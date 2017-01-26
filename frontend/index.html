@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html ng-app="booksAR">
+  <head>
+    <!-- bootstrap css -->
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css" />
+
+    <!-- Custom styles for this template -->
+    <link href="assets/css/sticky-footer-navbar.css" rel="stylesheet">
+  </head>
+  <body>
+
+    <div class="container header">
+      <h1 class="pull-left title"> Typewriter AR </h1>
+      <button class=" btn outline pull-right">
+      Log in
+      </button>
+    </div>
+
+
+    <div class="container signForm" ng-controller="signInController as signInCtrl">
+      <div class="col-sm-6 col-sm-offset-3 col-lg-4 col-lg-offset-4">
+        <!-- Sign In Form -->
+        <form name="signInForm" class="form-horizontal"  ng-submit="signInForm.$valid && signInCtrl.createUser()" novalidate>
+
+          <div class="has-feedback" ng-class="{'has-success': signInForm.name.$valid, 'has-error': signInForm.name.$invalid && signInForm.name.$dirty}">
+            <input name="name" type="text" class="formInput top form-control"  placeholder="Name" ng-model="signInCtrl.user.name" required>
+            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-show="signInForm.name.$valid"></span>
+            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="signInForm.name.$invalid && signInForm.name.$dirty"></span>
+          </div>
+
+          <div class="has-feedback" ng-class="{ 'has-success': signInForm.lastName.$valid, 'has-error': signInForm.lastName.$invalid && signInForm.lastName.$dirty}">
+            <input name="lastName" type="text" class="formInput form-control"  placeholder="Last Name" ng-model="signInCtrl.user.lastName" required>
+            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-show="signInForm.lastName.$valid"></span>
+            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="signInForm.lastName.$invalid && signInForm.lastName.$dirty"></span>
+          </div>
+
+          <div class="has-feedback" ng-class="{ 'has-success': signInForm.username.$valid, 'has-error': signInForm.username.$invalid && signInForm.username.$dirty}">
+            <input name="username" type="text" class="formInput form-control"  placeholder="Username" ng-model="signInCtrl.user.username" required minlength="8" maxlength="16">            
+            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-show="signInForm.username.$valid"></span>
+            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="signInForm.username.$invalid && signInForm.username.$dirty"></span>
+          </div>
+
+          <div class="has-feedback" ng-class="{ 'has-success': signInForm.email.$valid, 'has-error': signInForm.email.$invalid && signInForm.email.$dirty}">
+            <input name="email" type="email" class="formInput form-control"  placeholder="Email" ng-model="signInCtrl.user.email" required>
+            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-show="signInForm.email.$valid"></span>
+            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="signInForm.email.$invalid && signInForm.email.$dirty"></span>
+          </div>
+
+          <div class="has-feedback" ng-class="{ 'has-success': signInForm.password.$valid, 'has-error': signInForm.password.$invalid && signInForm.password.$dirty}">
+            <input name="password" type="password" class="formInput form-control"  placeholder="Password" ng-model="signInCtrl.user.password" required minlength="8" maxlength="16">
+            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-show="signInForm.password.$valid"></span>
+            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="signInForm.password.$invalid && signInForm.password.$dirty"></span>
+          </div>
+
+          <div class="has-feedback" ng-class="{ 'has-success': signInForm.passwordVerif.$valid && signInCtrl.validatePasswords(), 'has-error': signInForm.passwordVerif.$invalid && signInForm.passwordVerif.$dirty || !signInCtrl.validatePasswords()}">
+            <input name="passwordVerif" type="password" class="formInput bottom form-control"  placeholder="Repeat password" ng-model="signInCtrl.user.passwordVerif" required minlength="8" maxlength="16">
+            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-show="signInForm.passwordVerif.$valid && signInCtrl.validatePasswords()"></span>
+            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="signInForm.passwordVerif.$invalid && signInForm.passwordVerif.$dirty || !signInCtrl.validatePasswords()"></span>
+          </div>
+
+          <br>
+
+          <input type="submit" value="Sign In" class="btn btn-default btn-lg btn-block"/>
+
+        </form>
+        <!-- End Of Sign In Form -->
+      </div>
+    </div>
+
+    <!-- angular js file -->
+    <script type="text/javascript" src="assets/js/angular.min.js"></script>
+    <script type="text/javascript" src="assets/js/angular-ui-router.min.js"></script>
+    <script type="text/javascript" src="app/app.module.js"></script>
+  </body>
+</html>
