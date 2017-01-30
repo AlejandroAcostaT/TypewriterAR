@@ -18,8 +18,12 @@ body {
 
 .header {
   position: relative;
-  padding: 20px 0 30px;
-  margin-right: 8%;
+  width: 100%;
+  padding-left: 5%;
+  padding-right: 10%;
+  padding-top: 1%;
+  padding-bottom: 2%;
+  margin: 0;
 }
 
 /* TITTLE
@@ -52,7 +56,9 @@ body {
   font-size: 18px;
 }
 
-/* FORMS
+
+
+/* FORMS 
 --------------------------------------------------*/
 
 .formInput {
