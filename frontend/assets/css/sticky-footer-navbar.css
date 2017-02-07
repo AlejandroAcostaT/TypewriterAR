@@ -61,6 +61,14 @@ body {
 /* FORMS 
 --------------------------------------------------*/
 
+.signUpForm {
+  padding-top: 15%;
+}
+
+.logInForm {
+  padding-top: 32%;
+}
+
 .formInput {
   height: 52px;
   padding: 12px;
