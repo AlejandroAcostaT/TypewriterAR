@@ -1,0 +1,73 @@
+<!-- partial-home.html -->
+
+<div class="container signForm">
+
+      <div class="alert alert-danger" role="alert" ng-show="homeCtrl.err.show">
+        <h4> {{homeCtrl.err.message}}</h4>
+      </div>
+
+      <!-- Sign Up Form -->
+      <div class="col-sm-4 col-sm-offset-1 col-lg-4 col-lg-offset-1">
+        <form name="signUpForm" class="form-horizontal signUpForm"  ng-submit="signUpForm.$valid && homeCtrl.createUser()" novalidate>
+
+          <div class="has-feedback" ng-class="{'has-success': signUpForm.name.$valid, 'has-error': signUpForm.name.$invalid && signUpForm.name.$dirty}">
+            <input name="name" type="text" class="formInput top form-control" ng-change="homeCtrl.verifyName(signUpForm.name.$valid)" placeholder="Name" ng-model="homeCtrl.user.name" required>
+            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-show="signUpForm.name.$valid"></span>
+            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="signUpForm.name.$invalid && signUpForm.name.$dirty"></span>
+          </div>
+
+          <div class="has-feedback" ng-class="{ 'has-success': signUpForm.lastName.$valid, 'has-error': signUpForm.lastName.$invalid && signUpForm.lastName.$dirty}">
+            <input name="lastName" type="text" class="formInput form-control" ng-change="homeCtrl.verifyLastName(signUpForm.lastName.$valid)" placeholder="Last Name" ng-model="homeCtrl.user.lastName" required>
+            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-show="signUpForm.lastName.$valid"></span>
+            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="signUpForm.lastName.$invalid && signUpForm.lastName.$dirty"></span>
+          </div>
+
+          <div class="has-feedback" ng-class="{ 'has-success': signUpForm.username.$valid && (homeCtrl.user.username.length > 7), 'has-error': (homeCtrl.user.username.length <= 7) || signUpForm.username.$invalid && signUpForm.username.$dirty}">
+            <input name="username" type="text" class="formInput form-control" ng-change="homeCtrl.verifyUsername()" placeholder="Username" ng-model="homeCtrl.user.username" ng-model-options="{allowInvalid: true}" minlength="8" maxlength="16" required>            
+            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-show="signUpForm.username.$valid && homeCtrl.user.username.length > 7"></span>
+            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="homeCtrl.user.username.length <= 7 || signUpForm.username.$invalid && signUpForm.username.$dirty"></span>
+          </div>
+
+          <div class="has-feedback" ng-class="{ 'has-success': signUpForm.email.$valid, 'has-error': signUpForm.email.$invalid && signUpForm.email.$dirty}">
+            <input name="email" type="email" class="formInput form-control" ng-change="homeCtrl.verifyEmail(signUpForm.email.$valid)" placeholder="Email" ng-model="homeCtrl.user.email" required>
+            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-show="signUpForm.email.$valid"></span>
+            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="signUpForm.email.$invalid && signUpForm.email.$dirty"></span>
+          </div>
+
+          <div class="has-feedback" ng-class="{ 'has-success': signUpForm.password.$valid && (homeCtrl.user.password.length > 7), 'has-error': (homeCtrl.user.password.length <= 7) || signUpForm.password.$invalid && signUpForm.password.$dirty}">
+            <input name="password" type="password" class="formInput bottom form-control" ng-change="homeCtrl.verifyPassword()" placeholder="Password" ng-model="homeCtrl.user.password" ng-model-options="{allowInvalid: true}" minlength="8" required maxlength="16">
+            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-show="signUpForm.password.$valid && homeCtrl.user.password.length > 7"></span>
+            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="homeCtrl.user.password.length <= 7 || signUpForm.password.$invalid && signUpForm.password.$dirty"></span>
+          </div>
+
+          <br>
+          <input type="submit" value="Sign Up" class="btn btn-default btn-lg btn-block"/>
+
+        </form>
+      </div>
+      <!-- End Of Sign In Form -->
+
+      <!-- Log In Form -->
+
+      <div class="col-sm-4 col-sm-offset-2 col-lg-4 col-lg-offset-2">
+        <form name="logInForm" class="form-horizontal logInForm"  ng-submit="logInForm.$valid && homeCtrl.logIn()" novalidate>
+
+          <div class="has-feedback" ng-class="{ 'has-success': logInForm.username.$valid && (homeCtrl.loginUser.username.length > 7), 'has-error': (homeCtrl.loginUser.username.length <= 7) || logInForm.username.$invalid && logInForm.username.$dirty}">
+            <input name="username" type="text" class="formInput top form-control" ng-change="homeCtrl.verifyLoginUsername()" placeholder="Username" ng-model="homeCtrl.loginUser.username" ng-model-options="{allowInvalid: true}" minlength=
+            "8" maxlength="16" required>            
+            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-show="logInForm.username.$valid && homeCtrl.loginUser.username.length > 7"></span>
+            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="homeCtrl.loginUser.username.length <= 7 || logInForm.username.$invalid && logInForm.username.$dirty"></span>
+          </div>
+
+          <div class="has-feedback" ng-class="{ 'has-success': logInForm.password.$valid && (homeCtrl.loginUser.password.length > 7), 'has-error': (homeCtrl.loginUser.password.length <= 7) || logInForm.password.$invalid && logInForm.password.$dirty}">
+            <input name="password" type="password" class="formInput bottom form-control" ng-change="homeCtrl.verifyLoginPassword()" placeholder="Password" ng-model="homeCtrl.loginUser.password" ng-model-options="{allowInvalid: true}" minlength="8" required maxlength="16">
+            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-show="logInForm.password.$valid && homeCtrl.loginUser.password.length > 7"></span>
+            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="homeCtrl.loginUser.password.length <= 7 || logInForm.password.$invalid && logInForm.password.$dirty"></span>
+          </div>
+
+          <br>
+
+          <input type="submit" value="Log In" class="btn btn-default btn-lg btn-block"/>
+        </form>
+      </div>
+    </div>
