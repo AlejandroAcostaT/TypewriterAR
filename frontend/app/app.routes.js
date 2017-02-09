@@ -1,4 +1,4 @@
-angular.module('routerApp')
+angular.module('booksAR')
 
 .config(function($stateProvider, $urlRouterProvider) {
     
@@ -8,10 +8,16 @@ angular.module('routerApp')
         
         // HOME STATES AND NESTED VIEWS ========================================
         .state('home', {
-            url: '/home',
+            url: '/',
             templateUrl: './app/components/home/homeView.html',
             controller: 'homeController',
             controllerAs: 'homeCtrl'
+        })
+        .state('typewriter', {
+            url: '/typewriter',
+            templateUrl: './app/components/typewriter/typewriterView.html',
+            controller: 'typewriterController',
+            controllerAs: 'typewriterCtrl'
         });
         
 });

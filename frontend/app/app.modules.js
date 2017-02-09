@@ -1,3 +1,3 @@
 // app.js
-var app = angular.module('routerApp', ['ui.router']);
+var app = angular.module('booksAR', ['ui.router']);
 

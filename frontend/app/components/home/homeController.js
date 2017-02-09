@@ -1,5 +1,5 @@
 
-angular.module('routerApp')
+angular.module('booksAR')
 
 .controller('homeController', function(){
 
