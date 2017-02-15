@@ -1,5 +1,31 @@
 
+textarea{
+	outline: none;
+	width: 612pt;
+	height: 792pt;
+	max-height: 792pt;
+	resize: none;
+	padding: 60pt 45pt 60pt 45pt;
+	border: none;
+	overflow: hidden;
+}
 
-.paper{
+.page{
 	border:1px solid #000000;
+	padding: 60pt 40pt 50pt 40pt;
+	width: 622pt;
+	height: 742pt;
+}
+
+.content{
+	color: red;
+	font-family: "Times New Roman";
+}
+
+.content2{
+	color: red;
+	font-family: "Times New Roman";
+	font-size: 20px;
+	text-align: justify;
+
 }
