@@ -1,16 +1,16 @@
-<div class="container">
+<div class="container typewriter">
 	<div class="col-lg-4 col-md-4">
+		<textarea ng-model="typewriterCtrl.text"></textarea>
 		<button type="submit" class="btn btn-default btn-lg btn-block" ng-click="typewriterCtrl.pdf()">PDF</button>
 	</div>
 	<div class="col-lg-8 col-md-8">
 		<div class="page" id="page">
 			<h1>TITLE AAAAAA</h1>
-			<p class="content2">
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque aliquam magna risus, ac commodo sapien porta vel. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aliquam et tortor sapien. Proin eget justo et ipsum imperdiet condimentum. Sed tristique porttitor ex at finibus. Praesent rutrum posuere mauris et ultrices. Phasellus lacinia felis quam, ut ornare risus malesuada eu. Proin in tellus purus. Nunc at turpis varius, iaculis diam at, condimentum lacus. Pellentesque auctor purus risus, et molestie turpis interdum et. Sed quis massa eu erat vehicula varius. Duis mollis viverra scelerisque. Nam libero diam, hendrerit et imperdiet nec, dictum id risus. Praesent eget elementum turpis, at congue lacus.
-
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque aliquam magna risus, ac commodo sapien porta vel. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aliquam et tortor sapien. Proin eget justo et ipsum imperdiet condimentum. Sed tristique porttitor ex at finibus. Praesent rutrum posuere mauris et ultrices. Phasellus lacinia felis quam, ut ornare risus malesuada eu. Proin in tellus purus. Nunc at turpis varius, iaculis diam at, condimentum lacus. Pellentesque auctor purus risus, et molestie turpis interdum et. Sed quis massa eu erat vehicula varius. Duis mollis viverra scelerisque. Nam libero diam, hendrerit et imperdiet nec, dictum id risus. Praesent eget elementum turpis, at congue lacus.
+			<p style="white-space:pre-line;">
+				{{typewriterCtrl.text}}
 			</p>
-			<!--<textarea ng-model="typewriterCtrl.text"></textarea>-->
+
+			<!---->
 		</div>
 
 		

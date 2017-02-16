@@ -1,6 +1,6 @@
 angular.module('booksAR')
 
-.controller('typewriterController', function($state, $scope, $document){
+.controller('typewriterController', function(){
 
 	this.text = '';
 

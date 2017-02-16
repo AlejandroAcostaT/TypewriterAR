@@ -1,13 +1,16 @@
 
 textarea{
 	outline: none;
-	width: 612pt;
-	height: 792pt;
-	max-height: 792pt;
+	width: 100%;
+	height: 200pt;
 	resize: none;
-	padding: 60pt 45pt 60pt 45pt;
-	border: none;
-	overflow: hidden;
+}
+
+.typewriter{
+	padding-top: 5%;
+	padding-bottom: 5%;
+	margin-left: 2%;
+	margin-right: 2%;
 }
 
 .page{
@@ -15,17 +18,7 @@ textarea{
 	padding: 60pt 40pt 50pt 40pt;
 	width: 622pt;
 	height: 742pt;
-}
-
-.content{
-	color: red;
-	font-family: "Times New Roman";
-}
-
-.content2{
-	color: red;
-	font-family: "Times New Roman";
-	font-size: 20px;
-	text-align: justify;
-
+	/*-ms-transform: scale(0.5, 0.5); /* IE 9 */
+    /*-webkit-transform: scale(0.5, 0.5); /* Safari */
+    /*transform: scale(0.6, 0.6);*/
 }
