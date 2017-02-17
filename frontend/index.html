@@ -17,19 +17,17 @@
 </head>
 
 <!-- apply our angular app to our site -->
-<body ng-app="booksAR">
+<body ng-app="booksAR" class="{{bodyClass}}" ng-controller="GlobalCtrl">
 
 <!-- NAVIGATION -->
-<div class="container header">
-  <h1 class="pull-left title"> Typewriter AR </h1>
-</div>
+    <div class="container header">
+      <h1 class="pull-left title"> Typewriter AR </h1>
+    </div>
 
 <!-- MAIN CONTENT -->
 
-<!-- THIS IS WHERE WE WILL INJECT OUR CONTENT ============================== -->
-    <div class="views">
-        <div ui-view></div>
-    </div>
+<!-- THIS IS WHERE WE WILL INJECT OUR CONTENT -->
+    <div ui-view></div>
 
 <!-- JS (load angular, ui-router, and our custom js file) -->
     <script src="./assets/js/angular.min.js"></script>
