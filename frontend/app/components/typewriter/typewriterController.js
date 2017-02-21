@@ -6,6 +6,13 @@ angular.module('booksAR')
 
 	this.paragraphs = [];
 
+	this.pageStyle = {
+		size: "100%",
+		weight: "",
+		style: "",
+		font: "times"
+	};
+
 	this.isExtra = function(index){
 		var limit = document.getElementById("page").getBoundingClientRect().bottom - 45,
 		rect = document.getElementById("page").getElementsByTagName("P")[index].getBoundingClientRect(),
@@ -36,18 +43,15 @@ angular.module('booksAR')
 		// (class, of compound) at this time.
 		, specialElementHandlers = {
 		    // element with id of "bypass" - jQuery style selector
-		    '#page': function(element, renderer){
-		        // true = "handled elsewhere, bypass text extraction"
-		        return true
-		    }
+		    
 		}
 
 		margins = {
 		  top: 60,
 		  bottom: 50,
-		  left: 40,
-		  right: 40,
-		  width: 530
+		  left: 35,
+		  right: 35,
+		  width: 540
 		 };
 
 		 // all coords and widths are in jsPDF instance's declared units
@@ -63,6 +67,7 @@ angular.module('booksAR')
 		    function (dispose) {
 		      // dispose: object with X, Y of the last line add to the PDF 
 		      //          this allow the insertion of new lines after html
+		      
 		    },
 		    margins
 		);
@@ -83,7 +88,7 @@ angular.module('booksAR')
 		    margins
 		);*/
 
-
+		//console.log(pdf.getFontList());
 		pdf.output('dataurlnewwindow');     //opens the data uri in new window
 	};
 

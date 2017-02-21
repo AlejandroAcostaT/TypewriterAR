@@ -2,6 +2,7 @@
 * GREEN: #7ebb6b;
 * RED: #ee9e8b;
 * AQUAMARINE: #19AC8F;
+* DARK AQUAMARINE: #158A73;
 * ORANGE: #D98C34;
 * DARK ORANGE: #BE7A2B;
 --------------------------------------------------*/
@@ -13,11 +14,13 @@
 html {
   height: 100%;
   min-height: 100%;
+  min-width: 100%;
 }
 
 body {
   height: 100%;
   min-height: 100%;
+  min-width: 100%;
 }
 
 /* BACKGROUND PAGE STYLES
@@ -67,9 +70,9 @@ body.typewriter-page{
 .btn {
   font-weight: bold;
   font-size: 15px;
-  background-color: #D98C34;
+  background-color: #19AC8F;
   color: #fff;
-  border-color: #BE7A2B;
+  border-color: #158A73;
 }
 
 .btn.outline {
@@ -84,24 +87,24 @@ body.typewriter-page{
 }
 
 .btn:focus{
-  background-color: #D98C34;
+  background-color: #19AC8F;
   color: #fff;
-  border-color: #BE7A2B;
+  border-color: #158A73;
   outline: none;
 }
 
 .btn:hover{
-  background-color: #BE7A2B;
+  background-color: #158A73;
   color: #fff;
-  border-color: #BE7A2B;
+  border-color: #158A73;
 }
 
 .btn:active, 
 .btn:target,
 .btn:active:focus{
-  background-color: #BE7A2B;
+  background-color: #158A73;
   color: #fff;
-  border-color: #BE7A2B;
+  border-color: #158A73;
   outline: none;
 }
 
@@ -172,7 +175,7 @@ body.typewriter-page{
   margin: 4% 0 0 0; 
   padding-top: 2%;
   padding-bottom: 5%;
-  background-color: rgba(25,172,143,0.5);
+  background-color: rgba(190,122,43,0.5);
   border-radius: 8px;
 }
 
@@ -190,7 +193,6 @@ body.typewriter-page{
   margin-top: 8px;
   margin-bottom: 9px; 
 }
-
 
 .slogan{
   text-align: center;
