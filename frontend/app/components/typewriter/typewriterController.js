@@ -6,11 +6,61 @@ angular.module('booksAR')
 
 	this.paragraphs = [];
 
+	this.pageType = 2;
+
 	this.pageStyle = {
 		size: "100%",
-		weight: "",
-		style: "",
+		weight: "normal",
+		style: "normal",
 		font: "times"
+	};
+
+	this.image={
+		width: 720, //max value
+		height: 880, //max value
+		left: 0,
+		top: 0
+	}
+
+	this.setWidth = function(width){
+		if(parseInt(this.image.width) < 720){
+			return (width + "px");
+		}else{
+			this.image.width = 720;
+			return (this.image.width + "px");
+		}
+	};
+
+	this.setHeight = function(height){
+		if(parseInt(this.image.height) < 720){
+			return (height + "px");
+		}else{
+			this.image.height = 880;
+			return (this.image.height + "px");
+		}
+	};
+
+	this.setMarginLeft = function(left){
+		if(parseInt(this.image.width + left) < 720){
+			return (left + "px");
+		}else{
+			this.image.left = (720 - this.image.width);
+			return (this.image.left + "px");
+		}
+		
+	};
+
+	this.setMarginTop = function(top){
+		if(parseInt(this.image.height + top) < 880){
+			return (top + "px");
+		}else{
+			this.image.top = (880 - this.image.height);
+			return (this.image.top + "px");
+		}
+	};
+
+	this.isSelected = function(pageType){
+		return this.pageType == pageType;
 	};
 
 	this.isExtra = function(index){
@@ -27,6 +77,41 @@ angular.module('booksAR')
 
 	this.textAnalysis = function(){
 		this.paragraphs = this.text.split(/\r\n|\r|\n/g);
+	};
+
+	this.pdfImage = function(){
+		var pdf = new jsPDF('p', 'pt', 'letter')
+
+		// source can be HTML-formatted string, or a reference
+		// to an actual DOM element from which the text will be scraped.
+		, imgData = document.getElementById("img")
+
+		// we support special element handlers. Register them with jQuery-style 
+		// ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
+		// There is no support for any other type of selectors 
+		// (class, of compound) at this time.
+		, specialElementHandlers = {
+		    // element with id of "bypass" - jQuery style selector
+		    
+		}
+
+		margins = {
+		  top: 60,
+		  bottom: 50,
+		  left: 35,
+		  right: 35,
+		  width: 540
+		 },
+
+		image = {
+			width: this.image.width*0.75,
+			height: this.image.height*0.75,
+			left: (this.image.left*0.75) + margins.left,
+			top: (this.image.top*0.75) + margins.top
+		};
+
+		pdf.addImage(imgData, 'JPEG', image.left, image.top, image.width, image.height);
+		pdf.output('dataurlnewwindow');     //opens the data uri in new window
 	};
 
 

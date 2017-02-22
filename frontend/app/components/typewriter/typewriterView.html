@@ -1,41 +1,35 @@
 <div class="row typewriter">
 	<div class="col-lg-4 col-md-4 col-sm-4 leftBar">
-		<div>
-			<textarea ng-model="typewriterCtrl.text" cols="5" rows="5"></textarea>
-			<button type="submit" class="btn btn-default btn-lg btn-block" ng-click="typewriterCtrl.textAnalysis()">Submit Text</button>
-
-			<div class="textControls">
-				<h3>Text Size</h3>
-			    <select name="textSize" class="textSize form-control" ng-model="typewriterCtrl.pageStyle.size">
-				  <option value="100%">12</option>
-				  <option value="112.5%">14</option>
-				  <option value="131.3%">16</option>
-				  <option value="150%">18</option>
-				  <option value="162.5%">20</option>
-				  <option value="181.3%">22</option>
-				  <option value="200%">24</option>
-				  <option value="206.3%">26</option>
-				</select>
-			</div>
-
-			<div class="textControls">
-				<h3>Text Font</h3>
-			    <select name="textSize" class="textSize form-control" ng-model="typewriterCtrl.pageStyle.font">
-				  <option value="times">Times New Roman</option>
-				  <option value="helvetica">Helvetica</option>
-				  <option value="courier">Courier</option>
-				</select>
-			</div>
-
+		<!-- Text Only-->
+		<div ng-show="typewriterCtrl.isSelected(1)">
+			<text-editor></text-editor>
 			<button type="submit" class="btn btn-default btn-lg btn-block" ng-click="typewriterCtrl.pdf()">PDF</button>
+		</div>
+		<!-- Image Only-->
+		<div ng-show="typewriterCtrl.isSelected(2)">
+			<h3>Image Dimension</h3>
+			<div class="form-group">
+				<label for="exampleInputEmail1">Width</label>
+				<input type="number" class="form-control" ng-model="typewriterCtrl.image.width">
+			</div>
+			<div class="form-group">
+				<label for="exampleInputEmail1">Height</label>
+				<input type="number" class="form-control" ng-model="typewriterCtrl.image.height">
+			</div>
+			<h3>Image Position</h3>
+			<div class="form-group">
+				<label for="exampleInputEmail1">Horizontal</label>
+				<input type="number" min="0" class="form-control" ng-model="typewriterCtrl.image.left">
+			</div>
+			<div class="form-group">
+				<label for="exampleInputEmail1">Vertical</label>
+				<input type="number" min="0" class="form-control" ng-model="typewriterCtrl.image.top">
+			</div>
+			<button type="submit" class="btn btn-default btn-lg btn-block" ng-click="typewriterCtrl.pdfImage()">PDF</button>
 		</div>
 	</div>
 	<div class="col-lg-8 col-md-8 col-sm-8">
-		<div class="page" id="page" ng-style="{'font-family': typewriterCtrl.pageStyle.font, 'font-size':typewriterCtrl.pageStyle.size}">
-			<div ng-repeat="par in typewriterCtrl.paragraphs track by $index">
-				<p class="paragraph" style="white-space:pre-line;" ng-show="typewriterCtrl.isExtra($index)">{{par}} </p>
-			</div>
-		</div>
+		<page-preview></page-preview>
 	</div>
 	</div>
 </div>

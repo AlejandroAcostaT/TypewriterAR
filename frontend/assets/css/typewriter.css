@@ -40,14 +40,11 @@ textarea{
     font-family: "Comic Sans MS";
 }
 
+
+
 .textControls{
-	height: 100%;
-
-}
-
-.textSize{
 	margin-bottom: 3%;
-	width: 50%;
+	width: 60%;
 	outline: none;
 }
 
@@ -66,4 +63,8 @@ textarea{
 /* turn it off completely */
 select:active, select:hover {
   outline: none
+}
+
+
+.image{
 }
