@@ -24,20 +24,21 @@
 <body ng-app="booksAR" class="{{bodyClass}}" ng-controller="GlobalCtrl">
 
 <!-- NAVIGATION -->
-    <div class="container header">
+
+    <div class="container header"  ng-show="state=='home'">
       <h1 class="pull-left title"> Typewriter AR </h1>
-      
     </div>
+
 
 <!-- MAIN CONTENT -->
 
 <!-- THIS IS WHERE WE WILL INJECT OUR CONTENT -->
     <div ui-view class="content"></div>
 
-<!-- JS (load angular, ui-router, and our custom js file) -->
+<!-- JS (load angular, ui-router, ui-bootstrap and our custom js file) -->
     <script src="./assets/js/angular.min.js"></script>
     <script src="./assets/js/angular-ui-router.min.js"></script>
-
+    <script src="./assets/js/ui-bootstrap-tpls-2.5.0.min.js"></script>
 
 <!-- JS (load modules and routes) -->
     <script src="./app/app.modules.js"></script>
@@ -46,7 +47,7 @@
     <script src="./app/components/home/homeController.js"></script>
     <script src="./app/components/typewriter/typewriterController.js"></script>
 <!-- JS (load directives) -->
-    <script src="./app/components/directives/page/page.js"></script>
+    <script src="./app/components/directives/typewriter/typewriter.js"></script>
 
     <script src="./assets/js/jspdf.min.js"></script>
     <script src="./assets/js/html2canvas.js"></script>

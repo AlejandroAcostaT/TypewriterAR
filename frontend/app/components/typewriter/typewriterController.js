@@ -1,12 +1,12 @@
 angular.module('booksAR')
 
-.controller('typewriterController', function(){
+.controller('typewriterController', function($scope){
 
 	this.text = '';
 
 	this.paragraphs = [];
 
-	this.pageType = 2;
+	this.pageType = 1;
 
 	this.pageStyle = {
 		size: "100%",
@@ -21,6 +21,8 @@ angular.module('booksAR')
 		left: 0,
 		top: 0
 	}
+
+	/*-------------Image position and size setings--------------*/
 
 	this.setWidth = function(width){
 		if(parseInt(this.image.width) < 720){
@@ -59,10 +61,17 @@ angular.module('booksAR')
 		}
 	};
 
+	/*-------------Page Settings--------------*/
+
 	this.isSelected = function(pageType){
 		return this.pageType == pageType;
 	};
 
+	this.setPageType = function(pageType){
+		this.pageType = pageType;
+	}
+
+	/*-------------Text Analysis--------------*/
 	this.isExtra = function(index){
 		var limit = document.getElementById("page").getBoundingClientRect().bottom - 45,
 		rect = document.getElementById("page").getElementsByTagName("P")[index].getBoundingClientRect(),
@@ -78,6 +87,8 @@ angular.module('booksAR')
 	this.textAnalysis = function(){
 		this.paragraphs = this.text.split(/\r\n|\r|\n/g);
 	};
+
+	/*-------------PDF Creation--------------*/
 
 	this.pdfImage = function(){
 		var pdf = new jsPDF('p', 'pt', 'letter')
@@ -109,7 +120,6 @@ angular.module('booksAR')
 			left: (this.image.left*0.75) + margins.left,
 			top: (this.image.top*0.75) + margins.top
 		};
-
 		pdf.addImage(imgData, 'JPEG', image.left, image.top, image.width, image.height);
 		pdf.output('dataurlnewwindow');     //opens the data uri in new window
 	};
@@ -138,6 +148,8 @@ angular.module('booksAR')
 		  right: 35,
 		  width: 540
 		 };
+
+		 console.log(source);
 
 		 // all coords and widths are in jsPDF instance's declared units
 		 // 'inches' in this case
