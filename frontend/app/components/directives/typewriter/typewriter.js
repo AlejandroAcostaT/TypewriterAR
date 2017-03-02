@@ -26,4 +26,11 @@ angular.module('booksAR')
 		restrict: 'E',
 		templateUrl: './app/components/directives/typewriter/image-editor.html'
 	};
+})
+
+.directive('titleEditor', function(){
+	return{
+		restrict: 'E',
+		templateUrl: './app/components/directives/typewriter/title-editor.html'
+	};
 });
