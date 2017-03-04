@@ -234,8 +234,6 @@ angular.module('booksAR')
 		  width: 540
 		 };
 
-		 console.log(source);
-
 		 // all coords and widths are in jsPDF instance's declared units
 		 // 'inches' in this case
 		pdf.fromHTML(
@@ -390,19 +388,19 @@ angular.module('booksAR')
 
 	//Title & Text
 	this.pdfTitleText = function(){
-		var pdf = new jsPDF('p', 'pt', 'letter')
+		var pdf = new jsPDF('p', 'pt', 'letter'),
+		source = document.getElementById("page"),
 
 		// we support special element handlers. Register them with jQuery-style 
 		// ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
 		// There is no support for any other type of selectors 
 		// (class, of compound) at this time.
-		, specialElementHandlers = {
+		specialElementHandlers = {
 		    // element with id of "bypass" - jQuery style selector
-		    
 		}
 
 		margins = {
-		  top: 65,
+		  top: 85,
 		  bottom: 50,
 		  left: 35,
 		  right: 35,
@@ -412,7 +410,7 @@ angular.module('booksAR')
 		linesOffset = 0;
 
 
-		//Font Size
+		//Title Font Size
 		if(this.pageStyle.titleSize == "270%"){
 			pdf.setFontSize(26);
 			linesOffset = 32;
@@ -438,7 +436,7 @@ angular.module('booksAR')
 			linesOffset = 42;
 		}
 		
-		//Font Family
+		//Title Font Family
 		pdf.setFont(this.pageStyle.titleFont);
 
 
@@ -446,8 +444,7 @@ angular.module('booksAR')
 		var splitTitle = pdf.splitTextToSize(this.title, 540),
 		lines = Math.floor(splitTitle.length / 2),
 		xOffset = 0,
-		yOffset = (pdf.internal.pageSize.height / 2) - (lines * linesOffset);
-		yOffset = yOffset > 0 ? yOffset : margins.top;
+		yOffset = margins.top;
 
 		for(var i=0; i<splitTitle.length; i++){
 			//Calculate Center
@@ -456,12 +453,29 @@ angular.module('booksAR')
 			xOffset = xOffset > 0 ? xOffset : margins.left;
 
 			//Write Title
-			console.log(pdf.internal.getFontSize());
-
 			pdf.text(splitTitle[i], xOffset, yOffset);
 
 			yOffset += linesOffset;
 		}
+
+		yOffset -= linesOffset*2; //reset margin top to fit page
+
+		// Text Printing
+		pdf.fromHTML(
+		    source, // HTML string or DOM elem ref.
+		    margins.left, // x coord
+		    yOffset - 15, // y coord
+		    {
+		        'width': margins.width, // max width of content on PDF
+		        'elementHandlers': specialElementHandlers
+		    },
+		    function (dispose) {
+		      // dispose: object with X, Y of the last line add to the PDF 
+		      //          this allow the insertion of new lines after html
+		      
+		    },
+		    margins
+		);
 
 		pdf.output('dataurlnewwindow');     //opens the data uri in new window
 
@@ -483,7 +497,7 @@ angular.module('booksAR')
 		}
 
 		margins = {
-		  top: 65,
+		  top: 85,
 		  bottom: 50,
 		  left: 35,
 		  right: 35,
