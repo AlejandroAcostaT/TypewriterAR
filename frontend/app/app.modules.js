@@ -14,5 +14,12 @@ app.controller('GlobalCtrl', function($scope) {
         $scope.state = toState.name;
     });
 
+});
 
+
+//Setting API Address
+app.service('API', function(){
+    return {
+        address : 'http://192.168.1.9:3000/api/'
+    };
 });

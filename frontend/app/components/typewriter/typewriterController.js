@@ -1,6 +1,6 @@
 angular.module('booksAR')
 
-.controller('typewriterController', function($scope, Upload){
+.controller('typewriterController', function($scope, Upload, sessionService){
 
 	this.text = '';
 
@@ -24,6 +24,10 @@ angular.module('booksAR')
 		height: 880, //max value if page type is only image (2)
 		left: 0,
 		top: 0
+	}
+
+	this.logOut = function(){
+		sessionService.logOut();
 	}
 
 	/*-------------Image position and size setings--------------*/

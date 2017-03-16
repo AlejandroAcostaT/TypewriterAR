@@ -1,7 +1,7 @@
 
 angular.module('booksAR')
 
-.controller('homeController', function(){
+.controller('homeController', function($state, userService, sessionService, tokenService){
 
 	// new user
 	this.user = {};
@@ -17,8 +17,37 @@ angular.module('booksAR')
 	//New user functions
 
 	this.createUser = function(){
-		console.log(this.user);
-		this.user = {};
+
+		var error = this.err,
+			user = this.user;
+
+		userService.createUser(user).then(function successCallback(response) {
+
+			var login = {
+				username: user.username,
+				password: user.password
+			}
+			console.log(login);
+
+			sessionService.logIn(login).then(function successCallback(response) {
+
+				tokenService.setToken(response.data.data.token);
+				tokenService.setUser(response.data.data.user);
+
+				console.log(tokenService.getToken());
+				console.log(tokenService.getUser());
+
+				$state.go('typewriter');
+			}, function errorCallback(response) {
+				error.message = response.data.data.message;
+				error.show = true;
+			});
+
+		}, function errorCallback(response) {
+			error.message = response.data.data.message;
+			error.show = true;
+		});
+		
 	};
 
 	this.addError = function(message){
@@ -92,8 +121,19 @@ angular.module('booksAR')
 	};
 
 	this.logIn = function(){
-		console.log(this.loginUser);
-		this.loginUser = {};
+
+		var error = this.err;
+
+		sessionService.logIn(this.loginUser).then(function successCallback(response) {
+
+			tokenService.setToken(response.data.data.token);
+			tokenService.setUser(response.data.data.user);
+
+			$state.go('typewriter');
+		}, function errorCallback(response) {
+			error.message = response.data.data.message;
+			error.show = true;
+		});
 	};
 
 });
