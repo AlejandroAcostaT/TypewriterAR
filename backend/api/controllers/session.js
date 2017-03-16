@@ -1,12 +1,214 @@
-var Session = require('../models/session');
+/*****************************************************
+*		Project: Typewriter AR - 2017				 *
+*													 *
+*		Controller: Session							 *
+*													 *
+*		Author: Alejandro Acosta					 *
+*****************************************************/
+
+var Session = require('../models/session'),
+	User 	= require('../models/user')
+	jwt		= require('jsonwebtoken'),
+	async	= require('async'),
+	config	= require('../config.js'),
+	bcrypt 	= require('bcrypt');
 
 module.exports = {
 
-	/* Comparar pasword con el hash
-	// Load the password hash from DB
-	// Let's assume it's stored in a variable called `hash`
-	bcrypt.compareSync("my password", hash); // true
-	bcrypt.compareSync("not my password", hash); // false
-	*/
+	/******************************************************
+	*		Function: verifySession (MIDDLEWARE)	 	  *
+	*													  *
+	*		Description: Verify existing session  		  *
+	*													  *
+	******************************************************/
+
+	verifySession : function(req, res, next){
+		
+		var token = req.headers['token'];
+
+		if(token){
+
+		}else{
+
+		}		
+	},
+
+	/******************************************************
+	*		Function: deleteExistingSession (MIDDLEWARE)  *
+	*													  *
+	*		Description: If session exist it's deleted	  *
+	*													  *
+	******************************************************/
+
+	deleteExistingSession : function(req, res, next){
+	
+		var username = req.body.username;
+		console.log("middleware");
+		Session.forge({
+			username : username,
+			type : "web"
+		})
+		.fetch()
+		.then(function(session){
+			console.log("db look");
+			if(!session){
+				console.log("not session");
+				next();
+			}else{
+				session.destroy()
+				.then(function(){
+					console.log("session");
+					next();
+				})
+				.catch(function(err){
+					res.status(500)
+					.json({error : true, data : {message : err.message}})
+				});
+			}
+		})
+		.catch(function(err){
+			res.status(500)
+			.json({
+				error : false,
+				data : {message : err.message}
+			})
+		})
+
+	},
+
+	/******************************************************
+	*		Function: createSession / Method: POST 		  *
+	*													  *
+	*		Description: Create a new session  			  *
+	*													  *
+	*		Parameters: 								  *
+	*			- username 		: string (body)		 	  *
+	*			- password 		: string (body)		 	  *
+	******************************************************/
+
+	createSession :  function(req, res){
+		console.log("create session");
+
+		var password = req.body.password,
+			username = req.body.username;
+ 		
+		async.series({
+		    verifyUser: function(callback) {
+		    	//get user by username
+		    	User.forge({
+					username : username
+				})
+				.fetch()
+				.then(function(user){
+					if(!user){ 
+					//verify user exist in database
+						res.status(404)
+						.json({
+							error : true,
+							data : {message: "username or password are incorrect"}
+						})
+					}else{
+						user_json = user.toJSON();
+						if(!bcrypt.compareSync(password, user_json.password)){ 
+						//verify password match the database one
+							res.status(404)
+							.json({
+								error : true,
+								data : {message: "username or password are incorrect"}
+							})
+						}else{
+						// No error, pass user to callback	
+							delete user_json.password;
+							callback(null, user_json);
+						}
+					}
+				})
+				.catch(function(err){
+					res.status(500)
+					.json({
+						error : false,
+						data : {message : err.message}
+					})
+				});
+		    },
+		    createNewSession: function(callback){
+		    	//Creating Session in database
+				Session.forge({
+					username: username,
+					type: "web"
+				})
+				.save()
+				.then(function(session){
+					//create token
+					var token = jwt.sign({
+											username: username,
+										 	sessionId: session.get('id')
+										},
+										config.secret,
+										{
+								         	expiresIn: '24h' // expires in 24 hours
+								        });
+					//pass token to callback
+					callback(null, token);
+				})
+				.catch(function (err) {
+					res.status(500)
+					.json({
+						error: true,
+						data: {message: err.message}
+					});
+				});
+		    }
+		}, 
+		function(err, results) {
+		    // results is now equal to: {verifyUser: user_json, createNewSession: token}
+		    res.status(201)
+			.json({
+				error: false,
+				data: {
+					user : results.verifyUser,
+					token : results.createNewSession
+				}
+			});
+		});
+		
+	},
+
+	/******************************************************
+	*		Function: deleteSession / Method: DELETE	  *
+	*													  *
+	*		Description: Delete session		  			  *
+	*													  *
+	*		Parameters: 								  *
+	*			- token: json-web-token (headers)  		  *
+	******************************************************/
+
+	deleteSession : function(req, res){
+
+		var token 	= req.headers['token'],
+			decoded = jwt.verify(token, config.secret);
+
+
+		Session.forge({id : decoded.sessionId})
+		.fetch({require : true})
+		.then(function(session){
+			session.destroy()
+			.then(function(){
+				res.status(204)
+				.json({
+					error : false,
+					data : {message : 'Session successfully deleted'}
+				})
+			})
+			.catch(function(err){
+				res.status(500)
+				.json({error : true, data : {message : err.message}})
+			});
+		})
+		.catch(function(err){
+			res.status(500)
+			.json({error : true, data : {message : err.message}})
+		});
+	}
 	
 }

@@ -23,6 +23,8 @@ module.exports = (function () {
   /*              Sesions               */
   /**************************************/
 
+  router.post('/sessions', sessionCtrl.deleteExistingSession, sessionCtrl.createSession);
+  router.delete('/sessions', sessionCtrl.deleteSession);
 
   return router;
 

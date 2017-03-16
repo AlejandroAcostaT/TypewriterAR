@@ -1,8 +1,8 @@
 var Schema = {
   user : {
     id        : {type : 'increments', nullable: false, primary: true},
-    username  : {type : 'string', maxlength: 150, nullable: false, unique: true},
-    password  : {type : 'string', maxlength: 254, nullable: false},
+    username  : {type : 'string', maxlength: 20, nullable: false, unique: true},
+    password  : {type : 'string', maxlength: 150, nullable: false},
     email     : {type : 'string', maxlength: 254, nullable: false},
     name      : {type : 'string', maxlength: 254, nullable: false},
     lastName  : {type : 'string', maxlength: 254, nullable: false},
@@ -11,7 +11,8 @@ var Schema = {
   },
   session : {
     id        : {type : 'increments', nullable: false, primary: true},
-    idUser    : {type : 'integer', nullable: false},
+    username  : {type : 'string', maxlength: 20, nullable: false},
+    type      : {type : 'string', maxlength: 10, nullable: false},
     created_at: {type: 'dateTime', nullable: false},
     updated_at: {type: 'dateTime', nullable: true}
   }/*,

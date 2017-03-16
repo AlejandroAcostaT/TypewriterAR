@@ -14,7 +14,6 @@ var User 		= require('../models/user'), 	//User model
 	validator 	= require("email-validator"),	//Email valiator
 	bcrypt 		= require('bcrypt');			//Module for password encrypting 
 
-
 /************
 * Functions *
 ************/
