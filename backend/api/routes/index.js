@@ -13,18 +13,18 @@ module.exports = (function () {
   /*               User                 */
   /**************************************/
 
-	router.get('/users', userCtrl.getUsers);
+	router.get('/users', sessionCtrl.verifySession, userCtrl.getUsers);
 	router.post('/users', userCtrl.createUser);
-	router.get('/users/:id', userCtrl.getUserById);
-	router.put('/users/:id', userCtrl.updateUser);
-	router.delete('/users/:id', userCtrl.deleteUser);
+	router.get('/users/:id', sessionCtrl.verifySession, userCtrl.getUserById);
+	router.put('/users/:id', sessionCtrl.verifySession, userCtrl.updateUser);
+	router.delete('/users/:id', sessionCtrl.verifySession, userCtrl.deleteUser);
 
   /**************************************/
   /*              Sesions               */
   /**************************************/
 
   router.post('/sessions', sessionCtrl.deleteExistingSession, sessionCtrl.createSession);
-  router.delete('/sessions', sessionCtrl.deleteSession);
+  router.delete('/sessions', sessionCtrl.verifySession, sessionCtrl.deleteSession);
 
   return router;
 

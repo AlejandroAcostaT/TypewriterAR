@@ -26,9 +26,23 @@ module.exports = {
 		
 		var token = req.headers['token'];
 
-		if(token){
+		if(!token){
+
+			res.status(403)
+			.json({error : true, data : {message : "The token was not provided"}});
 
 		}else{
+			// verifies secret and checks exp
+		    jwt.verify(token, config.secret, function(err, decoded) {      
+		      if (err) {
+		        return res.status(400)
+		        		.json({ success: false, message: "Failed to authenticate token."});    
+		      } else {
+		        // if everything is good, save to request for use in other routes
+		        req.decoded = decoded;    
+		        next();
+		      }
+		    });
 
 		}		
 	},
@@ -43,21 +57,17 @@ module.exports = {
 	deleteExistingSession : function(req, res, next){
 	
 		var username = req.body.username;
-		console.log("middleware");
 		Session.forge({
 			username : username,
 			type : "web"
 		})
 		.fetch()
 		.then(function(session){
-			console.log("db look");
 			if(!session){
-				console.log("not session");
 				next();
 			}else{
 				session.destroy()
 				.then(function(){
-					console.log("session");
 					next();
 				})
 				.catch(function(err){
@@ -69,7 +79,7 @@ module.exports = {
 		.catch(function(err){
 			res.status(500)
 			.json({
-				error : false,
+				error : true,
 				data : {message : err.message}
 			})
 		})
@@ -105,7 +115,7 @@ module.exports = {
 						res.status(404)
 						.json({
 							error : true,
-							data : {message: "username or password are incorrect"}
+							data : {message: "Username or password are incorrect"}
 						})
 					}else{
 						user_json = user.toJSON();
@@ -114,7 +124,7 @@ module.exports = {
 							res.status(404)
 							.json({
 								error : true,
-								data : {message: "username or password are incorrect"}
+								data : {message: "Username or password are incorrect"}
 							})
 						}else{
 						// No error, pass user to callback	
@@ -126,7 +136,7 @@ module.exports = {
 				.catch(function(err){
 					res.status(500)
 					.json({
-						error : false,
+						error : true,
 						data : {message : err.message}
 					})
 				});
@@ -140,9 +150,11 @@ module.exports = {
 				.save()
 				.then(function(session){
 					//create token
-					var token = jwt.sign({
+					var date  	= new Date(),
+					 	token 	= jwt.sign({
 											username: username,
-										 	sessionId: session.get('id')
+										 	sessionId: session.get('id'),
+										 	date: date
 										},
 										config.secret,
 										{
