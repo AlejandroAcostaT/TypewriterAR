@@ -18,6 +18,12 @@ angular.module('booksAR')
             templateUrl: './app/components/typewriter/typewriterView.html',
             controller: 'typewriterController',
             controllerAs: 'typewriterCtrl'
+        })
+        .state('user', {
+            url: '/user',
+            templateUrl: './app/components/user/userView.html',
+            controller: 'userController',
+            controllerAs: 'userCtrl'
         });
         
 });

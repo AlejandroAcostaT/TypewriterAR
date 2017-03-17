@@ -1,0 +1,39 @@
+
+.userProfile{
+	padding-top: 3%;
+	padding-bottom: 2%;
+	background-color: #B8BBC1;
+	width: 100%;	
+	color: #fff;
+}
+
+.shadow{
+	box-shadow: 0 -4px 8px 0 rgba(0, 0, 0, 0.2), 0 -6px 20px 0 rgba(0, 0, 0, 0.19);
+	width: 100%;
+}
+
+.border-col{
+	margin-top: 5%;
+	border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    border-color: #B8BBC1;
+}
+
+.icon{
+	color: #158A73;
+	cursor:pointer;
+}
+
+.heading{
+	display: inline-block;
+}
+
+.create-btn{
+	float: right;
+	margin-top: 3%;
+}
+
+.button-icon{
+	margin-left: 5%;
+}
