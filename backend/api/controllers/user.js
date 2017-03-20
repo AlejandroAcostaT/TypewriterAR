@@ -174,23 +174,17 @@ module.exports = {
 	*			- id 		: integer (params)		 	  *
 	*			- name 		: string (body)			 	  *
 	*			- lastName	: string (body)		 		  *
-	*			- username 	: string / 8 - 16 char (body) *
 	*			- email 	: string (body)			 	  *
+	*			- password 	: string (body)			 	  *
 	******************************************************/
 
 	updateUser : function(req, res){
 
-		var username = req.body.username,
-			email	 = req.body.email;
+		var email		= req.body.email,
+			password 	= req.body.password,
+			salt 		= bcrypt.genSaltSync(10);
 
-		if(username.length < 8 || username.length > 16){
-			res.status(400)
-			.json({
-				error : true,
-				data : { message : "Username length must be between 8 and 16 characters" }
-			})
-		}	
-
+		//Email validation
 		if(!validator.validate(email)){
 			res.status(400)
 			.json({
@@ -199,14 +193,28 @@ module.exports = {
 			})
 		}
 
+		if(password){
+			//Password length validation
+			if(password.length < 8 || password.length > 16){
+				res.status(400)
+				.json({
+					error : true,
+					data : { message : "Password length must be between 8 and 16 characters" }
+				})
+			}
+
+			//Encrypting password;
+			var hash = bcrypt.hashSync(password, salt);
+		}
+
 		User.where('id', req.params.id)
 		.fetch({ require : true })
 		.then(function(user){
 			user.save({
-				name: req.body.name || user.get('name'),
-				lastName: req.body.lastName || user.get('lastName'),
-				username: req.body.username || user.get('username'),
-				email: req.body.email || user.get('email')
+				name: 		req.body.name || user.get('name'),
+				lastName: 	req.body.lastName || user.get('lastName'),
+				email: 		req.body.email || user.get('email'),
+				password: 	hash || user.get('password')
 			},
 			{
 				method: "update"
