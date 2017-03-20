@@ -1,6 +1,6 @@
 angular.module('booksAR')
 
-.controller('typewriterController', function($scope, Upload, sessionService){
+.controller('typewriterController', function($scope, $state, Upload, sessionService, tokenService){
 
 	this.text = '';
 
@@ -614,6 +614,15 @@ angular.module('booksAR')
       }
     }
     */
+
+    //verify user has logged in
+	this.verifySession = function(){
+		if(tokenService.getToken()==""){
+			$state.go('home');
+		}
+	};
+
+	this.verifySession();
 	
 
 });

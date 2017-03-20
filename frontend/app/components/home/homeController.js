@@ -27,17 +27,13 @@ angular.module('booksAR')
 				username: user.username,
 				password: user.password
 			}
-			console.log(login);
 
 			sessionService.logIn(login).then(function successCallback(response) {
 
 				tokenService.setToken(response.data.data.token);
 				tokenService.setUser(response.data.data.user);
 
-				console.log(tokenService.getToken());
-				console.log(tokenService.getUser());
-
-				$state.go('typewriter');
+				$state.go('user');
 			}, function errorCallback(response) {
 				error.message = response.data.data.message;
 				error.show = true;
@@ -129,7 +125,7 @@ angular.module('booksAR')
 			tokenService.setToken(response.data.data.token);
 			tokenService.setUser(response.data.data.user);
 
-			$state.go('typewriter');
+			$state.go('user');
 		}, function errorCallback(response) {
 			error.message = response.data.data.message;
 			error.show = true;
