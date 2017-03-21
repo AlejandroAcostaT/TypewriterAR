@@ -1,27 +1,31 @@
 var Schema = {
   user : {
-    id        : {type : 'increments', nullable: false, primary: true},
-    username  : {type : 'string', maxlength: 20, nullable: false, unique: true},
-    password  : {type : 'string', maxlength: 150, nullable: false},
-    email     : {type : 'string', maxlength: 254, nullable: false},
-    name      : {type : 'string', maxlength: 254, nullable: false},
-    lastName  : {type : 'string', maxlength: 254, nullable: false},
+    id        : {type: 'increments', nullable: false, primary: true},
+    username  : {type: 'string', maxlength: 20, nullable: false, unique: true},
+    password  : {type: 'string', maxlength: 150, nullable: false},
+    email     : {type: 'string', maxlength: 254, nullable: false},
+    name      : {type: 'string', maxlength: 254, nullable: false},
+    lastName  : {type: 'string', maxlength: 254, nullable: false},
 	  created_at: {type: 'dateTime', nullable: false},
     updated_at: {type: 'dateTime', nullable: true}
   },
   session : {
-    id        : {type : 'increments', nullable: false, primary: true},
-    username  : {type : 'string', maxlength: 20, nullable: false},
-    type      : {type : 'string', maxlength: 10, nullable: false},
+    id        : {type: 'increments', nullable: false, primary: true},
+    username  : {type: 'string', maxlength: 20, nullable: false},
+    type      : {type: 'string', maxlength: 10, nullable: false},
     created_at: {type: 'dateTime', nullable: false},
     updated_at: {type: 'dateTime', nullable: true}
-  }/*,
-  categories: {
-    id: {type: 'increments', nullable: false, primary: true},
-    name: {type: 'string', maxlength: 150, nullable: false},
-	  created_at: {type: 'dateTime', nullable: false},
-    updated_at: {type: 'dateTime', nullable: true}
   },
+  book : {
+    id         : {type: 'increments', nullable: false, primary: true},
+    title      : {type: 'string', maxlength: 150, nullable: false},
+    description: {type: 'string', maxlength: 300, nullable: false},
+    cover      : {type: 'string', maxlength: 150, nullable: false},
+    publish    : {type: 'boolean', nullable: false},
+    idUser     : {type: 'integer', nullable: false},
+	  created_at : {type: 'dateTime', nullable: false},
+    updated_at : {type: 'dateTime', nullable: true}
+  }/*,
   posts: {
     id: {type: 'increments', nullable: false, primary: true},
     user_id: {type: 'integer', nullable: false, unsigned: true},

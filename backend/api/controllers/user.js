@@ -23,7 +23,7 @@ module.exports = {
 	/*****************************************************
 	*		Function: getUsers	/ Method: GET 			 *
 	*													 *
-	*		Description: Get All users from database	 *
+	*		Description: Get all users from database	 *
 	*													 *
 	*		Parameters: NONE							 *
 	*****************************************************/
@@ -223,7 +223,7 @@ module.exports = {
 				res.status(204)
 				.json({
 					error : false,
-					data : { message : 'User deatils update'}
+					data : { message : 'User details update'}
 				});
 			})
 			.catch(function(err){
