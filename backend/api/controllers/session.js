@@ -7,7 +7,7 @@
 *****************************************************/
 
 var Session = require('../models/session'),
-	User 	= require('../models/user')
+	User 	= require('../models/user'),
 	jwt		= require('jsonwebtoken'),
 	async	= require('async'),
 	config	= require('../config.js'),

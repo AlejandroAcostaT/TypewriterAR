@@ -11,6 +11,7 @@
 ***************/
 
 var User 		= require('../models/user'), 	//User model
+	Book 		= require('../models/book'), 	//Book model
 	validator 	= require("email-validator"),	//Email valiator
 	bcrypt 		= require('bcrypt');			//Module for password encrypting 
 
@@ -55,12 +56,14 @@ module.exports = {
 	*		Parameters: 								 *
 	*			- id: integer (params)	 				 *
 	*****************************************************/
-
 	getUserById : function(req, res){
 		User.forge({
 			id : req.params.id
 		})
-		.fetch({columns: ['id', 'name', 'lastName', 'username', 'email']})
+		.fetch({
+			columns: ['id', 'name', 'lastName', 'username', 'email'], 
+			withRelated: ['books']
+		})
 		.then(function(user){
 			if(!user){
 				res.status(404)

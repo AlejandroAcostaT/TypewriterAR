@@ -1,8 +1,28 @@
+/*****************************************************
+*            Project: Typewriter AR - 2017           *
+*                                                    *
+*            Routes: Web                             *
+*                                                    *
+*            Author: Alejandro Acosta                *
+*****************************************************/
+
 var express     = require('express'),
-userCtrl        = require('../controllers/user'),
-sessionCtrl     = require('../controllers/session'),
-bookCtrl        = require('../controllers/book'),
-router          = express.Router();
+    userCtrl    = require('../controllers/user'),
+    sessionCtrl = require('../controllers/session'),
+    bookCtrl    = require('../controllers/book'),
+    router      = express.Router(),
+    multer      = require('multer'),
+    coverUpload = multer({ dest: 'uploads/',
+                          fileFilter: function (req, file, cb) {
+                            var filetypes = /jpeg|jpg|png/,
+                                mimetype = filetypes.test(file.mimetype);
+
+                            if (mimetype) {
+                              return cb(null, true);
+                            }
+                            cb("Error: File upload only supports the following filetypes - " + filetypes);
+                          } 
+                        });
 
 module.exports = (function () {
 
@@ -32,9 +52,9 @@ module.exports = (function () {
   /**************************************/
 
   router.get('/books', sessionCtrl.verifySession, bookCtrl.getBooks);
-  router.post('/books', sessionCtrl.verifySession, bookCtrl.createBook);
+  router.post('/books', sessionCtrl.verifySession, coverUpload.single('cover'), bookCtrl.createBook);
   router.get('/books/:id', sessionCtrl.verifySession, bookCtrl.getBookById);
-  router.put('/books/:id', sessionCtrl.verifySession, bookCtrl.updateBook);
+  router.put('/books/:id', sessionCtrl.verifySession, coverUpload.single('cover'), bookCtrl.updateBook);
   router.put('/books/:id/publish', sessionCtrl.verifySession, bookCtrl.publishBook);
   router.delete('/books/:id', sessionCtrl.verifySession, bookCtrl.deleteBook);
 

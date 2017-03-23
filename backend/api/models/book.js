@@ -1,8 +1,12 @@
 var Bookshelf = require('../db/bookshelf');
+	require('./user');
 
 var Book = Bookshelf.Model.extend({
   tableName: 'book',
-  hasTimestamps: true
+  hasTimestamps: true,
+  user: function(){
+  	return this.belongsTo('User', 'idUser');
+  }
 });
 
-module.exports = Book;
+module.exports = Bookshelf.model('Book', Book);

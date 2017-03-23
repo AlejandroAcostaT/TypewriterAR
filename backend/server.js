@@ -1,8 +1,9 @@
-var express = require('express');
-app = express(),
-port = 3000,
-routes = require('./api/routes/index.js'),
-bodyParser = require('body-parser'),
+var express 	= require('express');
+	app 		= express(),
+	port 		= 3000,
+	routes 		= require('./api/routes/index.js'),
+	bodyParser 	= require('body-parser'),
+	multer  	= require('multer'),
 
 allowCrossDomain = function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -12,12 +13,12 @@ allowCrossDomain = function(req, res, next) {
 };
 
 app.use(allowCrossDomain);
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({extended : true}));
 // parse application/json
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
 // parse application/vnd.api+json as json
 app.use(bodyParser.json({type: 'application/json'}));
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({limit: '50mb', extended : true}));
 
 //routes
 

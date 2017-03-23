@@ -10,7 +10,8 @@
 * Requirements *
 ***************/
 
-var Book = require('../models/book'); 	//Book model
+var Book = require('../models/book'), 	//Book model
+	fs 	 = require('fs-extra');
 
 
 /************
@@ -29,7 +30,7 @@ module.exports = {
 
 	getBooks : function(req, res){
 		Book.forge()
-		.fetchAll()
+		.fetchAll({withRelated: ['user']})
 		.then(function(Books){
 			res.status(200)
 			.json({
@@ -97,10 +98,29 @@ module.exports = {
 
 	createBook :  function(req, res){
 
+		if(!req.file){
+			res.status(400)
+			.json({
+				error: true,
+				data: {message: "Cover file missing"}
+			});
+		}
+
+		
+		var dir = './public/books/'+req.decoded.username+'-'+req.body.title+'/content',
+			file = req.file,
+			cover = './public/books/'+req.decoded.username+'-'+req.body.title+'/'+req.file.filename;
+
+		//create new book folder in public folder	
+		fs.ensureDirSync(dir);
+
+		// move cover file to book folder
+		fs.moveSync(req.file.path, cover);
+
 		Book.forge({
 			title: req.body.title,
 			description: req.body.description,
-			cover: req.body.cover,
+			cover: cover,
 			publish: false,
 			idUser	: req.body.idUser
 		})
@@ -139,13 +159,27 @@ module.exports = {
 	******************************************************/
 
 	updateBook : function(req, res){
-
+		console.log(req.body);
 		Book.where('id', req.params.id)
 		.fetch({ require : true })
 		.then(function(book){
+			// if new cover image comes
+
+			if(req.file){
+
+				var file = req.file,
+				cover = './public/books/'+req.decoded.username+'-'+book.get('title')+'/'+req.file.filename;
+
+				// copy cover file to book folder
+				fs.moveSync(req.file.path, cover);
+
+				// remove cover file from its original path
+				fs.removeSync(book.get('cover'));
+			}
+
 			book.save({
 				description: req.body.description || book.get('description'),
-				cover: 	req.body.cover || book.get('cover')
+				cover: 	cover || book.get('cover')
 			},
 			{
 				method: "update"
