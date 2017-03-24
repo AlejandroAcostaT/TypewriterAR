@@ -20,6 +20,7 @@ app.controller('GlobalCtrl', function($scope) {
 //Setting API Address
 app.service('API', function(){
     return {
-        address : 'http://192.168.1.7:3000/api/'
+        bookAddress: 'http://192.168.1.4:3000/books/',
+        address : 'http://192.168.1.4:3000/api/'
     };
 });
