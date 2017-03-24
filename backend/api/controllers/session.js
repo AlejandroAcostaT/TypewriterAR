@@ -97,8 +97,6 @@ module.exports = {
 	******************************************************/
 
 	createSession :  function(req, res){
-		console.log("create session");
-
 		var password = req.body.password,
 			username = req.body.username;
  		
@@ -108,7 +106,7 @@ module.exports = {
 		    	User.forge({
 					username : username
 				})
-				.fetch()
+				.fetch({withRelated: ['books']})
 				.then(function(user){
 					if(!user){ 
 					//verify user exist in database

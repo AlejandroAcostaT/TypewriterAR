@@ -109,13 +109,14 @@ module.exports = {
 		
 		var dir = './public/books/'+req.decoded.username+'-'+req.body.title+'/content',
 			file = req.file,
-			cover = './public/books/'+req.decoded.username+'-'+req.body.title+'/'+req.file.filename;
+			cover = req.decoded.username+'-'+req.body.title+'/'+req.file.filename,
+			coverDir = './public/books/'+cover;
 
 		//create new book folder in public folder	
 		fs.ensureDirSync(dir);
 
 		// move cover file to book folder
-		fs.moveSync(req.file.path, cover);
+		fs.moveSync(req.file.path, coverDir);
 
 		Book.forge({
 			title: req.body.title,
@@ -159,7 +160,7 @@ module.exports = {
 	******************************************************/
 
 	updateBook : function(req, res){
-		console.log(req.body);
+
 		Book.where('id', req.params.id)
 		.fetch({ require : true })
 		.then(function(book){
@@ -168,13 +169,14 @@ module.exports = {
 			if(req.file){
 
 				var file = req.file,
-				cover = './public/books/'+req.decoded.username+'-'+book.get('title')+'/'+req.file.filename;
+				previous = './public/books/'+book.get('cover'),
+				cover = req.decoded.username+'-'+req.body.title+'/'+req.file.filename;
 
 				// copy cover file to book folder
 				fs.moveSync(req.file.path, cover);
 
 				// remove cover file from its original path
-				fs.removeSync(book.get('cover'));
+				fs.removeSync(previous);
 			}
 
 			book.save({
@@ -263,11 +265,18 @@ module.exports = {
 	******************************************************/
 
 	deleteBook : function(req, res){
+
 		Book.forge({id : req.params.id})
 		.fetch({require : true})
 		.then(function(book){
+			var folder = './public/books/'+req.decoded.username+'-'+book.get('title');
+
+			// remove cover file from its original path
+			fs.removeSync(folder);
+
 			book.destroy()
 			.then(function(){
+
 				res.status(204)
 				.json({
 					error : false,

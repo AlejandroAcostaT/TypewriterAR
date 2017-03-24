@@ -20,6 +20,9 @@ app.use(bodyParser.json({type: 'application/json'}));
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({limit: '50mb', extended : true}));
 
+//static folder (files)
+app.use(express.static('public'));
+
 //routes
 
 app.use('/api', routes);
