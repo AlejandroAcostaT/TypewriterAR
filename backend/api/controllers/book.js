@@ -173,10 +173,14 @@ module.exports = {
 				cover = req.decoded.username+'-'+req.body.title+'/'+req.file.filename;
 
 				// copy cover file to book folder
-				fs.moveSync(req.file.path, cover);
+				fs.moveSync(req.file.path, './public/books/'+cover);
 
 				// remove cover file from its original path
-				fs.removeSync(previous);
+				console.log(previous);
+				fs.remove(previous, err =>{
+					if(err) console.log(err);
+					console.log('success');
+				});
 			}
 
 			book.save({
