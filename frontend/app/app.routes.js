@@ -6,7 +6,7 @@ angular.module('booksAR')
     
     $stateProvider
         
-        // HOME STATES AND NESTED VIEWS ========================================
+        // Routes
         .state('home', {
             url: '/',
             templateUrl: './app/components/home/homeView.html',
@@ -24,6 +24,12 @@ angular.module('booksAR')
             templateUrl: './app/components/user/userView.html',
             controller: 'userController',
             controllerAs: 'userCtrl'
+        })
+        .state('book', {
+            url: '/book',
+            templateUrl: './app/components/book/bookView.html',
+            controller: 'bookController',
+            controllerAs: 'bookCtrl'
         });
         
 });

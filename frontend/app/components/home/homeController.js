@@ -33,7 +33,7 @@ angular.module('booksAR')
 				tokenService.setToken(response.data.data.token);
 				tokenService.setUser(response.data.data.user);
 
-				$state.go('user');
+				$state.go('book');
 			}, function errorCallback(response) {
 				error.message = response.data.data.message;
 				error.show = true;
@@ -125,7 +125,7 @@ angular.module('booksAR')
 			tokenService.setToken(response.data.data.token);
 			tokenService.setUser(response.data.data.user);
 
-			$state.go('user');
+			$state.go('book');
 		}, function errorCallback(response) {
 			error.message = response.data.data.message;
 			error.show = true;

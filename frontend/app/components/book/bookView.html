@@ -1,0 +1,29 @@
+<!-- Header Navbar -->
+<book-navbar></book-navbar>
+<!--/.Header Navbar -->
+
+<!-- Content -->
+
+<div class="container bookContainer">
+	<div class="row">
+
+		<div class="col-md-3 col-lg-3" ng-repeat="book in bookCtrl.books">
+			<div class="thumbnail">
+		      	<img src="{{bookCtrl.bookAddress}}{{book.cover}}" alt="..." class="thumbImage">
+		      	<div class="caption">
+			        <h2>{{book.title}}</h2>
+			        <h4> -{{book.user.name}} {{book.user.lastName}}</h4>
+			        <p>
+			        	<a href="#" class="btn btn-primary" role="button">
+			        		Download <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+			        	</a>   
+			        	<a href="#" class="btn btn-primary btnInverted" role="button">
+			        		See More <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+			        	</a>
+			        </p>
+		      	</div>
+		    </div>
+		</div>
+		
+	</div>
+</div>
