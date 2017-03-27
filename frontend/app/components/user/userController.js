@@ -20,6 +20,11 @@ angular.module('booksAR')
 	this.bookCreation = false;
 	this.newBook = {};
 
+	this.bookUpdate = false;
+	this.updBook = {};
+
+	// User functions
+
 	this.logOut = function(){
 		sessionService.logOut();
 	};
@@ -68,6 +73,8 @@ angular.module('booksAR')
 		this.editUser = false;
 	};
 
+	// Book functions
+
 	this.publishBook = function(book){
 		var token = tokenService.getToken(),
 		bookId = book.id,
@@ -113,7 +120,6 @@ angular.module('booksAR')
 	};
 
 	this.uploadCover = function (file) {
-		console.log(file);
         Upload.upload({
             url: '',
             data: {file: file}
@@ -168,6 +174,53 @@ angular.module('booksAR')
 	this.cancelCreateBook = function(){
 		this.newBook = {};
 		this.bookCreation = false;
+	};
+
+	var bookUpdated = (function(){
+		this.updBook = {};
+		this.bookUpdate = false;
+	}).bind(this);
+
+	this.updateBook = function(){
+		var token = tokenService.getToken(),
+		idUser = this.user.id,
+		idBook = this.updBook.id,
+		data = new FormData();
+
+	    data.append("title", this.updBook.title);
+	    data.append('description', this.updBook.description);
+	    data.append('cover', this.updBook.cover);
+	    data.append('idUser', idUser);
+
+		bookService.updateBook(token, idBook, data).then(function successCallback(response) {
+
+			userService.getUser(token, idUser).then(function successCallback(response) {
+
+				setUser(response.data.data);
+				bookUpdated();
+
+			}, function errorCallback(response) {
+				//error
+				console.log(response.data.data.message);
+			});
+			
+		}, function errorCallback(response) {
+			//error
+			console.log(response.data.data.message);
+		});
+
+	};
+
+	this.changeBookUpdate = function(book){
+		this.bookUpdate = true;
+		this.updBook = book;
+		console.log(book.cover);
+		this.updBook.cover = API.bookAddress + book.cover;
+	};
+
+	this.cancelUpdateBook = function(){
+		this.updBook = {};
+		this.bookUpdate = false;
 	};
 
 	//verify user has logged in

@@ -8,6 +8,27 @@ angular.module('booksAR')
 	};
 })
 
+.directive('userBooksTable', function(){
+    return{
+        restrict: 'E',
+        templateUrl: './app/components/directives/user/user-books-table.html'
+    };
+})
+
+.directive('userTable', function(){
+    return{
+        restrict: 'E',
+        templateUrl: './app/components/directives/user/user-table.html'
+    };
+})
+
+.directive('userProfileInfo', function(){
+    return{
+        restrict: 'E',
+        templateUrl: './app/components/directives/user/user-profile-info.html'
+    };
+})
+
 .directive('ngConfirmClick', [
     function(){
         return {

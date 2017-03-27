@@ -18,7 +18,9 @@ angular.module('booksAR')
 
 	var updateBook= function(token, id, data){ //Verify how to sen form-data with file
 		return $http.put(API.address + "books/" + id, data, {
-			headers: {'token': token}
+			headers: {'token': token,
+					  'Content-Type': undefined
+					}
 			});
 	};
 
