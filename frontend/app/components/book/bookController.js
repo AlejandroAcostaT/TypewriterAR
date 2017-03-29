@@ -1,32 +1,54 @@
 angular.module('booksAR')
 
-.controller('bookController', function($state, tokenService, sessionService, bookService, API){
+.controller('bookController', function($state, tokenService, sessionService, bookService, API, verifySession){
 	//server address 
 	this.bookAddress = API.bookAddress;
 	this.books = {};
 	this.offset = 1;
 	this.q = '';
+	this.pages = 0;
 	this.total = 0;
+	this.bookPerPage = 12;
+	this.amountBookPerPage = 12;
+	this.bookDetail = {};
+	this.detail = false;
 
 	var setBooks = (function(data){
 		var div = Math.floor(data.total / 12),
 			mod = data.total % 12;
 
 		this.books = data.data;
+		this.total = data.total;
 
+		//amount of pages
 		if(mod > 0){
-			this.total = div + 1;
+			this.pages = div + 1;
 		}else{
-			this.total = div;
+			this.pages = div;
+		}
+
+		//books per pages
+		if(this.bookPerPage * this.offset > this.total){
+			this.amountBookPerPage = this.total
+		}else{
+			this.amountBookPerPage = this.bookPerPage * this.offset;
 		}
 
 	}).bind(this);
 
 	this.next = function(){
 		this.offset++;
-		if(this.offset > this.total){
-			this.offset = this.total;
+		if(this.offset > this.pages){
+			this.offset = this.pages;
 		}
+		
+		//books per pages
+		if(this.bookPerPage * this.offset > this.total){
+			this.amountBookPerPage = this.total
+		}else{
+			this.amountBookPerPage = this.bookPerPage * this.offset;
+		}
+
 		this.getBooks();
 	};
 
@@ -35,6 +57,14 @@ angular.module('booksAR')
 		if(this.offset < 1){
 			this.offset = 1;
 		}
+
+		//books per pages
+		if(this.bookPerPage * this.offset > this.total){
+			this.amountBookPerPage = this.total
+		}else{
+			this.amountBookPerPage = this.bookPerPage * this.offset;
+		}
+
 		this.getBooks();
 	};
 
@@ -50,19 +80,32 @@ angular.module('booksAR')
 		});
 	};
 
-	//verify user has logged in
-	this.verifySession = function(){
-		if(tokenService.getToken()==""){
-			$state.go('home');
-		}
-	};
+	//Show selected Book's Detail
+	this.selectedBook = function(book){
+		this.bookDetail = book;
+		this.detail = true;
+	}
+
+	//deselect Book
+	this.deselectBook = function(){
+		this.bookDetail = {};
+		this.detail = false;
+	}
 
 	//log out
 	this.logOut = function(){
 		sessionService.logOut();
-	}
+	};
+
+	//verify user has logged in
+	this.verifySession = function(){
+		if(verifySession){
+			$state.go('home');
+		}
+	};
 
 	this.verifySession();
+
 	this.getBooks();
 
 });

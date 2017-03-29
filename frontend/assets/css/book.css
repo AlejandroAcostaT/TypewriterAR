@@ -55,3 +55,17 @@
 .searchbar{
 	height: 35px;
 }
+
+.pageNumbers{
+  color: #158A73;
+  margin-left: 2%;
+  margin-right: 2%;
+  font-weight: bold;
+}
+
+.bookDetailImage{
+  max-width: 350px;
+  max-height: 550px;
+  min-width: 320px;
+  min-height: 500px;
+}

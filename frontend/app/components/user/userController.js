@@ -1,6 +1,6 @@
 angular.module('booksAR')
 
-.controller('userController', function($state, tokenService, userService, sessionService, bookService, API){
+.controller('userController', function($state, tokenService, userService, sessionService, bookService, API, verifySession){
 	//server address 
 	this.bookAddress = API.bookAddress;
 
@@ -227,9 +227,8 @@ angular.module('booksAR')
 
 	//verify user has logged in
 	this.verifySession = function(){
-		if(tokenService.getToken()==""){
+		if(verifySession){
 			$state.go('home');
-			console.log("CERRADO");
 		}
 	};
 
