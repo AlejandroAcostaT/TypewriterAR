@@ -29,13 +29,29 @@ module.exports = {
 	*****************************************************/
 
 	getBooks : function(req, res){
-		Book.forge()
-		.fetchAll({withRelated: ['user']})
+
+		var offset = req.query.offset ? parseInt(req.query.offset): 0,
+			q 	   = req.query.q ? req.query.q+'%' : undefined;
+
+		Book.query(function(qb){
+			qb.innerJoin('user', 'book.idUser', 'user.id');
+			if(q){
+				qb.where('book.title', 'LIKE', q);
+				qb.orWhere('user.name',  'LIKE', q);
+				qb.orWhere('user.lastName',  'LIKE', q);
+			}
+		})
+		.fetchPage({
+			pageSize: 12,
+			page: offset,
+			withRelated: ['user']
+		})
 		.then(function(Books){
 			res.status(200)
 			.json({
 				error : false,
-				data : Books.toJSON()
+				data : Books.toJSON(),
+				total : Books.pagination.rowCount
 			});
 		})
 		.catch(function (err) {
