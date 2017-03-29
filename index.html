@@ -1,0 +1,70 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <!-- CSS (load bootstrap) -->
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+    <!-- CSS (load awesomefonts) -->
+    <link rel="stylesheet" href="./assets/css/font-awesome.min.css">
+
+
+    <!-- CUSTOM CSS -->
+    <link rel="stylesheet" href="./assets/css/home.css">
+    <link rel="stylesheet" href="./assets/css/typewriter.css">
+    <link rel="stylesheet" href="./assets/css/user.css">
+    <link rel="stylesheet" href="./assets/css/book.css">
+    <title>Typewriter AR</title>
+
+    <style>
+        .navbar { border-radius:0; }
+    </style>
+</head>
+
+<!-- apply our angular app to our site -->
+<body ng-app="booksAR" class="{{bodyClass}}" ng-controller="GlobalCtrl">
+
+<!-- NAVIGATION -->
+
+    <div class="container header"  ng-show="state=='home'">
+      <h1 class="pull-left title"> Typewriter AR </h1>
+    </div>
+
+
+<!-- MAIN CONTENT -->
+
+<!-- THIS IS WHERE WE WILL INJECT OUR CONTENT -->
+    <div ui-view class="content"></div>
+
+<!-- JS (load angular, ui-router, ui-bootstrap, file-upload and our custom js file) -->
+    <script src="./assets/js/angular.min.js"></script>
+    <script src="./assets/js/angular-ui-router.min.js"></script>
+    <script src="./assets/js/ui-bootstrap-tpls-2.5.0.min.js"></script>
+    <script src="./assets/js/ng-file-upload-shim.min.js"></script> <!-- for no html5 browsers support -->
+    <script src="./assets/js/ng-file-upload.min.js"></script>
+    
+
+<!-- JS (load modules and routes) -->
+    <script src="./app/app.modules.js"></script>
+    <script src="./app/app.routes.js"></script>
+<!-- JS (load controllers) -->
+    <script src="./app/components/home/homeController.js"></script>
+    <script src="./app/components/typewriter/typewriterController.js"></script>
+    <script src="./app/components/user/userController.js"></script>
+    <script src="./app/components/book/bookController.js"></script>
+<!-- JS (load directives) -->
+    <script src="./app/components/directives/typewriter/typewriter.js"></script>
+    <script src="./app/components/directives/user/user.js"></script>
+    <script src="./app/components/directives/book/book.js"></script>
+<!-- JS (load services) -->
+    <script src="./app/components/services/tokenService.js"></script>
+    <script src="./app/components/services/userService.js"></script>
+    <script src="./app/components/services/sessionService.js"></script>
+    <script src="./app/components/services/bookService.js"></script>
+<!-- PDF Maker Modules -->
+    <script src="./assets/js/jspdf.min.js"></script>
+    <script src="./assets/js/html2canvas.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,57 @@
+.bookContainer{
+	margin-top: 2%;
+}
+
+.newLines{
+	white-space: pre-wrap;
+}
+
+.thumbImage{
+	min-height: 200px;
+	max-height: 200px;
+}
+
+.thumbnail{
+	width: 100%;
+}
+
+.btnInverted {
+  font-weight: bold;
+  font-size: 15px;
+  background-color: #fff;
+  color: #158A73;
+  border-color: #B8BBC1;
+}
+
+.btnInverted.outline {
+  background: none;
+  padding: 10px 20px;
+  border: 1px solid;
+  color: #0099cc;
+}
+
+.btnInverted:focus{
+  background-color: #e8e8e8;
+  color: #158A73;
+  border-color: #B8BBC1;
+  outline: none;
+}
+
+.btnInverted:hover{
+  background-color: #e8e8e8;
+  color: #158A73;
+  border-color: #B8BBC1;
+}
+
+.btnInverted:active, 
+.btnInverted:target,
+.btnInverted:active:focus{
+  background-color: #e8e8e8;
+  color: #158A73;
+  border-color: #B8BBC1;
+  outline: none;
+}
+
+.searchbar{
+	height: 35px;
+}

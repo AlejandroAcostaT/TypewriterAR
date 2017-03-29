@@ -1,0 +1,45 @@
+<!-- Header Navbar -->
+<typewriter-navbar></typewriter-navbar>
+<!--/.Header Navbar -->
+
+<!-- Content -->
+<div class="row typewriter">
+	<!--Left column (content options)-->
+	<div class="col-lg-4 col-md-4 col-sm-4 leftBar">
+		<!-- Text Only-->
+		<div ng-show="typewriterCtrl.isSelected(1)">
+			<text-editor></text-editor>
+			<button type="submit" class="btn btn-default btn-lg btn-block" ng-click="typewriterCtrl.pdf()">PDF</button>
+		</div>
+		<!-- Image Only-->
+		<div ng-show="typewriterCtrl.isSelected(2)">
+			<image-editor></image-editor>
+			<button type="submit" class="btn btn-default btn-lg btn-block" ng-click="typewriterCtrl.pdfImage()">PDF</button>
+		</div>
+		<!-- Title Only-->
+		<div ng-show="typewriterCtrl.isSelected(3)">
+			<title-editor></title-editor>
+			<button type="submit" class="btn btn-default btn-lg btn-block" ng-click="typewriterCtrl.pdfTitle()">PDF</button>
+		</div>
+		<!-- Title & Text-->
+		<div ng-show="typewriterCtrl.isSelected(4)">
+			<title-editor></title-editor>
+			<text-editor></text-editor>
+			<button type="submit" class="btn btn-default btn-lg btn-block" ng-click="typewriterCtrl.pdfTitleText()">PDF</button>
+		</div>
+		<!-- Title & Image-->
+		<div ng-show="typewriterCtrl.isSelected(5)">
+			<title-editor></title-editor>
+			<image-editor></image-editor>
+			<button type="submit" class="btn btn-default btn-lg btn-block" ng-click="typewriterCtrl.pdfTitleImage()">PDF</button>
+		</div>
+	</div>
+	<!--/Left column (content options)-->
+
+	<!--Right column (Page preview)-->
+	<div class="col-lg-8 col-md-8 col-sm-8">
+		<page-preview></page-preview>
+	</div>
+	<!--/Right column (Page preview)-->
+</div>
+<!-- ./Content -->

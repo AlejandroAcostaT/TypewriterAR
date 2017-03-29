@@ -1,0 +1,23 @@
+<h3>Image Selection</h3>
+<button class="btn btn-default btn-lg btn-block" ng-model="typewriterCtrl.logo"  ngf-pattern="'image/*'" ngf-select="upload(file)">Upload Image File</button>
+
+<h3>Image Dimension</h3>
+<div class="form-group">
+	<label for="exampleInputEmail1">Width</label>
+	<input type="number" class="form-control" ng-model="typewriterCtrl.image.width">
+</div>
+<div class="form-group">
+	<label for="exampleInputEmail1">Height</label>
+	<input type="number" class="form-control" ng-model="typewriterCtrl.image.height">
+</div>
+
+<h3>Image Position</h3>
+<div class="form-group">
+	<label for="exampleInputEmail1">Horizontal</label>
+	<input type="number" min="0" class="form-control" ng-model="typewriterCtrl.image.left">
+</div>
+<div class="form-group">
+	<label for="exampleInputEmail1">Vertical</label>
+	<input type="number" min="0" class="form-control" ng-model="typewriterCtrl.image.top">
+</div>
+
