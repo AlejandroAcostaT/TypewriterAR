@@ -46,3 +46,9 @@
 .cover{
 	margin-bottom: 3%;
 }
+
+.cover-preview{
+	max-width: 60px;
+	max-height: 90px;
+	margin-left: 5%;
+}

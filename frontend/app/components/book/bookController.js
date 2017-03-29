@@ -4,17 +4,45 @@ angular.module('booksAR')
 	//server address 
 	this.bookAddress = API.bookAddress;
 	this.books = {};
+	this.offset = 1;
+	this.q = '';
+	this.total = 0;
 
 	var setBooks = (function(data){
-		this.books = data;
-		console.log(data[2]);
+		var div = Math.floor(data.total / 12),
+			mod = data.total % 12;
+
+		this.books = data.data;
+
+		if(mod > 0){
+			this.total = div + 1;
+		}else{
+			this.total = div;
+		}
+
 	}).bind(this);
+
+	this.next = function(){
+		this.offset++;
+		if(this.offset > this.total){
+			this.offset = this.total;
+		}
+		this.getBooks();
+	};
+
+	this.previous = function(){
+		this.offset--;
+		if(this.offset < 1){
+			this.offset = 1;
+		}
+		this.getBooks();
+	};
 
 	this.getBooks =function(){
 		var token = tokenService.getToken();
-		bookService.getAllBooks(token).then(function successCallback(response) {
+		bookService.getAllBooks(token, this.offset, this.q).then(function successCallback(response) {
 
-			setBooks(response.data.data);
+			setBooks(response.data);
 
 		}, function errorCallback(response) {
 			//error

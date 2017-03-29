@@ -4,7 +4,7 @@
 	<!-- /Title -->
 
 	<!-- Create Book Button -->
-	<button class="btn btn-default create-btn" type="submit" ng-click="userCtrl.changeBookCreation()">Create New Book <span class="glyphicon glyphicon-plus button-icon" aria-hidden="true"></span></button>
+	<button class="btn btn-default create-btn" type="submit" ng-click="userCtrl.changeBookCreation()" ng-show="!userCtrl.bookCreation && !userCtrl.bookUpdate">Create New Book <span class="glyphicon glyphicon-plus button-icon" aria-hidden="true"></span></button>
 	<!-- /Create Book Button -->
 
 	<!-- Book's Info Table -->
@@ -47,7 +47,7 @@
 			<br>
 			<button type="button" class="btn btn-default inline" ng-model="userCtrl.newBook.cover"  ngf-pattern="'image/*'" ngf-select="upload(file)">Upload Image File</button>
 			<!-- IMAGE -->
-			<img ngf-src="userCtrl.newBook.cover" id="img" class="inline" width="60" height="60">
+			<img ngf-src="userCtrl.newBook.cover" id="img" class="inline cover-preview">
 			<!-- /IMAGE -->
 		</div>
 
@@ -74,7 +74,7 @@
 			<br>
 			<button type="button" class="btn btn-default inline" ng-model="userCtrl.updBook.cover"  ngf-pattern="'image/*'" ngf-select="upload(file)">Upload Image File</button>
 			<!-- IMAGE -->
-			<img ngf-src="userCtrl.updBook.cover" id="img" class="inline" width="60" height="60">
+			<img ngf-src="userCtrl.updBook.cover" id="img" class="inline cover-preview">
 			<!-- /IMAGE -->
 		</div>
 

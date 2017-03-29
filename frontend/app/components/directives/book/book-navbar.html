@@ -17,7 +17,7 @@
 
                 <form class="navbar-form navbar-left" style="margin-left: 5%; width: 40%;">
                     <div class="input-group" style="width: 120%;">
-                        <input type="text" class="form-control input-group searchbar" placeholder="Search...">
+                        <input type="text" class="form-control input-group searchbar" ng-model="bookCtrl.q" placeholder="Search..." ng-change="bookCtrl.getBooks()">
                         <span class="input-group-btn">
                             <button type="submit" class="btn btn-default input-group-btn btnInverted searchbar">
                                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>

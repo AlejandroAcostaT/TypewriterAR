@@ -34,7 +34,8 @@ angular.module('booksAR')
 	};
 
 	var setUser = (function(data){
-		this.user = data;
+		this.user = tokenService.setUser(data);
+		this.user = tokenService.getUser();
 		this.updUser = {
 			name: this.user.name,
 			lastName: this.user.lastName,
@@ -179,6 +180,7 @@ angular.module('booksAR')
 	var bookUpdated = (function(){
 		this.updBook = {};
 		this.bookUpdate = false;
+		this.updBook.cover = "";
 	}).bind(this);
 
 	this.updateBook = function(){
@@ -213,13 +215,13 @@ angular.module('booksAR')
 
 	this.changeBookUpdate = function(book){
 		this.bookUpdate = true;
-		this.updBook = book;
-		console.log(book.cover);
+		this.updBook = Object.assign({}, book);
 		this.updBook.cover = API.bookAddress + book.cover;
 	};
 
 	this.cancelUpdateBook = function(){
 		this.updBook = {};
+		this.updBook.cover = "";
 		this.bookUpdate = false;
 	};
 
@@ -227,6 +229,7 @@ angular.module('booksAR')
 	this.verifySession = function(){
 		if(tokenService.getToken()==""){
 			$state.go('home');
+			console.log("CERRADO");
 		}
 	};
 

@@ -1,5 +1,5 @@
 .bookContainer{
-	margin-top: 5%;
+	margin-top: 2%;
 }
 
 .newLines{
@@ -9,7 +9,6 @@
 .thumbImage{
 	min-height: 200px;
 	max-height: 200px;
-	width: 95%;
 }
 
 .thumbnail{

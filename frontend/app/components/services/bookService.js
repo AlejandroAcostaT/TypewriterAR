@@ -10,9 +10,13 @@ angular.module('booksAR')
 			});
 	};
 
-	var getAllBooks= function(token){
+	var getAllBooks= function(token, offset, q){
 		return $http.get(API.address + "books", {
-	    	headers: {'token': token}
+	    	headers: {'token': token},
+	    	params : {
+	    				'offset': offset,
+	    				'q': q
+	    			 }
 		});
 	};
 
