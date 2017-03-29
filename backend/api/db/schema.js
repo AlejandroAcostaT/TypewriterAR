@@ -19,7 +19,7 @@ var Schema = {
   book : {
     id         : {type: 'increments', nullable: false, primary: true},
     title      : {type: 'string', maxlength: 150, nullable: false},
-    description: {type: 'string', maxlength: 300, nullable: false},
+    description: {type: 'string', maxlength: 10000, nullable: false},
     cover      : {type: 'string', maxlength: 150, nullable: false},
     publish    : {type: 'boolean', nullable: false},
     idUser     : {type: 'integer', nullable: false},
