@@ -2,8 +2,11 @@
 * GREEN: #7ebb6b;
 * RED: #ee9e8b;
 * AQUAMARINE: #19AC8F;
+* DARK AQUAMARINE: #158A73;
 * ORANGE: #D98C34;
 * DARK ORANGE: #BE7A2B;
+* GREY: #B8BBC1;
+
 --------------------------------------------------*/
 
 .textarea-text{
@@ -84,3 +87,53 @@ select:active, select:hover {
     -webkit-transform: translateY(-50%); /* Safari */
     transform: translateY(-50%);
 }
+
+.pageTypeMenu{
+	margin-top: 3%;
+}
+
+.pageTypeBtn{
+	border: 1px solid;
+	border-color: #B8BBC1;
+	color: #158A73;
+  	font-weight: bold;
+  	text-align: center;
+  	text-decoration: none;
+}
+
+.pageTypeBtn:hover{
+	border: 1px solid;
+	border-color: #B8BBC1;
+	color: #fff;
+	background-color: #19AC8F;
+  	font-weight: bold;
+  	text-align: center;
+  	text-decoration: none;
+}
+
+.pageTypeBtn:focus{
+	border: 1px solid;
+	border-color: #B8BBC1;
+	color: #fff;
+	background-color: #19AC8F;
+  	font-weight: bold;
+  	text-align: center;
+  	text-decoration: none;
+  	box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(204,204,204,.6);
+}
+
+.pageTypeImage{
+	width: 70px;
+	height: 70px;
+}
+
+.pageTypeSelected{
+	border: 1px solid;
+	border-color: #B8BBC1;
+	color: #fff;
+	background-color: #19AC8F;
+  	font-weight: bold;
+  	text-align: center;
+  	text-decoration: none;
+}
+

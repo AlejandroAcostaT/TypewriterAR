@@ -26,6 +26,10 @@
 	cursor:pointer;
 }
 
+.titleIcon{
+	cursor:pointer;
+}
+
 .inline{
 	display: inline-block;
 }

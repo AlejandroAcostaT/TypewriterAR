@@ -623,6 +623,5 @@ angular.module('booksAR')
 	};
 
 	this.verifySession();
-	
 
 });

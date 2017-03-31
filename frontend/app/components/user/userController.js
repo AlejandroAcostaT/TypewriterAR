@@ -225,6 +225,10 @@ angular.module('booksAR')
 		this.bookUpdate = false;
 	};
 
+	this.goToTypewriter = function(){
+		$state.go('typewriter');
+	}
+
 	//verify user has logged in
 	this.verifySession = function(){
 		if(verifySession){

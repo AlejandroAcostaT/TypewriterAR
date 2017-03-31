@@ -20,7 +20,7 @@
 		</thead>
 		<tbody ng-repeat="book in userCtrl.user.books">
 			<tr>
-				<td>{{book.title}}</td>
+				<td class="center titleIcon" ng-click="userCtrl.goToTypewriter()">{{book.title}}</td>
 				<td class="center icon"><span class="glyphicon glyphicon-pencil" ng-click="userCtrl.changeBookUpdate(book)" aria-hidden="true"></span></td>
 				<td class="center icon" ng-click="userCtrl.publishBook(book)">
 					<span ng-show="book.publish" class="glyphicon glyphicon-check" aria-hidden="true"></span>
