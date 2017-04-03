@@ -98,14 +98,11 @@ angular.module('booksAR')
 	};
 
 	//verify user has logged in
-	this.verifySession = function(){
-		if(verifySession){
-			$state.go('home');
-		}
-	};
+	if(verifySession){
+		$state.go('home');
+	}
 
-	this.verifySession();
-
+	//set books
 	this.getBooks();
 
 });

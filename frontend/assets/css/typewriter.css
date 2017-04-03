@@ -137,3 +137,7 @@ select:active, select:hover {
   	text-decoration: none;
 }
 
+.pageButton{
+	margin-right: 5%;
+	margin-left: 5%;
+}

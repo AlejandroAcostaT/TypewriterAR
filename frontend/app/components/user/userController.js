@@ -230,12 +230,8 @@ angular.module('booksAR')
 	}
 
 	//verify user has logged in
-	this.verifySession = function(){
-		if(verifySession){
-			$state.go('home');
-		}
-	};
-
-	this.verifySession();
+	if(verifySession){
+		$state.go('home');
+	}
 
 });

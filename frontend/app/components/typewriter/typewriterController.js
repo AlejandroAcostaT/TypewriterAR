@@ -24,11 +24,35 @@ angular.module('booksAR')
 		height: 880, //max value if page type is only image (2)
 		left: 0,
 		top: 0
-	}
+	};
+
+	var page = {
+			pageType: 1,
+			text: '',
+			title: '',
+			pageStyle: {
+				textSize: "100%",
+				titleSize: "270%",
+				weight: "normal",
+				style: "normal",
+				textFont: "times",
+				titleFont: "times"
+			},
+			image: {
+				width: 720, //max value
+				height: 880, //max value if page type is only image (2)
+				left: 0,
+				top: 0
+			}
+		};
+
+	this.pages = [];
 
 	this.logOut = function(){
 		sessionService.logOut();
-	}
+	};
+
+
 
 	/*-------------Image position and size setings--------------*/
 
@@ -616,12 +640,8 @@ angular.module('booksAR')
     */
 
     //verify user has logged in
-	this.verifySession = function(){
-		if(verifySession){
-			$state.go('home');
-		}
-	};
-
-	this.verifySession();
+	if(verifySession){
+		$state.go('home');
+	}
 
 });
