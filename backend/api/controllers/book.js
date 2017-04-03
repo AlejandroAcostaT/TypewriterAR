@@ -85,9 +85,11 @@ module.exports = {
 					data : {message: "book doesn't exist"}
 				})
 			}else{
+				var book_json = book.toJSON();
 				res.json({
 					error : false,
-					data : book.toJSON()
+					data : book_json,
+					pages : fs.readJsonSync(book_json.pages)
 				})
 			}
 		})
@@ -125,6 +127,7 @@ module.exports = {
 		
 		var dir = './public/books/'+req.decoded.username+'-'+req.body.title+'/content',
 			file = req.file,
+			userDir = './public/books/'+req.decoded.username+'-'+req.body.title+'/',
 			cover = req.decoded.username+'-'+req.body.title+'/'+req.file.filename,
 			coverDir = './public/books/'+cover;
 
@@ -134,10 +137,16 @@ module.exports = {
 		// move cover file to book folder
 		fs.moveSync(req.file.path, coverDir);
 
+		//create json files in book folder
+		fs.writeJsonSync(userDir+'pages.json', []);
+		fs.writeJsonSync(userDir+'content/content.json', []);
+
 		Book.forge({
 			title: req.body.title,
 			description: req.body.description,
 			cover: cover,
+			pages: userDir+'pages.json',
+			content: userDir+'content/content.json',
 			publish: false,
 			idUser	: req.body.idUser
 		})
@@ -151,6 +160,8 @@ module.exports = {
 					title : book.get('title'),
 					description : book.get('description'),
 					cover : book.get('cover'),
+					pages : book.get('pages'),
+					content : book.get('content'),
 					idUser : book.get('idUser')
 				}
 			});
@@ -307,6 +318,39 @@ module.exports = {
 				res.status(500)
 				.json({error : true, data : {message : err.message}})
 			})
+		})
+		.catch(function(err){
+			res.status(500)
+			.json({error : true, data : {message : err.message}})
+		})
+	},
+
+	/******************************************************
+	*		Function: updateBookPages / Method: PUT 	  *
+	*													  *
+	*		Description: update pages.json 		  		  *
+	*													  *
+	*		Parameters: 								  *
+	*			- id: integer (params)		 	  		  *
+	*			- pages: json object (body)	 	  		  *
+	******************************************************/
+
+	updateBookPages : function(req, res){
+
+		Book.forge({id : req.params.id})
+		.fetch({require : true})
+		.then(function(book){
+			var folder = './public/books/'+req.decoded.username+'-'+book.get('title')+'/';
+
+			//create json files in book folder
+			fs.writeJsonSync(folder+'pages.json', req.body.pages);
+
+			res.status(204)
+			.json({
+				error : false,
+				data : {message : 'Book pages successfully updated'}
+			});
+
 		})
 		.catch(function(err){
 			res.status(500)
