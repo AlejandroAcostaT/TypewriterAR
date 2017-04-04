@@ -21,6 +21,16 @@ angular.module('booksAR')
             resolve: {
                 verifySession:  function(tokenService){
                     return tokenService.getToken()=="";
+                },
+                Book:  function(tokenService, bookService){
+                    return bookService.getBook(tokenService.getToken(), bookService.getBookData().id).then(function successCallback(response) {
+                        return response.data;
+
+                    }, function errorCallback(response) {
+                        //error
+                        console.log(response.data.data.message);
+                        return response.data;
+                    });
                 }
             }
         })

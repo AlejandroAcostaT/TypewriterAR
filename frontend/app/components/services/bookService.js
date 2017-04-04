@@ -2,6 +2,20 @@ angular.module('booksAR')
 
 .service('bookService', function($http, API){
 
+	var book = {};
+
+	var getBookData= function () {
+        return book;
+    };
+
+    var setBookData= function(data) {
+        book = data;
+    };
+
+    var deleteBookData= function(){
+		book = {};
+	};
+
 	var createBook= function(token, data){ //Verify how to sen form-data with file
 		return $http.post(API.address + "books", data, {
 			headers: {'token': token,
@@ -52,7 +66,10 @@ angular.module('booksAR')
 	    updateBook: updateBook,
 	    getBook: getBook,
 	    publishBook: publishBook,
-	    deleteBook: deleteBook
+	    deleteBook: deleteBook,
+	    getBookData: getBookData,
+	    setBookData: setBookData,
+	    deleteBookData: deleteBookData
     };
 	
 });

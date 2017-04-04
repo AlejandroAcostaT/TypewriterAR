@@ -7,6 +7,7 @@ angular.module('booksAR')
 	//user
 	this.editUser = false;
 	this.user = tokenService.getUser();
+	console.log(this.user.books);
 
 	this.updUser = {
 		name: this.user.name,
@@ -22,6 +23,7 @@ angular.module('booksAR')
 
 	this.bookUpdate = false;
 	this.updBook = {};
+
 
 	// User functions
 
@@ -225,8 +227,9 @@ angular.module('booksAR')
 		this.bookUpdate = false;
 	};
 
-	this.goToTypewriter = function(){
-		$state.go('typewriter');
+	this.goToTypewriter = function(book){
+		bookService.setBookData(book);
+		$state.go('typewriter', {id: book.id});
 	}
 
 	//verify user has logged in

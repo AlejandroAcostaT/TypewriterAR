@@ -24,12 +24,22 @@ var app = angular.module('booksAR', [
 //Setting API Address
 app.service('API', function(){
     return {
-        bookAddress: 'http://192.168.1.10:3000/books/',
-        address : 'http://192.168.1.10:3000/api/'
+        bookAddress: 'http://192.168.1.11:3000/books/',
+        address : 'http://192.168.1.11:3000/api/'
     };
 });
 
 app.config(['$locationProvider', function($locationProvider) {
   $locationProvider.hashPrefix('');
 }]);
+
+app.filter('range', function() {
+  return function(input, min, max) {
+    min = parseInt(min); //Make string input int
+    max = parseInt(max);
+    for (var i=min; i<=max; i++)
+      input.push(i);
+    return input;
+  };
+});
 

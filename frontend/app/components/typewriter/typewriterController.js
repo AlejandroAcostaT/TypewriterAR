@@ -1,6 +1,6 @@
 angular.module('booksAR')
 
-.controller('typewriterController', function($scope, $state, Upload, sessionService, tokenService, verifySession){
+.controller('typewriterController', function($scope, $state, Upload, sessionService, tokenService, verifySession, Book){
 
 	this.text = '';
 
@@ -28,7 +28,7 @@ angular.module('booksAR')
 
 	var page = {
 			pageType: 1,
-			text: '',
+			paragraphs: '',
 			title: '',
 			pageStyle: {
 				textSize: "100%",
@@ -48,11 +48,76 @@ angular.module('booksAR')
 
 	this.pages = [];
 
+	this.currentPage = 1;
+
+	//pages definition and load
+	if(Book.pages.length == 0){
+		this.pages.push(page);
+	}else{
+		this.pages = Book.pages
+	}
+
+
+	//logout function
 	this.logOut = function(){
 		sessionService.logOut();
 	};
 
 
+	/*-------------Add & Delete Pages--------------*/
+	//Add page
+	this.addPage = function(){
+		this.pages.push(page);
+		this.currentPage = this.pages.length;
+		console.log(this.pages);
+	};
+
+	//Delete Page
+	this.deletePage = function(){
+		this.pages.splice(this.currentPage-1, 1);
+		this.currentPage = this.pages.length;
+	};
+
+	this.resetPage = function(){
+		this.text = '';
+
+		this.title = '';
+
+		this.paragraphs = [];
+
+		this.pageType = 1;
+
+		this.pageStyle = {
+			textSize: "100%",
+			titleSize: "270%",
+			weight: "normal",
+			style: "normal",
+			textFont: "times",
+			titleFont: "times"
+		};
+
+		this.image={
+			width: 720, //max value
+			height: 880, //max value if page type is only image (2)
+			left: 0,
+			top: 0
+		};
+	};
+
+	this.updatePage = function(){
+
+		this.pages[this.currentPage-1].title = this.title;
+
+		this.pages[this.currentPage-1].paragraphs = this.paragraphs;
+
+		this.pages[this.currentPage-1].pageType = this.pageType;
+
+		this.pages[this.currentPage-1].pageStyle = this.pageStyle;
+
+		this.pages[this.currentPage-1].image = this.image;
+
+		this.resetPage();
+	};
 
 	/*-------------Image position and size setings--------------*/
 
@@ -232,6 +297,7 @@ angular.module('booksAR')
 	};
 
 	this.textAnalysis = function(){
+		console.log(this);
 		this.paragraphs = this.text.split(/\r\n|\r|\n/g);
 	};
 
