@@ -26,8 +26,9 @@ angular.module('booksAR')
 		top: 0
 	};
 
-	var page = {
+	this.page = {
 			pageType: 1,
+			text: '',
 			paragraphs: '',
 			title: '',
 			pageStyle: {
@@ -49,12 +50,15 @@ angular.module('booksAR')
 	this.pages = [];
 
 	this.currentPage = 1;
+	this.pastPage = 1;
 
 	//pages definition and load
 	if(Book.pages.length == 0){
-		this.pages.push(page);
+		var newPage = angular.copy(this.page);
+		this.pages.push(newPage);
 	}else{
-		this.pages = Book.pages
+		this.pages = angular.copy(Book.pages);
+		//verify when not empty asign this.page to first page on pages
 	}
 
 
@@ -67,80 +71,116 @@ angular.module('booksAR')
 	/*-------------Add & Delete Pages--------------*/
 	//Add page
 	this.addPage = function(){
-		this.pages.push(page);
+
+		var newPage = angular.copy(this.page);
+		angular.copy(newPage, this.pages[this.pastPage-1]);
+
+		var emptyPage = {
+			pageType: 1,
+			text: '',
+			paragraphs: '',
+			title: '',
+			pageStyle: {
+				textSize: "100%",
+				titleSize: "270%",
+				weight: "normal",
+				style: "normal",
+				textFont: "times",
+				titleFont: "times"
+			},
+			image: {
+				width: 720, //max value
+				height: 880, //max value if page type is only image (2)
+				left: 0,
+				top: 0
+			}
+		};
+
+		this.pages.push(emptyPage);
+
+		angular.copy(emptyPage, this.page);
 		this.currentPage = this.pages.length;
-		console.log(this.pages);
+		this.pastPage = this.currentPage;
 	};
 
 	//Delete Page
 	this.deletePage = function(){
-		this.pages.splice(this.currentPage-1, 1);
-		this.currentPage = this.pages.length;
-	};
+		if(this.pages.length == 1){
+			this.pages.splice(this.currentPage-1, 1);
+			var emptyPage = {
+				pageType: 1,
+				text: '',
+				paragraphs: '',
+				title: '',
+				pageStyle: {
+					textSize: "100%",
+					titleSize: "270%",
+					weight: "normal",
+					style: "normal",
+					textFont: "times",
+					titleFont: "times"
+				},
+				image: {
+					width: 720, //max value
+					height: 880, //max value if page type is only image (2)
+					left: 0,
+					top: 0
+				}
+			};
 
-	this.resetPage = function(){
-		this.text = '';
+			this.pages.push(emptyPage);
+			angular.copy(emptyPage, this.page);
+			this.currentPage = this.pages.length;
+			this.pastPage = this.currentPage;
+		}else{
+			if(this.currentPage == this.pages.length){
 
-		this.title = '';
+				this.pages.splice(this.currentPage-1, 1);
+				this.currentPage = this.currentPage -1;
+				angular.copy(this.pages[this.currentPage-1], this.page);
+				this.pastPage = this.currentPage;
+			}else{
 
-		this.paragraphs = [];
+				this.pages.splice(this.currentPage-1, 1);
+				angular.copy(this.pages[this.currentPage-1], this.page);
+				this.pastPage = this.currentPage;
 
-		this.pageType = 1;
-
-		this.pageStyle = {
-			textSize: "100%",
-			titleSize: "270%",
-			weight: "normal",
-			style: "normal",
-			textFont: "times",
-			titleFont: "times"
-		};
-
-		this.image={
-			width: 720, //max value
-			height: 880, //max value if page type is only image (2)
-			left: 0,
-			top: 0
-		};
+			}
+		}
+		
+		
 	};
 
 	this.updatePage = function(){
+		var newPage = angular.copy(this.page);
+		angular.copy(newPage, this.pages[this.pastPage-1]);
 
-		this.pages[this.currentPage-1].title = this.title;
-
-		this.pages[this.currentPage-1].paragraphs = this.paragraphs;
-
-		this.pages[this.currentPage-1].pageType = this.pageType;
-
-		this.pages[this.currentPage-1].pageStyle = this.pageStyle;
-
-		this.pages[this.currentPage-1].image = this.image;
-
-		this.resetPage();
+		angular.copy(this.pages[this.currentPage-1], this.page);
+		this.pastPage = this.currentPage;
 	};
 
 	/*-------------Image position and size setings--------------*/
 
 	this.setWidth = function(width){
-		if(parseInt(this.image.width) < 720){
+		if(parseInt(this.page.image.width) < 720){
 			return (width + "px");
 		}else{
-			this.image.width = 720;
-			return (this.image.width + "px");
+			this.page.image.width = 720;
+			return (this.page.image.width + "px");
 		}
 	};
 
 	this.setHeight = function(height){
-		if(this.pageType == 2){
+		if(this.page.pageType == 2){
 			//page type is only image
-			if(parseInt(this.image.height) < 880){
+			if(parseInt(this.page.image.height) < 880){
 				return (height + "px");
 			}else{
-				this.image.height = 880;
-				return (this.image.height + "px");
+				this.page.image.height = 880;
+				return (this.page.image.height + "px");
 			}
 
-		}else if(this.pageType == 5){
+		}else if(this.page.pageType == 5){
 			//page type is title & image
 			var lines = this.title.split(/\r\n|\r|\n/g),
 			space = 0,
@@ -149,7 +189,7 @@ angular.module('booksAR')
 			lines = lines.length - 1;
 
 
-			switch(this.pageStyle.titleSize) {
+			switch(this.page.pageStyle.titleSize) {
 			    case '270%': //26
 			        space = 40;
 			        newHeight = 820;
@@ -177,44 +217,44 @@ angular.module('booksAR')
 			}
 
 
-			if(parseInt(this.image.height) < (newHeight - space*lines)){
+			if(parseInt(this.page.image.height) < (newHeight - space*lines)){
 				return (height + "px");
 			}else{
-				this.image.height = (newHeight - space*lines);
-				return (this.image.height + "px");
+				this.page.image.height = (newHeight - space*lines);
+				return (this.page.image.height + "px");
 			}
 		}
 		
 	};
 
 	this.setMarginLeft = function(left){
-		if(parseInt(this.image.width + left) < 720){
+		if(parseInt(this.page.image.width + left) < 720){
 			return (left + "px");
 		}else{
-			this.image.left = (720 - this.image.width);
-			return (this.image.left + "px");
+			this.page.image.left = (720 - this.page.image.width);
+			return (this.page.image.left + "px");
 		}
 		
 	};
 
 	this.setMarginTop = function(top){
-		if(this.pageType == 2){
-			if(parseInt(this.image.height + top) < 880){
+		if(this.page.pageType == 2){
+			if(parseInt(this.page.image.height + top) < 880){
 				return (top + "px");
 			}else{
-				this.image.top = (880 - this.image.height);
-				return (this.image.top + "px");
+				this.page.image.top = (880 - this.page.image.height);
+				return (this.page.image.top + "px");
 			}
-		}else if(this.pageType == 5){
+		}else if(this.page.pageType == 5){
 			//page type is title & image
-			var lines = this.title.split(/\r\n|\r|\n/g),
+			var lines = this.page.title.split(/\r\n|\r|\n/g),
 			space = 0,
 			newHeight = 0;
 			//default size with 1 line
 			lines = lines.length - 1;
 
 
-			switch(this.pageStyle.titleSize) {
+			switch(this.page.pageStyle.titleSize) {
 			    case '270%': //26
 			        space = 40;
 			        newHeight = 820;
@@ -242,11 +282,11 @@ angular.module('booksAR')
 			}
 
 
-			if(parseInt(this.image.height + top) < (newHeight - space*lines)){
+			if(parseInt(this.page.image.height + top) < (newHeight - space*lines)){
 				return (top + "px");
 			}else{
-				this.image.top = ((newHeight - space*lines) - this.image.height);
-				return (this.image.top + "px");
+				this.page.image.top = ((newHeight - space*lines) - this.page.image.height);
+				return (this.page.image.top + "px");
 			}
 		}
 	};
@@ -254,32 +294,32 @@ angular.module('booksAR')
 	/*-------------Page Settings--------------*/
 
 	this.isSelected = function(pageType){
-		return this.pageType == pageType;
+		return this.page.pageType == pageType;
 	};
 
 	this.setPageType = function(pageType){
-		this.pageType = pageType;
+		this.page.pageType = pageType;
 		// Text Only
 		if(pageType == 1){
-			this.pageStyle.textSize = "100%";
+			this.page.pageStyle.textSize = "100%";
 		}
 		// Image Only
 		if(pageType == 2){
-			this.image.height = 880;
+			this.page.image.height = 880;
 		}
 		// Title Only
 		if(pageType == 3){
-			this.pageStyle.titleSize = "270%";
+			this.page.pageStyle.titleSize = "270%";
 		}
 		// Title & Text
 		if(pageType == 4){
-			this.pageStyle.textSize = "100%";
-			this.pageStyle.titleSize = "270%";
+			this.page.pageStyle.textSize = "100%";
+			this.page.pageStyle.titleSize = "270%";
 		}
 		// Title & Image
 		if(pageType == 5){
-			this.pageStyle.titleSize = "270%";
-			this.image.height = 820;
+			this.page.pageStyle.titleSize = "270%";
+			this.page.image.height = 820;
 		}
 	}
 
@@ -287,7 +327,7 @@ angular.module('booksAR')
 	this.isExtra = function(index){
 		var limit = document.getElementById("page").getBoundingClientRect().bottom - 45,
 		rect = document.getElementById("page").getElementsByTagName("P")[index].getBoundingClientRect(),
-		length = this.paragraphs.length;
+		length = this.page.paragraphs.length;
 		if(rect.bottom > limit){
 			this.paragraphs.splice(index, length-index);
 			return false;
@@ -297,8 +337,7 @@ angular.module('booksAR')
 	};
 
 	this.textAnalysis = function(){
-		console.log(this);
-		this.paragraphs = this.text.split(/\r\n|\r|\n/g);
+		this.page.paragraphs = this.page.text.split(/\r\n|\r|\n/g);
 	};
 
 	/*-------------PDF Creation--------------*/

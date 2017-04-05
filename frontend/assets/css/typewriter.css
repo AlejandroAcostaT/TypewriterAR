@@ -41,16 +41,16 @@
 	width: 622pt;
 	height: 782pt;
 	/*------------scale page-----------------*/
-	-ms-transform: scale(0.8, 0.8) translate(-10px, -10%); /* IE 9 */
-    -webkit-transform: scale(0.8, 0.8) translate(-10px, -10%); /* Safari */
-    transform: scale(0.8, 0.8) translate(-10px, -10%);
+	-ms-transform: scale(0.8, 0.8) translate(-60%, -10%); /* IE 9 */
+    -webkit-transform: scale(0.8, 0.8) translate(-60%, -10%); /* Safari */
+    transform: scale(0.8, 0.8) translate(-60%, -10%);
     color: #000;
     position: absolute;
+    left: 50%;
     margin-bottom: 5%;
     text-align: justify;
     background-color: #fff;
     font-family: "Comic Sans MS";
-    position: absolute;
 }
 
 .center{
