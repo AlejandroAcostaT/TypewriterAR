@@ -110,7 +110,7 @@ module.exports = {
 	*		Parameters: 								  *
 	*			- title 		: string (body)			  *
 	*			- description	: string (body)		 	  *
-	*			- cover 		: string (body/file url)  *
+	*			- cover 		: file (body/file)  	  *
 	*			- idUser 		: integer (body)		  *
 	******************************************************/
 
@@ -183,7 +183,7 @@ module.exports = {
 	*		Parameters: 								  *
 	*			- id 			: integer (params)		  *
 	*			- description 	: string (body)			  *
-	*			- cover			: string (body)		 	  *
+	*			- cover			: file (body/file url)    *
 	******************************************************/
 
 	updateBook : function(req, res){
@@ -331,8 +331,8 @@ module.exports = {
 	*		Description: update pages.json 		  		  *
 	*													  *
 	*		Parameters: 								  *
-	*			- id: integer (params)		 	  		  *
-	*			- pages: json object (body)	 	  		  *
+	*			- id 	: integer (params)		 	  	  *
+	*			- pages : json object (body)	 	  	  *
 	******************************************************/
 
 	updateBookPages : function(req, res){
@@ -356,5 +356,59 @@ module.exports = {
 			res.status(500)
 			.json({error : true, data : {message : err.message}})
 		})
+	},
+
+	/************************************************************
+	*		Function: addContent / Method: POST		 	  		*
+	*													  		*
+	*		Description: add marker and content to book folder 	*
+	*													  		*
+	*		Parameters: 								  		*
+	*			- id 		: integer (params)		 			*
+	*			- marker 	: file (body/file) 					*
+	*			- content	: file (body/file) 					*
+	*************************************************************/
+
+	addContent : function(req, res){
+
+		if(!req.files){
+			res.status(400)
+			.json({
+				error: true,
+				data: {message: "AR content files are missing"}
+			});
+		}
+
+		Book.where('id', req.params.id)
+		.fetch({ require : true })
+		.then(function(book){
+
+			var markerFile = req.files['marker'][0],
+			contentFile = req.files['content'][0],
+			path = './public/books/'+ req.decoded.username+'-'+book.get('title')+'/content';
+
+			// copy marker file to book's content folder
+			fs.moveSync(markerFile.path, path+'/'+markerFile.filename);
+			// copy content file to book's content folder
+			fs.moveSync(contentFile.path, path+'/'+contentFile.filename);
+
+			res.status(200)
+			.json({
+				error : false,
+				data : {
+					markerPath: path+'/'+markerFile.filename,
+					contentPath: path+'/'+contentFile.filename,
+					message : 'Book pages successfully updated'
+				}
+			});
+			
+		})
+		.catch(function(err){
+			res.status(500)
+			.json({
+				error : true,
+				data : { message : err.message }
+			})
+		});
 	}
 }

@@ -22,7 +22,19 @@ var express     = require('express'),
                             }
                             cb("Error: File upload only supports the following filetypes - " + filetypes);
                           } 
-                        });
+                        }),
+    contentUpload = multer({ dest: 'uploads/',
+                          fileFilter: function (req, file, cb) {
+                            var filetypes = /jpeg|jpg|png|mp4|mp3|jet|wav|3gp/,
+                                mimetype = filetypes.test(file.mimetype);
+
+                            if (mimetype) {
+                              return cb(null, true);
+                            }
+                            cb("Error: File upload only supports the following filetypes - " + filetypes);
+                          } 
+                        }),
+    cpUpload = contentUpload.fields([{ name: 'marker', maxCount: 1 }, { name: 'content', maxCount: 1 }]);
 
 module.exports = (function () {
 
@@ -57,6 +69,11 @@ module.exports = (function () {
   router.put('/books/:id', sessionCtrl.verifySession, coverUpload.single('cover'), bookCtrl.updateBook);
   router.put('/books/:id/publish', sessionCtrl.verifySession, bookCtrl.publishBook);
   router.delete('/books/:id', sessionCtrl.verifySession, bookCtrl.deleteBook);
+
+  /**************************************/
+  /*               Content              */
+  /**************************************/
+  router.post('/books/:id/content', sessionCtrl.verifySession, cpUpload, bookCtrl.addContent);
 
   return router;
 
