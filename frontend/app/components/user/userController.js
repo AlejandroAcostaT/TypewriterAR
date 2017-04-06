@@ -7,7 +7,6 @@ angular.module('booksAR')
 	//user
 	this.editUser = false;
 	this.user = tokenService.getUser();
-	console.log(this.user.books);
 
 	this.updUser = {
 		name: this.user.name,

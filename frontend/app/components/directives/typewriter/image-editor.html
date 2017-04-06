@@ -1,5 +1,27 @@
 <h3>Image Selection</h3>
-<button class="btn btn-default btn-lg btn-block" ng-model="typewriterCtrl.logo"  ngf-pattern="'image/*'" ngf-select="upload(file)">Upload Image File</button>
+<button class="btn btn-default btn-lg btn-block" ng-model="typewriterCtrl.image"  ngf-pattern="'.jpg,.jpeg,.png'" ngf-select="submitImage(file)">Select Image File</button>
+
+<h3>AR Content Selection</h3>
+
+<div >
+	<h3>Select Content Type</h3>
+	<select class="form-control" ng-model="typewriterCtrl.page.image.contentType" ng-change="typewriterCtrl.resetMarkerFile()">
+		<option value="image">Image</option>
+      	<option value="video">Video</option>
+      	<option value="audio">Audio</option>
+      	<option value="object">3D Object</option>
+	</select>
+</div>
+
+<button class="btn btn-default btn-lg btn-block" ng-model="typewriterCtrl.ARContent" ng-show="typewriterCtrl.page.image.contentType == 'image'" ngf-pattern="'.jpg,.jpeg,.png'" ngf-select="uploadContent(file)">Select AR Content File</button> 
+
+<button class="btn btn-default btn-lg btn-block" ng-model="typewriterCtrl.ARContent" ng-show="typewriterCtrl.page.image.contentType == 'video'" ngf-pattern="'.3gp,.mp4'" ngf-select="uploadImage(file)">Select AR Content File</button> 
+
+<button class="btn btn-default btn-lg btn-block" ng-model="typewriterCtrl.ARContent" ng-show="typewriterCtrl.page.image.contentType == 'audio'" ngf-pattern="'.wav,.mp3'" ngf-select="uploadContent(file)">Select AR Content File</button>
+
+<button class="btn btn-default btn-lg btn-block" ng-model="typewriterCtrl.ARContent" ng-show="typewriterCtrl.page.image.contentType == 'object'" ngf-pattern="'.jet'" ngf-select="uploadContent(file)">Select AR Content File</button>
+<br><br>
+<button type='submit' class="btn btn-default btn-lg btn-block" ng-click="typewriterCtrl.sendFiles()" ng-disabled="!typewriterCtrl.image || !typewriterCtrl.ARContent">Upload Files</button>
 
 <h3>Image Dimension</h3>
 <div class="form-group">

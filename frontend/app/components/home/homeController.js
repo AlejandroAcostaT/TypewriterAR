@@ -121,9 +121,12 @@ angular.module('booksAR')
 		var error = this.err;
 
 		sessionService.logIn(this.loginUser).then(function successCallback(response) {
+			console.log(response.data.data.token);
 
 			tokenService.setToken(response.data.data.token);
 			tokenService.setUser(response.data.data.user);
+
+			console.log(tokenService.getToken());
 
 			$state.go('book');
 		}, function errorCallback(response) {

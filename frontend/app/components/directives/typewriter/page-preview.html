@@ -9,7 +9,7 @@
 		<!-- /TEXT -->
 
 		<!-- IMAGE -->
-		<img ngf-src="typewriterCtrl.logo"  ng-style="{'width': typewriterCtrl.setWidth(typewriterCtrl.image.width), 'height':typewriterCtrl.setHeight(typewriterCtrl.image.height), 'margin-left':typewriterCtrl.setMarginLeft(typewriterCtrl.image.left), 'margin-top':typewriterCtrl.setMarginTop(typewriterCtrl.image.top)}" id="img" class="image" ng-if="typewriterCtrl.isSelected(2)">
+		<img ng-src="{{typewriterCtrl.bookAddress}}{{typewriterCtrl.page.image.markerPath}}"  ng-style="{'width': typewriterCtrl.setWidth(typewriterCtrl.image.width), 'height':typewriterCtrl.setHeight(typewriterCtrl.image.height), 'margin-left':typewriterCtrl.setMarginLeft(typewriterCtrl.image.left), 'margin-top':typewriterCtrl.setMarginTop(typewriterCtrl.image.top)}" id="img" class="image" ng-if="typewriterCtrl.isSelected(2)">
 		<!-- /IMAGE -->
 
 		<!-- TITLE -->
@@ -33,7 +33,7 @@
 		<div ng-if="typewriterCtrl.isSelected(5)">
 			<h3 class="paragraph" style="white-space:pre-line; text-align: center; margin-bottom: 3%; margin-top: 0;" ng-style="{'font-family': typewriterCtrl.page.pageStyle.titleFont, 'font-size':typewriterCtrl.page.pageStyle.titleSize}" ng-if="typewriterCtrl.page.title != ''">{{typewriterCtrl.page.title}}</h3>
 
-			<img ngf-src="typewriterCtrl.logo"  ng-style="{'width': typewriterCtrl.setWidth(typewriterCtrl.image.width), 'height':typewriterCtrl.setHeight(typewriterCtrl.image.height), 'margin-left':typewriterCtrl.setMarginLeft(typewriterCtrl.image.left), 'margin-top':typewriterCtrl.setMarginTop(typewriterCtrl.image.top)}" id="img" class="image">
+			<img ng-src="{{typewriterCtrl.bookAddress}}{{typewriterCtrl.page.image.markerPath}}"  ng-style="{'width': typewriterCtrl.setWidth(typewriterCtrl.image.width), 'height':typewriterCtrl.setHeight(typewriterCtrl.image.height), 'margin-left':typewriterCtrl.setMarginLeft(typewriterCtrl.image.left), 'margin-top':typewriterCtrl.setMarginTop(typewriterCtrl.image.top)}" id="img" class="image">
 		</div>
 		<!-- /TITLE & IMAGE -->
 

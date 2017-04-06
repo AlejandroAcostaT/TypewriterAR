@@ -1,30 +1,8 @@
 angular.module('booksAR')
 
-.controller('typewriterController', function($scope, $state, Upload, sessionService, tokenService, verifySession, Book){
+.controller('typewriterController', function($scope, $state, Upload, API, sessionService, tokenService, contentService, verifySession, Book){
 
-	this.text = '';
-
-	this.title = '';
-
-	this.paragraphs = [];
-
-	this.pageType = 1;
-
-	this.pageStyle = {
-		textSize: "100%",
-		titleSize: "270%",
-		weight: "normal",
-		style: "normal",
-		textFont: "times",
-		titleFont: "times"
-	};
-
-	this.image={
-		width: 720, //max value
-		height: 880, //max value if page type is only image (2)
-		left: 0,
-		top: 0
-	};
+	this.bookAddress = API.bookAddress;
 
 	this.page = {
 			pageType: 1,
@@ -43,7 +21,10 @@ angular.module('booksAR')
 				width: 720, //max value
 				height: 880, //max value if page type is only image (2)
 				left: 0,
-				top: 0
+				top: 0,
+				contentType: 'image',
+				markerPath: '',
+				contentPath: ''
 			}
 		};
 
@@ -92,7 +73,10 @@ angular.module('booksAR')
 				width: 720, //max value
 				height: 880, //max value if page type is only image (2)
 				left: 0,
-				top: 0
+				top: 0,
+				contentType: 'image',
+				markerPath: '',
+				contentPath: ''
 			}
 		};
 
@@ -124,7 +108,10 @@ angular.module('booksAR')
 					width: 720, //max value
 					height: 880, //max value if page type is only image (2)
 					left: 0,
-					top: 0
+					top: 0,
+					contentType: 'image',
+					markerPath: '',
+					contentPath: ''
 				}
 			};
 
@@ -182,7 +169,7 @@ angular.module('booksAR')
 
 		}else if(this.page.pageType == 5){
 			//page type is title & image
-			var lines = this.title.split(/\r\n|\r|\n/g),
+			var lines = this.page.title.split(/\r\n|\r|\n/g),
 			space = 0,
 			newHeight = 0;
 			//default size with 1 line
@@ -710,15 +697,9 @@ angular.module('booksAR')
 	/*-------------Files Input--------------*/
 
 
-	// upload later on form submit or something similar
-    this.submit = function() {
-      if ($scope.form.file.$valid && $scope.file) {
-        $scope.upload($scope.file);
-      }
-    };
-
     // upload on file select or drop
-    this.upload = function (file) {
+    this.uploadImage = function (file) {
+    	console.log('doing something');
         Upload.upload({
             url: '',
             data: {file: file}
@@ -728,22 +709,54 @@ angular.module('booksAR')
             console.log('Error status: ');
         }, function (evt) {
             var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-            console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
         });
     };
-    // for multiple files:
-    /*
-    this.uploadFiles = function (files) {
-      if (files && files.length) {
-        for (var i = 0; i < files.length; i++) {
-          Upload.upload({..., data: {file: files[i]}, ...})...;
-        }
-        // or send them all together for HTML5 browsers:
-        Upload.upload({..., data: {file: files}, ...})...;
-      }
-    }
-    */
+    
+    this.f = {};
+    this.uploadContent = function(file){
+    	Upload.upload({
+            url: '',
+            data: {file: file}
+        }).then(function (response) {
+            $timeout(function () {
+                file.result = response.data;
+            });
+        }, function (response) {
+            if (response.status > 0)
+                $scope.errorMsg = response.status + ': ' + response.data;
+        }, function (evt) {
+            file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+        });
+    };
 
+    var setFiles = (function(data){
+    	this.page.image.markerPath = data.markerPath;
+    	this.page.image.contentPath = data.contentPath;
+    }).bind(this);
+
+    this.sendFiles = function(){    	
+    	console.log(this.image);
+    	console.log(this.ARContent);
+    	var token = tokenService.getToken(),
+		id = Book.data.id,
+		data = new FormData();
+
+	    data.append('marker', this.image);
+	    data.append('content', this.ARContent);
+
+		contentService.addContent(token, id, data).then(function successCallback(response) {
+			setFiles(response.data.data);
+			
+		}, function errorCallback(response) {
+			//error
+			console.log(response.data.data.message);
+		});
+    };
+
+    this.resetMarkerFile = function(){
+    	this.ARContent = null;
+    };
+     
     //verify user has logged in
 	if(verifySession){
 		$state.go('home');

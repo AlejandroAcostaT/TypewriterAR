@@ -20,6 +20,7 @@ angular.module('booksAR')
             controllerAs: 'typewriterCtrl',
             resolve: {
                 verifySession:  function(tokenService){
+                    console.log(tokenService.getToken());
                     return tokenService.getToken()=="";
                 },
                 Book:  function(tokenService, bookService){
@@ -41,6 +42,7 @@ angular.module('booksAR')
             controllerAs: 'userCtrl',
             resolve: {
                 verifySession:  function(tokenService){
+                    console.log(tokenService.getToken());
                     return tokenService.getToken()=="";
                 }
             }
@@ -52,6 +54,7 @@ angular.module('booksAR')
             controllerAs: 'bookCtrl',
             resolve: {
                 verifySession:  function(tokenService){
+                    console.log(tokenService.getToken());
                     return tokenService.getToken()=="";
                 }
             }
