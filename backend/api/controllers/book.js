@@ -385,7 +385,8 @@ module.exports = {
 
 			var markerFile = req.files['marker'][0],
 			contentFile = req.files['content'][0],
-			path = './public/books/'+ req.decoded.username+'-'+book.get('title')+'/content';
+			path = './public/books/'+ req.decoded.username+'-'+book.get('title')+'/content',
+			userPath = req.decoded.username+'-'+book.get('title')+'/content';
 
 			// copy marker file to book's content folder
 			fs.moveSync(markerFile.path, path+'/'+markerFile.filename);
@@ -396,9 +397,9 @@ module.exports = {
 			.json({
 				error : false,
 				data : {
-					markerPath: path+'/'+markerFile.filename,
-					contentPath: path+'/'+contentFile.filename,
-					message : 'Book pages successfully updated'
+					markerPath: userPath+'/'+markerFile.filename,
+					contentPath: userPath+'/'+contentFile.filename,
+					message : 'Page content successfully uploaded'
 				}
 			});
 			

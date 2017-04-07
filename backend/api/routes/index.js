@@ -25,7 +25,7 @@ var express     = require('express'),
                         }),
     contentUpload = multer({ dest: 'uploads/',
                           fileFilter: function (req, file, cb) {
-                            var filetypes = /jpeg|jpg|png|mp4|mp3|jet|wav|3gp/,
+                            var filetypes = /jpeg|jpg|png|mp4|mp3|wav|3gp|octet-stream/,
                                 mimetype = filetypes.test(file.mimetype);
 
                             if (mimetype) {
