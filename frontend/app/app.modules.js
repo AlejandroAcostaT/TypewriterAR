@@ -24,8 +24,8 @@ var app = angular.module('booksAR', [
 //Setting API Address
 app.service('API', function(){
     return {
-        bookAddress: 'http://192.168.1.14:3000/books/',
-        address : 'http://192.168.1.14:3000/api/'
+        bookAddress: 'http://192.168.1.11:3000/books/',
+        address : 'http://192.168.1.11:3000/api/'
     };
 });
 

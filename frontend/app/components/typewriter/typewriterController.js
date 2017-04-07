@@ -1,6 +1,6 @@
 angular.module('booksAR')
 
-.controller('typewriterController', function($scope, $state, Upload, API, sessionService, tokenService, contentService, verifySession, Book){
+.controller('typewriterController', function($scope, $state, Upload, API, sessionService, tokenService, bookService, contentService, verifySession, Book){
 
 	this.bookAddress = API.bookAddress;
 
@@ -24,7 +24,8 @@ angular.module('booksAR')
 				top: 0,
 				contentType: 'image',
 				markerPath: '',
-				contentPath: ''
+				contentPath: '',
+				texturePath: ''
 			}
 		};
 
@@ -40,6 +41,7 @@ angular.module('booksAR')
 	}else{
 		this.pages = angular.copy(Book.pages);
 		//verify when not empty asign this.page to first page on pages
+		angular.copy(this.pages[this.currentPage-1], this.page);
 	}
 
 
@@ -76,7 +78,8 @@ angular.module('booksAR')
 				top: 0,
 				contentType: 'image',
 				markerPath: '',
-				contentPath: ''
+				contentPath: '',
+				texturePath: ''
 			}
 		};
 
@@ -111,7 +114,8 @@ angular.module('booksAR')
 					top: 0,
 					contentType: 'image',
 					markerPath: '',
-					contentPath: ''
+					contentPath: '',
+					texturePath: ''
 				}
 			};
 
@@ -712,7 +716,7 @@ angular.module('booksAR')
         });
     };
     
-    this.f = {};
+
     this.uploadContent = function(file){
     	Upload.upload({
             url: '',
@@ -729,9 +733,29 @@ angular.module('booksAR')
         });
     };
 
+    this.uploadTexture = function(file){
+    	Upload.upload({
+            url: '',
+            data: {file: file}
+        }).then(function (response) {
+            $timeout(function () {
+                file.result = response.data;
+            });
+        }, function (response) {
+            if (response.status > 0)
+                $scope.errorMsg = response.status + ': ' + response.data;
+        }, function (evt) {
+            file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+        });
+    };
+
     var setFiles = (function(data){
+    	//marker Path
     	this.page.image.markerPath = data.markerPath;
+    	//content Path
     	this.page.image.contentPath = data.contentPath;
+    	//texture Path
+    	this.page.image.texturePath = data.texturePath;
     }).bind(this);
 
     this.sendFiles = function(){    	
@@ -740,9 +764,18 @@ angular.module('booksAR')
     	var token = tokenService.getToken(),
 		id = Book.data.id,
 		data = new FormData();
+		console.log(this.page.image);
 
 	    data.append('marker', this.image);
+	   	data.append('markerPath', this.page.image.markerPath);
+
 	    data.append('content', this.ARContent);
+	    data.append('contentPath', this.page.image.contentPath);
+
+	    if(this.texture){
+	    	data.append('texture', this.texture);
+	   		data.append('texturePath', this.page.image.texturePath);
+	    }
 
 		contentService.addContent(token, id, data).then(function successCallback(response) {
 			setFiles(response.data.data);
@@ -755,6 +788,20 @@ angular.module('booksAR')
 
     this.resetMarkerFile = function(){
     	this.ARContent = null;
+    	this.texture = null;
+    };
+
+    this.saveBook = function(){
+    	angular.copy(this.page, this.pages[this.currentPage-1]);
+    	var token = tokenService.getToken(),
+		id = Book.data.id;
+
+    	bookService.saveBook(token, id, {pages: this.pages}).then(function successCallback(response) {
+			console.log('book has been saved');
+		}, function errorCallback(response) {
+			//error
+			console.log(response.data.data.message);
+		});
     };
      
     //verify user has logged in

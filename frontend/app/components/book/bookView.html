@@ -7,7 +7,7 @@
   <ul class="pager">
     <li ng-class=" bookCtrl.offset == 1 ? 'disabled' : ''"><a href="" ng-click="bookCtrl.previous()">Previous</a></li>
     <p class="inline pageNumbers">{{bookCtrl.amountBookPerPage}} - {{bookCtrl.total}}</p>
-    <li ng-class=" bookCtrl.offset == bookCtrl.pages ? 'disabled' : ''"><a href="" ng-click="bookCtrl.next()">Next</a></li>
+    <li ng-class=" (bookCtrl.offset == bookCtrl.pages) || bookCtrl.pages == 0 ? 'disabled' : ''"><a href="" ng-click="bookCtrl.next()">Next</a></li>
   </ul>
 </nav>
 
