@@ -123,7 +123,6 @@ module.exports = {
 				data: {message: "Cover file missing"}
 			});
 		}
-
 		
 		var dir = './public/books/'+req.decoded.username+'-'+req.body.title+'/content',
 			file = req.file,
@@ -137,16 +136,14 @@ module.exports = {
 		// move cover file to book folder
 		fs.moveSync(req.file.path, coverDir);
 
-		//create json files in book folder
+		//create json file in book folder
 		fs.writeJsonSync(userDir+'pages.json', []);
-		fs.writeJsonSync(userDir+'content/content.json', []);
 
 		Book.forge({
 			title: req.body.title,
 			description: req.body.description,
 			cover: cover,
 			pages: userDir+'pages.json',
-			content: userDir+'content/content.json',
 			publish: false,
 			idUser	: req.body.idUser
 		})
@@ -203,7 +200,6 @@ module.exports = {
 				fs.moveSync(req.file.path, './public/books/'+cover);
 
 				// remove cover file from its original path
-				console.log(previous);
 				fs.remove(previous, err =>{
 					if(err) console.log(err);
 					console.log('success');
@@ -336,7 +332,6 @@ module.exports = {
 	******************************************************/
 
 	updateBookPages : function(req, res){
-
 		Book.forge({id : req.params.id})
 		.fetch({require : true})
 		.then(function(book){
@@ -355,7 +350,7 @@ module.exports = {
 		.catch(function(err){
 			res.status(500)
 			.json({error : true, data : {message : err.message}})
-		})
+		});
 	},
 
 	/************************************************************
@@ -364,9 +359,11 @@ module.exports = {
 	*		Description: add marker and content to book folder 	*
 	*													  		*
 	*		Parameters: 								  		*
-	*			- id 		: integer (params)		 			*
-	*			- marker 	: file (body/file) 					*
-	*			- content	: file (body/file) 					*
+	*			- id 			: integer (params)	 			*
+	*			- marker 		: file (body/file)				*
+	*			- content		: file (body/file)				*
+	*			- markerPath	: file (body/text)				*
+	*			- contentPath	: file (body/text)				*
 	*************************************************************/
 
 	addContent : function(req, res){
@@ -386,12 +383,39 @@ module.exports = {
 			var markerFile = req.files['marker'][0],
 			contentFile = req.files['content'][0],
 			path = './public/books/'+ req.decoded.username+'-'+book.get('title')+'/content',
-			userPath = req.decoded.username+'-'+book.get('title')+'/content';
+			userPath = req.decoded.username+'-'+book.get('title')+'/content',
+			texturePath = '';
+
+			if(req.files['texture']){
+				var textureFile =  req.files['texture'][0];
+			}
+
+			//Verify if there are previous files and delete them
+
+			if(req.body.markerPath != ''){
+				fs.removeSync('./public/books/'+req.body.markerPath);
+			}
+			if(req.body.contentPath != ''){
+				fs.removeSync('./public/books/'+req.body.contentPath);
+			}
+			if(textureFile && (req.body.texturePath != '')){
+				fs.removeSync('./public/books/'+req.body.texturePath);
+			}
+
+			//Move new files to content folder
 
 			// copy marker file to book's content folder
 			fs.moveSync(markerFile.path, path+'/'+markerFile.filename);
+
 			// copy content file to book's content folder
 			fs.moveSync(contentFile.path, path+'/'+contentFile.filename);
+
+			// copy content file to book's content folder
+			if(textureFile){
+				fs.moveSync(textureFile.path, path+'/'+textureFile.filename);
+				texturePath = userPath+'/'+textureFile.filename;
+			}
+			
 
 			res.status(200)
 			.json({
@@ -399,6 +423,7 @@ module.exports = {
 				data : {
 					markerPath: userPath+'/'+markerFile.filename,
 					contentPath: userPath+'/'+contentFile.filename,
+					texturePath: texturePath,
 					message : 'Page content successfully uploaded'
 				}
 			});

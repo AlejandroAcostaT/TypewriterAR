@@ -34,7 +34,7 @@ var express     = require('express'),
                             cb("Error: File upload only supports the following filetypes - " + filetypes);
                           } 
                         }),
-    cpUpload = contentUpload.fields([{ name: 'marker', maxCount: 1 }, { name: 'content', maxCount: 1 }]);
+    cpUpload = contentUpload.fields([{ name: 'marker', maxCount: 1 }, { name: 'content', maxCount: 1 }, { name: 'texture', maxCount: 1 }]);
 
 module.exports = (function () {
 
@@ -68,6 +68,7 @@ module.exports = (function () {
   router.get('/books/:id', sessionCtrl.verifySession, bookCtrl.getBookById);
   router.put('/books/:id', sessionCtrl.verifySession, coverUpload.single('cover'), bookCtrl.updateBook);
   router.put('/books/:id/publish', sessionCtrl.verifySession, bookCtrl.publishBook);
+  router.put('/books/:id/save', sessionCtrl.verifySession, bookCtrl.updateBookPages);
   router.delete('/books/:id', sessionCtrl.verifySession, bookCtrl.deleteBook);
 
   /**************************************/

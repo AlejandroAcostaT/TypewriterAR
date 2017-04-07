@@ -22,7 +22,6 @@ var Schema = {
     description: {type: 'string', maxlength: 10000, nullable: false},
     cover      : {type: 'string', maxlength: 150, nullable: false},
     pages      : {type: 'string', maxlength: 150, nullable: false},
-    content    : {type: 'string', maxlength: 150, nullable: false},
     publish    : {type: 'boolean', nullable: false},
     idUser     : {type: 'integer', nullable: false},
 	  created_at : {type: 'dateTime', nullable: false},
