@@ -34,7 +34,18 @@ var express     = require('express'),
                             cb("Error: File upload only supports the following filetypes - " + filetypes);
                           } 
                         }),
-    cpUpload = contentUpload.fields([{ name: 'marker', maxCount: 1 }, { name: 'content', maxCount: 1 }, { name: 'texture', maxCount: 1 }]);
+    cpUpload = contentUpload.fields([{ name: 'marker', maxCount: 1 }, { name: 'content', maxCount: 1 }, { name: 'texture', maxCount: 1 }]),
+    pdfUpload = multer({ dest: 'uploads/',
+                          fileFilter: function (req, file, cb) {
+                            var filetypes = /pdf/,
+                                mimetype = filetypes.test(file.mimetype);
+
+                            if (mimetype) {
+                              return cb(null, true);
+                            }
+                            cb("Error: File upload only supports the following filetypes - " + filetypes);
+                          } 
+                        });
 
 module.exports = (function () {
 
@@ -69,6 +80,8 @@ module.exports = (function () {
   router.put('/books/:id', sessionCtrl.verifySession, coverUpload.single('cover'), bookCtrl.updateBook);
   router.put('/books/:id/publish', sessionCtrl.verifySession, bookCtrl.publishBook);
   router.put('/books/:id/save', sessionCtrl.verifySession, bookCtrl.updateBookPages);
+  router.get('/books/:id/pdf', sessionCtrl.verifySession, bookCtrl.getPDF);
+  router.put('/books/:id/pdf', sessionCtrl.verifySession, pdfUpload.single('pdf'), bookCtrl.savePDF);
   router.delete('/books/:id', sessionCtrl.verifySession, bookCtrl.deleteBook);
 
   /**************************************/

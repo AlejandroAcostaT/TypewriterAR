@@ -1,0 +1,82 @@
+[
+  {
+    "pageType": 3,
+    "text": "",
+    "paragraphs": "",
+    "title": "Prueba para el PDF",
+    "pageStyle": {
+      "textSize": "100%",
+      "titleSize": "270%",
+      "weight": "normal",
+      "style": "normal",
+      "textFont": "times",
+      "titleFont": "times"
+    },
+    "image": {
+      "width": 720,
+      "height": 880,
+      "left": 0,
+      "top": 0,
+      "contentType": "image",
+      "markerPath": "",
+      "contentPath": "",
+      "texturePath": ""
+    }
+  },
+  {
+    "pageType": 4,
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec scelerisque turpis, sed commodo ipsum. Pellentesque scelerisque risus eget urna hendrerit tincidunt. Suspendisse potenti. Etiam mattis, mauris et euismod efficitur, lacus nulla pellentesque nulla, at tincidunt nunc quam sit amet diam. Pellentesque a tortor vel risus efficitur ullamcorper. Nunc rutrum eros non ornare tincidunt. Donec porta eget quam non porta.\n\nCurabitur aliquet hendrerit tellus sodales elementum. Praesent at purus in diam hendrerit gravida id ac nisi. Morbi ac pulvinar nunc. Phasellus diam leo, venenatis sit amet tellus at, porttitor lobortis leo. Fusce tincidunt iaculis sapien, sed rutrum justo blandit vel. Nulla eget lacus libero. Etiam tempus, tellus sit amet venenatis luctus, nulla erat condimentum massa, eu tincidunt orci tortor vitae quam. Cras feugiat felis quam, vitae dapibus massa feugiat a. Sed condimentum auctor lacinia.\n\nEtiam sagittis mattis ipsum in vestibulum. Vestibulum quis semper dolor. In rhoncus lorem felis, in volutpat odio condimentum vitae. Suspendisse quis diam nec sapien placerat congue sit amet vel tortor. Nullam ac rutrum mauris. Morbi mollis augue vitae mollis pulvinar. Phasellus mi sapien, tempus sed rutrum et, aliquam id est. Nunc in efficitur lacus, ac efficitur orci. Etiam finibus bibendum blandit.\n\nFusce et quam accumsan, tincidunt felis a, ultricies lorem. Pellentesque ornare magna a ligula dapibus lobortis. Donec vehicula nisi ac sapien faucibus, at suscipit neque lobortis. Suspendisse in vestibulum metus. Donec lobortis et ex nec ultrices. Nam euismod sapien non efficitur viverra. Praesent vulputate blandit sollicitudin. Maecenas sed aliquet sem, vitae vestibulum turpis. Vivamus in massa in mauris rutrum fringilla. Mauris sollicitudin metus ipsum, ut aliquam risus sodales eu. Sed mollis malesuada magna, eget ultrices lacus rhoncus quis. Sed hendrerit ex ipsum, vel molestie felis tincidunt porta. Ut sed faucibus justo, eget iaculis sapien. Vestibulum nunc velit, molestie quis augue a, scelerisque faucibus risus. Duis faucibus vulputate dignissim. Cras et purus eros.",
+    "paragraphs": [
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec scelerisque turpis, sed commodo ipsum. Pellentesque scelerisque risus eget urna hendrerit tincidunt. Suspendisse potenti. Etiam mattis, mauris et euismod efficitur, lacus nulla pellentesque nulla, at tincidunt nunc quam sit amet diam. Pellentesque a tortor vel risus efficitur ullamcorper. Nunc rutrum eros non ornare tincidunt. Donec porta eget quam non porta.",
+      "",
+      "Curabitur aliquet hendrerit tellus sodales elementum. Praesent at purus in diam hendrerit gravida id ac nisi. Morbi ac pulvinar nunc. Phasellus diam leo, venenatis sit amet tellus at, porttitor lobortis leo. Fusce tincidunt iaculis sapien, sed rutrum justo blandit vel. Nulla eget lacus libero. Etiam tempus, tellus sit amet venenatis luctus, nulla erat condimentum massa, eu tincidunt orci tortor vitae quam. Cras feugiat felis quam, vitae dapibus massa feugiat a. Sed condimentum auctor lacinia.",
+      "",
+      "Etiam sagittis mattis ipsum in vestibulum. Vestibulum quis semper dolor. In rhoncus lorem felis, in volutpat odio condimentum vitae. Suspendisse quis diam nec sapien placerat congue sit amet vel tortor. Nullam ac rutrum mauris. Morbi mollis augue vitae mollis pulvinar. Phasellus mi sapien, tempus sed rutrum et, aliquam id est. Nunc in efficitur lacus, ac efficitur orci. Etiam finibus bibendum blandit.",
+      "",
+      "Fusce et quam accumsan, tincidunt felis a, ultricies lorem. Pellentesque ornare magna a ligula dapibus lobortis. Donec vehicula nisi ac sapien faucibus, at suscipit neque lobortis. Suspendisse in vestibulum metus. Donec lobortis et ex nec ultrices. Nam euismod sapien non efficitur viverra. Praesent vulputate blandit sollicitudin. Maecenas sed aliquet sem, vitae vestibulum turpis. Vivamus in massa in mauris rutrum fringilla. Mauris sollicitudin metus ipsum, ut aliquam risus sodales eu. Sed mollis malesuada magna, eget ultrices lacus rhoncus quis. Sed hendrerit ex ipsum, vel molestie felis tincidunt porta. Ut sed faucibus justo, eget iaculis sapien. Vestibulum nunc velit, molestie quis augue a, scelerisque faucibus risus. Duis faucibus vulputate dignissim. Cras et purus eros."
+    ],
+    "title": "Capitulo I",
+    "pageStyle": {
+      "textSize": "100%",
+      "titleSize": "270%",
+      "weight": "normal",
+      "style": "normal",
+      "textFont": "times",
+      "titleFont": "times"
+    },
+    "image": {
+      "width": 720,
+      "height": 880,
+      "left": 0,
+      "top": 0,
+      "contentType": "image",
+      "markerPath": "",
+      "contentPath": "",
+      "texturePath": ""
+    }
+  },
+  {
+    "pageType": 2,
+    "text": "",
+    "paragraphs": "",
+    "title": "",
+    "pageStyle": {
+      "textSize": "100%",
+      "titleSize": "270%",
+      "weight": "normal",
+      "style": "normal",
+      "textFont": "times",
+      "titleFont": "times"
+    },
+    "image": {
+      "width": 720,
+      "height": 880,
+      "left": 0,
+      "top": 0,
+      "contentType": "image",
+      "markerPath": "tartaretalex-PDF Test/content/3384ef1aadd0e2c8b01328ab837f136d",
+      "contentPath": "tartaretalex-PDF Test/content/11483d024628233b662697b52d76840c",
+      "texturePath": ""
+    }
+  }
+]

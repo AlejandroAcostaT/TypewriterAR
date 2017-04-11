@@ -37,9 +37,13 @@ module.exports = {
 			qb.innerJoin('user', 'book.idUser', 'user.id');
 			if(q){
 				qb.where('book.title', 'LIKE', q);
+				qb.andWhere('book.publish',  '=', 1);
 				qb.orWhere('user.name',  'LIKE', q);
+				qb.andWhere('book.publish',  '=', 1);
 				qb.orWhere('user.lastName',  'LIKE', q);
+				qb.andWhere('book.publish',  '=', 1);
 			}
+			qb.andWhere('book.publish',  '=', 1);
 		})
 		.fetchPage({
 			pageSize: 12,
@@ -86,7 +90,8 @@ module.exports = {
 				})
 			}else{
 				var book_json = book.toJSON();
-				res.json({
+				res.status(200)
+				.json({
 					error : false,
 					data : book_json,
 					pages : fs.readJsonSync(book_json.pages)
@@ -144,6 +149,7 @@ module.exports = {
 			description: req.body.description,
 			cover: cover,
 			pages: userDir+'pages.json',
+			pdf: '',
 			publish: false,
 			idUser	: req.body.idUser
 		})
@@ -436,5 +442,106 @@ module.exports = {
 				data : { message : err.message }
 			})
 		});
+	},
+
+	/******************************************************
+	*		Function: savePDF / Method: PUT 			  *
+	*													  *
+	*		Description: upload PDF file  		  		  *
+	*													  *
+	*		Parameters: 								  *
+	*			- id 	: integer (params)		 	  	  *
+	*			- pdf   : file (body/file)		 	  	  *
+	******************************************************/
+
+	savePDF : function(req, res){
+		Book.forge({id : req.params.id})
+		.fetch({require : true})
+		.then(function(book){
+
+			var folder = './public/books/'+req.decoded.username+'-'+book.get('title')+'/',
+			book_json = book.toJSON(),
+			pdfFile = req.file;
+
+			if(book_json.pdf != ''){
+				// remove pdf file from its previous path
+				fs.remove(book_json.pdf, err =>{
+					if(err) console.log(err);
+					console.log('success');
+				});
+			}
+
+			//move pdf file to book folder
+			fs.moveSync(pdfFile.path, folder+pdfFile.filename);
+
+			book.save({
+				pdf: folder+pdfFile.filename
+			},
+			{
+				method: "update"
+			})
+			.then(function(){
+				res.status(204)
+				.json({
+					error : false,
+					data : { message : 'Book PDF url changed'}
+				});
+			})
+			.catch(function(err){
+				res.status(400)
+				.json({
+					error : true,
+					data : { message : err.message }
+				})
+			});
+		})
+		.catch(function(err){
+			res.status(500)
+			.json({error : true, data : {message : err.message}})
+		});
+	},
+
+	/*****************************************************
+	*		Function: getPDF / Method: GET 		 		 *
+	*													 *
+	*		Description: Download Book PDF 				 *
+	*													 *
+	*		Parameters: 								 *
+	*			- id: integer (params)	 				 *
+	*****************************************************/
+
+	getPDF : function(req, res){
+		Book.forge({
+			id : req.params.id
+		})
+		.fetch()
+		.then(function(book){
+			if(!book || (book.get('pdf')=='')){
+				res.status(404)
+				.json({
+					error : true,
+					data : {message: "book doesn't exist"}
+				})
+			}else{
+				var book_json = book.toJSON();
+				res.setHeader('Content-Disposition', 'attachment; filename='+book_json.title+'.pdf');
+				res.setHeader('Content-Type', 'application/pdf');
+
+				res.download(book_json.pdf, book_json.title+'.pdf', function(err){
+					if(err){
+						console.log(err);
+					}else{
+						console.log('Success');
+					}
+				});
+			}
+		})
+		.catch(function(err){
+			res.status(500)
+			.json({
+				error : false,
+				data : {message : err.message}
+			})
+		})
 	}
 }
