@@ -16,7 +16,7 @@ angular.module('booksAR')
 		book = {};
 	};
 
-	var createBook= function(token, data){ //Verify how to sen form-data with file
+	var createBook= function(token, data){ 
 		return $http.post(API.address + "books", data, {
 			headers: {'token': token,
 					  'Content-Type': undefined
@@ -34,11 +34,17 @@ angular.module('booksAR')
 		});
 	};
 
-	var updateBook= function(token, id, data){ //Verify how to sen form-data with file
+	var updateBook= function(token, id, data){ 
 		return $http.put(API.address + "books/" + id, data, {
 			headers: {'token': token,
 					  'Content-Type': undefined
 					}
+			});
+	};
+
+	var saveBook= function(token, id, data){ 
+		return $http.put(API.address + "books/" + id + '/save', data, {
+			headers: {'token': token}
 			});
 	};
 
@@ -69,7 +75,8 @@ angular.module('booksAR')
 	    deleteBook: deleteBook,
 	    getBookData: getBookData,
 	    setBookData: setBookData,
-	    deleteBookData: deleteBookData
+	    deleteBookData: deleteBookData,
+	    saveBook: saveBook
     };
 	
 });

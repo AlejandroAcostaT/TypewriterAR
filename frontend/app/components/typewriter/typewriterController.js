@@ -1,6 +1,6 @@
 angular.module('booksAR')
 
-.controller('typewriterController', function($scope, $state, Upload, API, sessionService, tokenService, contentService, verifySession, Book){
+.controller('typewriterController', function($scope, $state, $interval, Upload, API, sessionService, tokenService, bookService, contentService, verifySession, Book){
 
 	this.bookAddress = API.bookAddress;
 
@@ -24,7 +24,8 @@ angular.module('booksAR')
 				top: 0,
 				contentType: 'image',
 				markerPath: '',
-				contentPath: ''
+				contentPath: '',
+				texturePath: ''
 			}
 		};
 
@@ -40,6 +41,7 @@ angular.module('booksAR')
 	}else{
 		this.pages = angular.copy(Book.pages);
 		//verify when not empty asign this.page to first page on pages
+		angular.copy(this.pages[this.currentPage-1], this.page);
 	}
 
 
@@ -76,7 +78,8 @@ angular.module('booksAR')
 				top: 0,
 				contentType: 'image',
 				markerPath: '',
-				contentPath: ''
+				contentPath: '',
+				texturePath: ''
 			}
 		};
 
@@ -111,7 +114,8 @@ angular.module('booksAR')
 					top: 0,
 					contentType: 'image',
 					markerPath: '',
-					contentPath: ''
+					contentPath: '',
+					texturePath: ''
 				}
 			};
 
@@ -328,31 +332,75 @@ angular.module('booksAR')
 	};
 
 	/*-------------PDF Creation--------------*/
+
+	this.createPDF = function(){
+		var pdf = new jsPDF('p', 'pt', 'letter'),
+		margins = {
+			top: 65,
+			bottom: 50,
+			left: 35,
+			right: 35,
+			width: 540
+		},
+		totalPages = this.pages.length,
+		newPage = angular.copy(this.page),
+		index = 0;
+
+		//reset this.page to be the first page of the book
+		this.currentPage = 1;
+		this.updatePage();
+
+		$interval((function(){
+
+			if(index != 0){
+				pdf.addPage();
+			}
+
+			if(this.page.pageType == 1){
+				console.log("Page "+index+" "+this.page.pageType);
+				this.pdfText(pdf, margins);
+				//text
+			}else if(this.page.pageType == 2){
+				console.log("Page "+index+" "+this.page.pageType);
+				this.pdfImage(pdf, margins);
+				//image
+			}else if(this.page.pageType == 3){
+				console.log("Page "+index+" "+this.page.pageType);
+				this.pdfTitle(pdf, margins);
+				//title
+			}else if(this.page.pageType == 4){
+				console.log("Page "+index+" "+this.page.pageType);
+				this.pdfTitleText(pdf, margins);
+				//title & text
+			}else if(this.page.pageType == 5){
+				console.log("Page "+index+" "+this.page.pageType);
+				this.pdfTitleImage(pdf, margins);
+				//title & image
+			};
+
+			if(index!=totalPages){
+				this.currentPage++;
+				this.updatePage();
+			}
+
+			index++;
+
+			if(index==totalPages){
+				pdf.output('dataurlnewwindow');
+				this.currentPage = 1;
+				this.updatePage();
+			}
+		
+		}).bind(this), 500, totalPages);
+		
+	};
 	
 	//Only Text
-	this.pdf = function(){
-		var pdf = new jsPDF('p', 'pt', 'letter')
-
+	this.pdfText = function(pdf, margins){
+		
 		// source can be HTML-formatted string, or a reference
 		// to an actual DOM element from which the text will be scraped.
-		, source = document.getElementById("page")
-
-		// we support special element handlers. Register them with jQuery-style 
-		// ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
-		// There is no support for any other type of selectors 
-		// (class, of compound) at this time.
-		, specialElementHandlers = {
-		    // element with id of "bypass" - jQuery style selector
-		    
-		}
-
-		margins = {
-		  top: 65,
-		  bottom: 50,
-		  left: 35,
-		  right: 35,
-		  width: 540
-		 };
+		var source = document.getElementById("page");
 
 		 // all coords and widths are in jsPDF instance's declared units
 		 // 'inches' in this case
@@ -361,8 +409,7 @@ angular.module('booksAR')
 		    margins.left, // x coord
 		    margins.top, // y coord
 		    {
-		        'width': margins.width, // max width of content on PDF
-		        'elementHandlers': specialElementHandlers
+		        'width': margins.width // max width of content on PDF
 		    },
 		    function (dispose) {
 		      // dispose: object with X, Y of the last line add to the PDF 
@@ -371,118 +418,66 @@ angular.module('booksAR')
 		    },
 		    margins
 		);
-
-		/*pdf.addPage();
-		pdf.fromHTML(
-		    source, // HTML string or DOM elem ref.
-		    margins.left, // x coord
-		    margins.top, // y coord
-		    {
-		        'width': margins.width, // max width of content on PDF
-		        'elementHandlers': specialElementHandlers
-		    },
-		    function (dispose) {
-		      // dispose: object with X, Y of the last line add to the PDF 
-		      //          this allow the insertion of new lines after html
-		    },
-		    margins
-		);*/
-
-		//console.log(pdf.getFontList());
-		pdf.output('dataurlnewwindow');     //opens the data uri in new window
 	};
 
 	//Only Image
-	this.pdfImage = function(){
-		var pdf = new jsPDF('p', 'pt', 'letter')
-
+	this.pdfImage = function(pdf, margins){
+		 
 		// source can be HTML-formatted string, or a reference
 		// to an actual DOM element from which the text will be scraped.
-		, imgData = document.getElementById("img")
+		var imgData = document.getElementById("img"),
 
 		// we support special element handlers. Register them with jQuery-style 
 		// ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
 		// There is no support for any other type of selectors 
 		// (class, of compound) at this time.
-		, specialElementHandlers = {
-		    // element with id of "bypass" - jQuery style selector
-		    
-		}
-
-		margins = {
-		  top: 65,
-		  bottom: 50,
-		  left: 35,
-		  right: 35,
-		  width: 540
-		 },
-
 		image = {
-			width: this.image.width*0.75,
-			height: this.image.height*0.75,
-			left: (this.image.left*0.75) + margins.left,
-			top: (this.image.top*0.75) + margins.top
+			width: this.page.image.width*0.75,
+			height: this.page.image.height*0.75,
+			left: (this.page.image.left*0.75) + margins.left,
+			top: (this.page.image.top*0.75) + margins.top
 		};
+
 		pdf.addImage(imgData, 'JPEG', image.left, image.top, image.width, image.height);
-		pdf.output('dataurlnewwindow');     //opens the data uri in new window
 	};
 
 	//Only Title
-	this.pdfTitle = function(){
-		var pdf = new jsPDF('p', 'pt', 'letter')
-
-		// we support special element handlers. Register them with jQuery-style 
-		// ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
-		// There is no support for any other type of selectors 
-		// (class, of compound) at this time.
-		, specialElementHandlers = {
-		    // element with id of "bypass" - jQuery style selector
-		    
-		}
-
-		margins = {
-		  top: 65,
-		  bottom: 50,
-		  left: 35,
-		  right: 35,
-		  width: 540
-		},
-
-		linesOffset = 0;
+	this.pdfTitle = function(pdf, margins){
+		var	linesOffset = 0;
 
 
 		//Font Size
-		if(this.pageStyle.titleSize == "270%"){
+		if(this.page.pageStyle.titleSize == "270%"){
 			pdf.setFontSize(26);
 			linesOffset = 32;
 		}
-		if(this.pageStyle.titleSize == "280%"){
+		if(this.page.pageStyle.titleSize == "280%"){
 			pdf.setFontSize(28);
 			linesOffset = 34;
 		}
-		if(this.pageStyle.titleSize == "290%"){
+		if(this.page.pageStyle.titleSize == "290%"){
 			pdf.setFontSize(30);
 			linesOffset = 36;
 		}
-		if(this.pageStyle.titleSize == "300%"){
+		if(this.page.pageStyle.titleSize == "300%"){
 			pdf.setFontSize(32);
 			linesOffset = 38;
 		}
-		if(this.pageStyle.titleSize == "320%"){
+		if(this.page.pageStyle.titleSize == "320%"){
 			pdf.setFontSize(34);
 			linesOffset = 40;
 		}
-		if(this.pageStyle.titleSize == "350%"){
+		if(this.page.pageStyle.titleSize == "350%"){
 			pdf.setFontSize(36);
 			linesOffset = 42;
 		}
 		
 		//Font Family
-		pdf.setFont(this.pageStyle.titleFont);
+		pdf.setFont(this.page.pageStyle.titleFont);
 
 
 		/*************** Center Text in Page********************/
-		var splitTitle = pdf.splitTextToSize(this.title, 540),
+		var splitTitle = pdf.splitTextToSize(this.page.title, 540),
 		lines = Math.floor(splitTitle.length / 2),
 		xOffset = 0,
 		yOffset = (pdf.internal.pageSize.height / 2) - (lines * linesOffset);
@@ -500,68 +495,50 @@ angular.module('booksAR')
 			pdf.text(splitTitle[i], xOffset, yOffset);
 
 			yOffset += linesOffset;
-		}
-
-		pdf.output('dataurlnewwindow');     //opens the data uri in new window
+		};
 
 	};
 
 	//Title & Text
-	this.pdfTitleText = function(){
-		var pdf = new jsPDF('p', 'pt', 'letter'),
-		source = document.getElementById("page"),
-
-		// we support special element handlers. Register them with jQuery-style 
-		// ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
-		// There is no support for any other type of selectors 
-		// (class, of compound) at this time.
-		specialElementHandlers = {
-		    // element with id of "bypass" - jQuery style selector
-		}
-
-		margins = {
-		  top: 85,
-		  bottom: 50,
-		  left: 35,
-		  right: 35,
-		  width: 540
-		},
-
+	this.pdfTitleText = function(pdf, margins){
+		// source can be HTML-formatted string, or a reference
+		// to an actual DOM element from which the text will be scraped.
+		var source = document.getElementById("page"),
 		linesOffset = 0;
 
 
 		//Title Font Size
-		if(this.pageStyle.titleSize == "270%"){
+		if(this.page.pageStyle.titleSize == "270%"){
 			pdf.setFontSize(26);
 			linesOffset = 32;
 		}
-		if(this.pageStyle.titleSize == "280%"){
+		if(this.page.pageStyle.titleSize == "280%"){
 			pdf.setFontSize(28);
 			linesOffset = 34;
 		}
-		if(this.pageStyle.titleSize == "290%"){
+		if(this.page.pageStyle.titleSize == "290%"){
 			pdf.setFontSize(30);
 			linesOffset = 36;
 		}
-		if(this.pageStyle.titleSize == "300%"){
+		if(this.page.pageStyle.titleSize == "300%"){
 			pdf.setFontSize(32);
 			linesOffset = 38;
 		}
-		if(this.pageStyle.titleSize == "320%"){
+		if(this.page.pageStyle.titleSize == "320%"){
 			pdf.setFontSize(34);
 			linesOffset = 40;
 		}
-		if(this.pageStyle.titleSize == "350%"){
+		if(this.page.pageStyle.titleSize == "350%"){
 			pdf.setFontSize(36);
 			linesOffset = 42;
 		}
 		
 		//Title Font Family
-		pdf.setFont(this.pageStyle.titleFont);
+		pdf.setFont(this.page.pageStyle.titleFont);
 
 
 		/*************** Center Text in Page********************/
-		var splitTitle = pdf.splitTextToSize(this.title, 540),
+		var splitTitle = pdf.splitTextToSize(this.page.title, 540),
 		lines = Math.floor(splitTitle.length / 2),
 		xOffset = 0,
 		yOffset = margins.top;
@@ -576,7 +553,7 @@ angular.module('booksAR')
 			pdf.text(splitTitle[i], xOffset, yOffset);
 
 			yOffset += linesOffset;
-		}
+		};
 
 		yOffset -= linesOffset*2; //reset margin top to fit page
 
@@ -586,8 +563,7 @@ angular.module('booksAR')
 		    margins.left, // x coord
 		    yOffset - 15, // y coord
 		    {
-		        'width': margins.width, // max width of content on PDF
-		        'elementHandlers': specialElementHandlers
+		        'width': margins.width // max width of content on PDF
 		    },
 		    function (dispose) {
 		      // dispose: object with X, Y of the last line add to the PDF 
@@ -597,66 +573,45 @@ angular.module('booksAR')
 		    margins
 		);
 
-		pdf.output('dataurlnewwindow');     //opens the data uri in new window
-
 	};
 
 
 	// Title & Image
-	this.pdfTitleImage = function(){
+	this.pdfTitleImage = function(pdf, margins){
 
-		var pdf = new jsPDF('p', 'pt', 'letter')
-
-		// we support special element handlers. Register them with jQuery-style 
-		// ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
-		// There is no support for any other type of selectors 
-		// (class, of compound) at this time.
-		, specialElementHandlers = {
-		    // element with id of "bypass" - jQuery style selector
-		    
-		}
-
-		margins = {
-		  top: 85,
-		  bottom: 50,
-		  left: 35,
-		  right: 35,
-		  width: 540
-		},
-
-		linesOffset = 0,
+		var linesOffset = 0,
 
 		imgData = document.getElementById("img"),
 
 		image = {
-			width: this.image.width*0.75,
-			height: this.image.height*0.75,
-			left: (this.image.left*0.75) + margins.left,
-			top: (this.image.top*0.75)
+			width: this.page.image.width*0.75,
+			height: this.page.image.height*0.75,
+			left: (this.page.image.left*0.75) + margins.left,
+			top: (this.page.image.top*0.75)
 		};
 
 		//Font Size
-		if(this.pageStyle.titleSize == "270%"){
+		if(this.page.pageStyle.titleSize == "270%"){
 			pdf.setFontSize(26);
 			linesOffset = 32;
 		}
-		if(this.pageStyle.titleSize == "280%"){
+		if(this.page.pageStyle.titleSize == "280%"){
 			pdf.setFontSize(28);
 			linesOffset = 34;
 		}
-		if(this.pageStyle.titleSize == "290%"){
+		if(this.page.pageStyle.titleSize == "290%"){
 			pdf.setFontSize(30);
 			linesOffset = 36;
 		}
-		if(this.pageStyle.titleSize == "300%"){
+		if(this.page.pageStyle.titleSize == "300%"){
 			pdf.setFontSize(32);
 			linesOffset = 38;
 		}
-		if(this.pageStyle.titleSize == "320%"){
+		if(this.page.pageStyle.titleSize == "320%"){
 			pdf.setFontSize(34);
 			linesOffset = 40;
 		}
-		if(this.pageStyle.titleSize == "350%"){
+		if(this.page.pageStyle.titleSize == "350%"){
 			pdf.setFontSize(36);
 			linesOffset = 42;
 		}
@@ -664,11 +619,11 @@ angular.module('booksAR')
 		image.top += linesOffset;
 		
 		//Font Family
-		pdf.setFont(this.pageStyle.titleFont);
+		pdf.setFont(this.page.pageStyle.titleFont);
 
 
 		/*************** Center Text in Page********************/
-		var splitTitle = pdf.splitTextToSize(this.title, 540),
+		var splitTitle = pdf.splitTextToSize(this.page.title, 540),
 		lines = Math.floor(splitTitle.length / 2),
 		xOffset = 0,
 		yOffset = margins.top;
@@ -684,13 +639,11 @@ angular.module('booksAR')
 			pdf.text(splitTitle[i], xOffset, yOffset);
 
 			yOffset += linesOffset;
-		}
+		};
 
 		yOffset -= linesOffset;
 
 		pdf.addImage(imgData, 'JPEG', image.left, yOffset + image.top, image.width, image.height+14); //+14 is to set image height in proportion to web page
-
-		pdf.output('dataurlnewwindow');     //opens the data uri in new window
 
 	};
 
@@ -712,7 +665,7 @@ angular.module('booksAR')
         });
     };
     
-    this.f = {};
+
     this.uploadContent = function(file){
     	Upload.upload({
             url: '',
@@ -729,9 +682,29 @@ angular.module('booksAR')
         });
     };
 
+    this.uploadTexture = function(file){
+    	Upload.upload({
+            url: '',
+            data: {file: file}
+        }).then(function (response) {
+            $timeout(function () {
+                file.result = response.data;
+            });
+        }, function (response) {
+            if (response.status > 0)
+                $scope.errorMsg = response.status + ': ' + response.data;
+        }, function (evt) {
+            file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+        });
+    };
+
     var setFiles = (function(data){
+    	//marker Path
     	this.page.image.markerPath = data.markerPath;
+    	//content Path
     	this.page.image.contentPath = data.contentPath;
+    	//texture Path
+    	this.page.image.texturePath = data.texturePath;
     }).bind(this);
 
     this.sendFiles = function(){    	
@@ -740,9 +713,18 @@ angular.module('booksAR')
     	var token = tokenService.getToken(),
 		id = Book.data.id,
 		data = new FormData();
+		console.log(this.page.image);
 
 	    data.append('marker', this.image);
+	   	data.append('markerPath', this.page.image.markerPath);
+
 	    data.append('content', this.ARContent);
+	    data.append('contentPath', this.page.image.contentPath);
+
+	    if(this.texture){
+	    	data.append('texture', this.texture);
+	   		data.append('texturePath', this.page.image.texturePath);
+	    }
 
 		contentService.addContent(token, id, data).then(function successCallback(response) {
 			setFiles(response.data.data);
@@ -755,7 +737,25 @@ angular.module('booksAR')
 
     this.resetMarkerFile = function(){
     	this.ARContent = null;
+    	this.texture = null;
     };
+
+    this.saveBook = function(){
+    	angular.copy(this.page, this.pages[this.currentPage-1]);
+    	var token = tokenService.getToken(),
+		id = Book.data.id;
+
+    	bookService.saveBook(token, id, {pages: this.pages}).then(function successCallback(response) {
+			console.log('book has been saved');
+		}, function errorCallback(response) {
+			//error
+			console.log(response.data.data.message);
+		});
+    };
+
+    this.goTo = function(route){
+    	$state.go(route);
+    }
      
     //verify user has logged in
 	if(verifySession){

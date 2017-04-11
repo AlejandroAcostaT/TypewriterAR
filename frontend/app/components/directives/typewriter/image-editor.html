@@ -13,15 +13,22 @@
 	</select>
 </div>
 
-<button class="btn btn-default btn-lg btn-block" ng-model="typewriterCtrl.ARContent" ng-show="typewriterCtrl.page.image.contentType == 'image'" ngf-pattern="'.jpg,.jpeg,.png'" ngf-select="uploadContent(file)">Select AR Content File</button> 
+<br>
 
-<button class="btn btn-default btn-lg btn-block" ng-model="typewriterCtrl.ARContent" ng-show="typewriterCtrl.page.image.contentType == 'video'" ngf-pattern="'.3gp,.mp4'" ngf-select="uploadImage(file)">Select AR Content File</button> 
+<button class="btn btn-default btn-lg btn-block" ng-model="typewriterCtrl.ARContent" ng-show="typewriterCtrl.page.image.contentType == 'image'" ngf-pattern="'.jpg,.jpeg,.png'" ngf-select="uploadContent(file)">Select AR Image File</button> 
 
-<button class="btn btn-default btn-lg btn-block" ng-model="typewriterCtrl.ARContent" ng-show="typewriterCtrl.page.image.contentType == 'audio'" ngf-pattern="'.wav,.mp3'" ngf-select="uploadContent(file)">Select AR Content File</button>
+<button class="btn btn-default btn-lg btn-block" ng-model="typewriterCtrl.ARContent" ng-show="typewriterCtrl.page.image.contentType == 'video'" ngf-pattern="'.3gp,.mp4'" ngf-select="uploadImage(file)">Select AR Video File</button> 
 
-<button class="btn btn-default btn-lg btn-block" ng-model="typewriterCtrl.ARContent" ng-show="typewriterCtrl.page.image.contentType == 'object'" ngf-pattern="'.jet'" ngf-select="uploadContent(file)">Select AR Content File</button>
+<button class="btn btn-default btn-lg btn-block" ng-model="typewriterCtrl.ARContent" ng-show="typewriterCtrl.page.image.contentType == 'audio'" ngf-pattern="'.wav,.mp3'" ngf-select="uploadContent(file)">Select AR Audio File</button>
+
+<button class="btn btn-default btn-lg btn-block" ng-model="typewriterCtrl.ARContent" ng-show="typewriterCtrl.page.image.contentType == 'object'" ngf-pattern="'.jet'" ngf-select="uploadContent(file)">Select AR 3D Object File</button>
+<button class="btn btn-default btn-lg btn-block" ng-model="typewriterCtrl.texture" ng-show="typewriterCtrl.page.image.contentType == 'object'" ngf-pattern="'.jpg,.jpeg,.png'" ngf-select="uploadTexture(file)">Select Object Texture File</button>
+
 <br><br>
-<button type='submit' class="btn btn-default btn-lg btn-block" ng-click="typewriterCtrl.sendFiles()" ng-disabled="!typewriterCtrl.image || !typewriterCtrl.ARContent">Upload Files</button>
+
+<button type='submit' class="btn btn-default btn-lg btn-block" ng-show="typewriterCtrl.page.image.contentType != 'object'" ng-click="typewriterCtrl.sendFiles()" ng-disabled="!typewriterCtrl.image || !typewriterCtrl.ARContent">Upload Files</button>
+
+<button type='submit' class="btn btn-default btn-lg btn-block" ng-show="typewriterCtrl.page.image.contentType == 'object'" ng-click="typewriterCtrl.sendFiles()" ng-disabled="!typewriterCtrl.image || !typewriterCtrl.ARContent || !typewriterCtrl.texture">Upload Files</button>
 
 <h3>Image Dimension</h3>
 <div class="form-group">
