@@ -3,6 +3,9 @@
 <!--/.Header Navbar -->
 
 <!-- Content -->
+<div uib-alert class="alert-success alertFixed" close="typewriterCtrl.closeSuccessAlert()" ng-if="typewriterCtrl.alertSuccess.show" dismiss-on-timeout="2000">{{typewriterCtrl.alertSuccess.msg}}</div >
+		
+<div uib-alert class="alert-danger alertFixed" close="typewriterCtrl.closeDangerAlert()" ng-if="typewriterCtrl.alertDanger.show" dismiss-on-timeout="2000">{{typewriterCtrl.alertDanger.msg}}</div >
 
 <div class="row pageTypeMenu">
 

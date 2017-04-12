@@ -7,19 +7,59 @@
 ********************************************************/
 
 /********************************************************
-*						Clases							*
+*														*
+*				  According to Database					*
+*														*
 ********************************************************/
 
-[User|id: Int; name: String; lastName: String; username: String; password: String]
+/********************************************************
+*						Classes							*
+********************************************************/
 
-[Session|id: Int; idUser: Int; Falta: String(web - movil)]
+[User|id: Int; name: String; lastName: String; username: String; password: String; email: String]
 
-[Book|id: Int; title: String; description: String; cover: String(url - image); pages: String(url - json); pdf: String(url - pdf); idUser: Int;]
+[Session|id: Int; username: String; type: String(web - mobile)]
+
+[Book|id: Int; title: String; description: String; cover: String(url - image); pages: String(url - json); pdf: String(url - pdf); publish: Boolean; idUser: Int;]
 
 /********************************************************
-*						Relaciones						*
+*						Relations						*
 ********************************************************/
 
 [User]1-0..2[Session]
 
 [User]1-0..*[Book]
+
+
+
+/********************************************************
+*														*
+*				  According to Objects					*
+*														*
+********************************************************/
+
+/********************************************************
+*						Classes							*
+********************************************************/
+
+[User|name: String; lastName: String; username: String; password: String; email: String]
+
+[Session|username: String; type: String(web - mobile)]
+
+[Book|title: String; description: String; publish: Boolean;]
+
+[Page|text: String; paragraphs: Array of String; title: String; pageType: String; pageStyle: Object; image: Object;]
+
+[AR Content|type: String; content: file;]
+
+/********************************************************
+*						Relations						*
+********************************************************/
+
+[User]1-0..2[Session]
+
+[User]1-0..*[Book]
+
+[Book]1-1..*[Page]
+
+[Page]1-0..*[AR Content]

@@ -7,7 +7,9 @@ angular.module('booksAR')
 	this.user = {};
 
 	// log in user
-	this.loginUser = {};
+	this.loginUser = {
+		device: "web"
+	};
 
 	// error to show in alert
 	this.err = {
@@ -25,7 +27,8 @@ angular.module('booksAR')
 
 			var login = {
 				username: user.username,
-				password: user.password
+				password: user.password,
+				device : "web"
 			}
 
 			sessionService.logIn(login).then(function successCallback(response) {
@@ -121,12 +124,11 @@ angular.module('booksAR')
 		var error = this.err;
 
 		sessionService.logIn(this.loginUser).then(function successCallback(response) {
-			console.log(response.data.data.token);
 
 			tokenService.setToken(response.data.data.token);
 			tokenService.setUser(response.data.data.user);
 
-			console.log(tokenService.getToken());
+			console.log('HOME: '+tokenService.getToken());
 
 			$state.go('book');
 		}, function errorCallback(response) {

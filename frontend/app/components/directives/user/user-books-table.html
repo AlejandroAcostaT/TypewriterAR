@@ -26,7 +26,7 @@
 					<span ng-show="book.publish" class="glyphicon glyphicon-check" aria-hidden="true"></span>
 					<span ng-show="!book.publish" class="glyphicon glyphicon-unchecked" aria-hidden="true"></span>
 				</td>
-				<td class="center icon"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></td>
+				<td class="center icon"><span class="glyphicon glyphicon-download-alt" aria-hidden="true" ng-click="userCtrl.downloadBook(book)"></span></td>
 				<td class="center icon" ng-confirm-click="Are you sure you want to delete this book?" confirmed-click="userCtrl.deleteBook(book)">
 					<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 				</td>

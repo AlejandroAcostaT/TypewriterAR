@@ -50,6 +50,45 @@ angular.module('booksAR')
 		sessionService.logOut();
 	};
 
+	//ALERTS
+	this.alertSuccess = { 
+		show: false,
+	 	msg: '' 
+	};
+
+	this.alertDanger = {
+		show: false,
+	 	msg: '' 
+	};
+
+	this.closeSuccessAlert = function(){
+		this.alertSuccess.show = false;
+		this.alertSuccess.msg = '';
+	};
+
+	this.showSuccessAlert = function(msg){
+		this.alertSuccess.show = true;
+		this.alertSuccess.msg = msg;
+	};
+
+	this.closeDangerAlert = function(){
+		this.alertDanger.show = false;
+		this.alertDanger.msg = '';
+	};
+
+	this.showDangerAlert = function(msg){
+		this.alertDanger.show = true;
+		this.alertDanger.msg = msg;
+	};
+
+	var showSuccessMessage = (function(msg){
+		this.showSuccessAlert(msg);
+	}).bind(this);
+
+	var showDangerMessage = (function(msg){
+		this.showDangerAlert(msg);
+	}).bind(this);
+
 
 	/*-------------Add & Delete Pages--------------*/
 	//Add page
@@ -139,6 +178,7 @@ angular.module('booksAR')
 			}
 		}
 		
+		showSuccessMessage('Page has been deleted!');
 		
 	};
 
@@ -320,7 +360,8 @@ angular.module('booksAR')
 		rect = document.getElementById("page").getElementsByTagName("P")[index].getBoundingClientRect(),
 		length = this.page.paragraphs.length;
 		if(rect.bottom > limit){
-			this.paragraphs.splice(index, length-index);
+			this.page.paragraphs.splice(index, length-index);
+			showDangerMessage('There is too much content in this page. Some data has been deleted!');
 			return false;
 		}else{
 			return true;
@@ -342,8 +383,10 @@ angular.module('booksAR')
 
     	bookService.savePDF(token, id, data).then(function successCallback(response) {
 			console.log('book pdf has been created');
+			showSuccessMessage('Book PDF file has been created!');
 		}, function errorCallback(response) {
 			//error
+			showDangerMessage(response.data.data.message);
 			console.log(response.data.data.message);
 		});
 	};
@@ -372,23 +415,18 @@ angular.module('booksAR')
 			}
 
 			if(this.page.pageType == 1){
-				console.log("Page "+index+" "+this.page.pageType);
 				this.pdfText(pdf, margins);
 				//text
 			}else if(this.page.pageType == 2){
-				console.log("Page "+index+" "+this.page.pageType);
 				this.pdfImage(pdf, margins);
 				//image
 			}else if(this.page.pageType == 3){
-				console.log("Page "+index+" "+this.page.pageType);
 				this.pdfTitle(pdf, margins);
 				//title
 			}else if(this.page.pageType == 4){
-				console.log("Page "+index+" "+this.page.pageType);
 				this.pdfTitleText(pdf, margins);
 				//title & text
 			}else if(this.page.pageType == 5){
-				console.log("Page "+index+" "+this.page.pageType);
 				this.pdfTitleImage(pdf, margins);
 				//title & image
 			};
@@ -680,7 +718,6 @@ angular.module('booksAR')
 
     // upload on file select or drop
     this.uploadImage = function (file) {
-    	console.log('doing something');
         Upload.upload({
             url: '',
             data: {file: file}
@@ -736,12 +773,9 @@ angular.module('booksAR')
     }).bind(this);
 
     this.sendFiles = function(){    	
-    	console.log(this.image);
-    	console.log(this.ARContent);
     	var token = tokenService.getToken(),
 		id = Book.data.id,
 		data = new FormData();
-		console.log(this.page.image);
 
 	    data.append('marker', this.image);
 	   	data.append('markerPath', this.page.image.markerPath);
@@ -755,10 +789,12 @@ angular.module('booksAR')
 	    }
 
 		contentService.addContent(token, id, data).then(function successCallback(response) {
+			showSuccessMessage('The files has been uploaded!');
 			setFiles(response.data.data);
 			
 		}, function errorCallback(response) {
 			//error
+			showDangerMessage(response.data.data.message);
 			console.log(response.data.data.message);
 		});
     };
@@ -774,9 +810,11 @@ angular.module('booksAR')
 		id = Book.data.id;
 
     	bookService.saveBook(token, id, {pages: this.pages}).then(function successCallback(response) {
+    		showSuccessMessage('Book has been saved!');
 			console.log('book has been saved');
 		}, function errorCallback(response) {
 			//error
+			showDangerMessage(response.data.data.message);
 			console.log(response.data.data.message);
 		});
     };
@@ -786,7 +824,7 @@ angular.module('booksAR')
     }
      
     //verify user has logged in
-	if(verifySession){
+	if(verifySession==''){
 		$state.go('home');
 	}
 

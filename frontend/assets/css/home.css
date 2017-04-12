@@ -40,6 +40,10 @@ body.typewriter-page{
 /*PAGE STYLES
 -------------------------------------------------- */
 
+.container{
+  width: 70%;
+}
+
 .header{
   height: 10%;
   position: relative;

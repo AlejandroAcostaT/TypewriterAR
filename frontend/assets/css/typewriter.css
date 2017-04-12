@@ -36,7 +36,7 @@
 }
 
 .page{
-	border:1px solid #000;
+	border:2px solid #000;
 	padding: 60pt 40pt 50pt 40pt;
 	width: 622pt;
 	height: 782pt;
@@ -141,12 +141,6 @@ select:active, select:hover {
 	margin-right: 5%;
 	margin-left: 5%;
 }
-
-
-
-
-
-
 
 .progress {
     display: inline-block;

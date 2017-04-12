@@ -23,6 +23,44 @@ angular.module('booksAR')
 	this.bookUpdate = false;
 	this.updBook = {};
 
+	//ALERTS
+	this.alertSuccess = { 
+		show: false,
+	 	msg: '' 
+	};
+
+	this.alertDanger = {
+		show: false,
+	 	msg: '' 
+	};
+
+	this.closeSuccessAlert = function(){
+		this.alertSuccess.show = false;
+		this.alertSuccess.msg = '';
+	};
+
+	this.showSuccessAlert = function(msg){
+		this.alertSuccess.show = true;
+		this.alertSuccess.msg = msg;
+	};
+
+	this.closeDangerAlert = function(){
+		this.alertDanger.show = false;
+		this.alertDanger.msg = '';
+	};
+
+	this.showDangerAlert = function(msg){
+		this.alertDanger.show = true;
+		this.alertDanger.msg = msg;
+	};
+
+	var showSuccessMessage = (function(msg){
+		this.showSuccessAlert(msg);
+	}).bind(this);
+
+	var showDangerMessage = (function(msg){
+		this.showDangerAlert(msg);
+	}).bind(this);
 
 	// User functions
 
@@ -57,14 +95,17 @@ angular.module('booksAR')
 			userService.getUser(token, id).then(function successCallback(response) {
 
 				setUser(response.data.data);
+				showSuccessMessage('User has been updated!');
 
 			}, function errorCallback(response) {
 				//error
+				showDangerMessage(response.data.data.message);
 				console.log(response.data.data.message);
 			});
 			
 		}, function errorCallback(response) {
 			//error
+			showDangerMessage(response.data.data.message);
 			console.log(response.data.data.message);
 		});
 
@@ -80,21 +121,30 @@ angular.module('booksAR')
 	this.publishBook = function(book){
 		var token = tokenService.getToken(),
 		bookId = book.id,
-		userId = this.user.id;
+		userId = this.user.id,
+		bookPublish = book.publish;
 
 		bookService.publishBook(token, bookId).then(function successCallback(response) {
 
 			userService.getUser(token, userId).then(function successCallback(response) {
-
+				
+				if(bookPublish == true){
+					showSuccessMessage('Book has been unpublished!');
+				}else{
+					showSuccessMessage('Book has been published!');
+				}
+				
 				setUser(response.data.data);
 
 			}, function errorCallback(response) {
 				//error
+				showDangerMessage(response.data.data.message);
 				console.log(response.data.data.message);
 			});
 			
 		}, function errorCallback(response) {
 			//error
+			showDangerMessage(response.data.data.message);
 			console.log(response.data.data.message);
 		});
 	};
@@ -108,15 +158,18 @@ angular.module('booksAR')
 
 			userService.getUser(token, userId).then(function successCallback(response) {
 
+				showSuccessMessage('Book has been deleted!');
 				setUser(response.data.data);
 
 			}, function errorCallback(response) {
 				//error
+				showDangerMessage(response.data.data.message);
 				console.log(response.data.data.message);
 			});
 			
 		}, function errorCallback(response) {
 			//error
+			showDangerMessage(response.data.data.message);
 			console.log(response.data.data.message);
 		});
 	};
@@ -154,16 +207,19 @@ angular.module('booksAR')
 
 			userService.getUser(token, id).then(function successCallback(response) {
 
+				showSuccessMessage('Book has been created!');
 				setUser(response.data.data);
 				bookCreated();
 
 			}, function errorCallback(response) {
 				//error
+				showDangerMessage(response.data.data.message);
 				console.log(response.data.data.message);
 			});
 			
 		}, function errorCallback(response) {
 			//error
+			showDangerMessage(response.data.data.message);
 			console.log(response.data.data.message);
 		});
 
@@ -199,16 +255,19 @@ angular.module('booksAR')
 
 			userService.getUser(token, idUser).then(function successCallback(response) {
 
+				showSuccessMessage('Book has been updated!');
 				setUser(response.data.data);
 				bookUpdated();
 
 			}, function errorCallback(response) {
 				//error
+				showDangerMessage(response.data.data.message);
 				console.log(response.data.data.message);
 			});
 			
 		}, function errorCallback(response) {
 			//error
+			showDangerMessage(response.data.data.message);
 			console.log(response.data.data.message);
 		});
 
@@ -226,13 +285,36 @@ angular.module('booksAR')
 		this.bookUpdate = false;
 	};
 
+	this.downloadBook =function(book){
+		var token = tokenService.getToken(),
+		id = book.id,
+		title = book.title;
+		bookService.downloadBook(token, id).then(function successCallback(response) {
+			var file = new Blob([response.data], {type: 'application/pdf'});
+       		//var fileURL = URL.createObjectURL(file);
+       		//window.open(fileURL);
+       		var blobURL = (window.URL || window.webkitURL).createObjectURL(file);
+			var anchor = document.createElement("a");
+			anchor.download = title+".pdf";
+			anchor.href = blobURL;
+			anchor.click();
+
+			showSuccessMessage('Your download should start soon!');
+
+		}, function errorCallback(response) {
+			//error
+			showDangerMessage(response.data.data.message);
+			console.log(response.data.data.message);
+		});
+	};
+
 	this.goToTypewriter = function(book){
 		bookService.setBookData(book);
 		$state.go('typewriter', {id: book.id});
 	}
 
 	//verify user has logged in
-	if(verifySession){
+	if(verifySession==''){
 		$state.go('home');
 	}
 

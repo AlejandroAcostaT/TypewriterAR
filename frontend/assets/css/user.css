@@ -56,3 +56,17 @@
 	max-height: 90px;
 	margin-left: 5%;
 }
+
+.alertFixed{
+	position: fixed;
+	width: 90%;
+	margin-top: 0.5%;
+	margin-bottom: 1%;
+	margin-left: 5%;
+	
+	z-index:9999;
+}
+
+.userTables{
+	margin-top: 1%;
+}

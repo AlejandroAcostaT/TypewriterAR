@@ -97,44 +97,12 @@ angular.module('booksAR')
 		sessionService.logOut();
 	};
 
-	//verify user has logged in
-	if(verifySession){
-		$state.go('home');
-	}
-
-	//set books
-	this.getBooks();
-
-	this.downloadBook =function(){
-		var token = tokenService.getToken(),
-		id = this.bookDetail.id,
-		title = this.bookDetail.title;
-		bookService.downloadBook(token, id).then(function successCallback(response) {
-
-			console.log(response.data);
-
-			var file = new Blob([response.data], {type: 'application/pdf'});
-       		//var fileURL = URL.createObjectURL(file);
-       		//window.open(fileURL);
-       		var blobURL = (window.URL || window.webkitURL).createObjectURL(file);
-			var anchor = document.createElement("a");
-			anchor.download = title+".pdf";
-			anchor.href = blobURL;
-			anchor.click();
-			
-
-		}, function errorCallback(response) {
-			//error
-			console.log(response.data.data.message);
-		});
-	};
-
 	this.downloadBook =function(book){
 		var token = tokenService.getToken(),
 		id = book.id,
 		title = book.title;
 		bookService.downloadBook(token, id).then(function successCallback(response) {
-
+			console.log("AAAAA");
 			var file = new Blob([response.data], {type: 'application/pdf'});
        		//var fileURL = URL.createObjectURL(file);
        		//window.open(fileURL);
@@ -149,5 +117,13 @@ angular.module('booksAR')
 			console.log(response.data.data.message);
 		});
 	};
+
+	//verify user has logged in
+	if(verifySession==''){
+		$state.go('home');
+	}
+
+	//set books
+	this.getBooks();
 
 });

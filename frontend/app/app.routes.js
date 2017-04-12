@@ -20,10 +20,11 @@ angular.module('booksAR')
             controllerAs: 'typewriterCtrl',
             resolve: {
                 verifySession:  function(tokenService){
+                    return tokenService.getToken();
                     console.log(tokenService.getToken());
-                    return tokenService.getToken()=="";
                 },
                 Book:  function(tokenService, bookService){
+                    console.log(tokenService.getToken());
                     return bookService.getBook(tokenService.getToken(), bookService.getBookData().id).then(function successCallback(response) {
                         return response.data;
 
@@ -42,8 +43,8 @@ angular.module('booksAR')
             controllerAs: 'userCtrl',
             resolve: {
                 verifySession:  function(tokenService){
-                    console.log(tokenService.getToken());
-                    return tokenService.getToken()=="";
+                    //console.log(tokenService.getToken());
+                    return tokenService.getToken();
                 }
             }
         })
@@ -54,8 +55,8 @@ angular.module('booksAR')
             controllerAs: 'bookCtrl',
             resolve: {
                 verifySession:  function(tokenService){
-                    console.log(tokenService.getToken());
-                    return tokenService.getToken()=="";
+                    console.log('Book RESOLVE: '+tokenService.getToken());
+                    return tokenService.getToken();
                 }
             }
         });
