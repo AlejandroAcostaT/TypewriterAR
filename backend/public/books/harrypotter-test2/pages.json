@@ -1,0 +1,26 @@
+[
+  {
+    "pageType": 3,
+    "text": "",
+    "paragraphs": "",
+    "title": "Titulo de prueba",
+    "pageStyle": {
+      "textSize": "100%",
+      "titleSize": "270%",
+      "weight": "normal",
+      "style": "normal",
+      "textFont": "times",
+      "titleFont": "times"
+    },
+    "image": {
+      "width": 720,
+      "height": 880,
+      "left": 0,
+      "top": 0,
+      "contentType": "image",
+      "markerPath": "",
+      "contentPath": "",
+      "texturePath": ""
+    }
+  }
+]

@@ -94,11 +94,13 @@ module.exports = {
 	*		Parameters: 								  *
 	*			- username 		: string (body)		 	  *
 	*			- password 		: string (body)		 	  *
+	*			- device 		: string (body)		 	  *
 	******************************************************/
 
 	createSession :  function(req, res){
 		var password = req.body.password,
-			username = req.body.username;
+			username = req.body.username,
+			device	 = req.body.device; // "web" or "mobile"
  		
 		async.series({
 		    verifyUser: function(callback) {
@@ -143,13 +145,16 @@ module.exports = {
 		    	//Creating Session in database
 				Session.forge({
 					username: username,
-					type: "web"
+					type: device
 				})
 				.save()
 				.then(function(session){
 					//create token
 					var date  	= new Date(),
-					 	token 	= jwt.sign({
+						token 	= {};
+
+					if(device=='web'){
+						token 	= jwt.sign({
 											username: username,
 										 	sessionId: session.get('id'),
 										 	date: date
@@ -158,6 +163,16 @@ module.exports = {
 										{
 								         	expiresIn: '24h' // expires in 24 hours
 								        });
+					}else if(device=='mobile'){
+						token 	= jwt.sign({
+											username: username,
+										 	sessionId: session.get('id'),
+										 	date: date
+										},
+										config.secret
+										);
+					}
+					 	
 					//pass token to callback
 					callback(null, token);
 				})
