@@ -22,7 +22,7 @@
 		      	<div class="caption">
 			        <h2>{{book.title}}</h2>
 			        <h4> -{{book.user.name}} {{book.user.lastName}}</h4>
-			        	<button href="" class="btn btn-primary inline" role="button">
+			        	<button href="" class="btn btn-primary inline" role="button"  ng-click="bookCtrl.downloadBook(book)">
 			        		Download <span class="glyphicon glyphicon-download-alt button-icon" aria-hidden="true"></span>
 			        	</button>   
 			        	<button href="" class="btn btn-primary btnInverted inline" role="button" ng-click="bookCtrl.selectedBook(book)">
@@ -45,7 +45,7 @@
 			<h3>Author: {{bookCtrl.bookDetail.user.name}} {{bookCtrl.bookDetail.user.lastName}} / @{{bookCtrl.bookDetail.user.username}}</h3>
 			<h4>Description:</h4>
 			<p class="newLines">{{bookCtrl.bookDetail.description}}</p>
-			<button href="" class="btn btn-primary inline" role="button">
+			<button href="" class="btn btn-primary inline" role="button" ng-click="bookCtrl.downloadBook(bookCtrl.bookDetail)">
 	    		Download <span class="glyphicon glyphicon-download-alt button-icon" aria-hidden="true"></span>
 	    	</button>   
 	    	<button href="" class="btn btn-primary btnInverted inline" role="button" ng-click="bookCtrl.deselectBook()">

@@ -1,0 +1,25 @@
+/********************************************************
+*														*
+*				Project Class Diagram					*
+*			Web Page to See Diagram: yuml.me			*
+*				Author: Alejandro Acosta				*
+*														*
+********************************************************/
+
+/********************************************************
+*						Clases							*
+********************************************************/
+
+[User|id: Int; name: String; lastName: String; username: String; password: String]
+
+[Session|id: Int; idUser: Int; Falta: String(web - movil)]
+
+[Book|id: Int; title: String; description: String; cover: String(url - image); pages: String(url - json); pdf: String(url - pdf); idUser: Int;]
+
+/********************************************************
+*						Relaciones						*
+********************************************************/
+
+[User]1-0..2[Session]
+
+[User]1-0..*[Book]

@@ -333,6 +333,21 @@ angular.module('booksAR')
 
 	/*-------------PDF Creation--------------*/
 
+	this.uploadPDF = function(blob){
+		var token = tokenService.getToken(),
+		id = Book.data.id,
+		data = new FormData();
+
+	    data.append('pdf', blob);
+
+    	bookService.savePDF(token, id, data).then(function successCallback(response) {
+			console.log('book pdf has been created');
+		}, function errorCallback(response) {
+			//error
+			console.log(response.data.data.message);
+		});
+	};
+
 	this.createPDF = function(){
 		var pdf = new jsPDF('p', 'pt', 'letter'),
 		margins = {
@@ -386,7 +401,12 @@ angular.module('booksAR')
 			index++;
 
 			if(index==totalPages){
-				pdf.output('dataurlnewwindow');
+				var blob = pdf.output('blob');
+				this.uploadPDF(blob);
+
+				//pdf.output('dataurlnewwindow');
+				pdf.save(Book.data.title+".pdf");
+
 				this.currentPage = 1;
 				this.updatePage();
 			}
@@ -420,9 +440,18 @@ angular.module('booksAR')
 		);
 	};
 
+	function getBase64Image(img) {
+		var canvas = document.createElement("canvas");
+		canvas.width = img.width;
+		canvas.height = img.height;
+		var ctx = canvas.getContext("2d");
+		ctx.drawImage(img, 0, 0);
+		var dataURL = canvas.toDataURL("image/png");
+		return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+	}
+
 	//Only Image
 	this.pdfImage = function(pdf, margins){
-		 
 		// source can be HTML-formatted string, or a reference
 		// to an actual DOM element from which the text will be scraped.
 		var imgData = document.getElementById("img"),
@@ -437,6 +466,7 @@ angular.module('booksAR')
 			left: (this.page.image.left*0.75) + margins.left,
 			top: (this.page.image.top*0.75) + margins.top
 		};
+
 
 		pdf.addImage(imgData, 'JPEG', image.left, image.top, image.width, image.height);
 	};
@@ -490,8 +520,6 @@ angular.module('booksAR')
 			xOffset = xOffset > 0 ? xOffset : margins.left;
 
 			//Write Title
-			console.log(pdf.internal.getFontSize());
-
 			pdf.text(splitTitle[i], xOffset, yOffset);
 
 			yOffset += linesOffset;

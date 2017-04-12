@@ -66,6 +66,23 @@ angular.module('booksAR')
 		});
 	};
 
+	var savePDF= function(token, id, data){ 
+		return $http.put(API.address + "books/" + id + "/pdf", data, {
+			headers: {'token': token,
+					  'Content-Type': undefined
+					}
+			});
+	};
+
+	var downloadBook= function(token, id){
+		return $http.get(API.address + "books/" + id + "/pdf", {
+	    	headers: {'token': token,
+	    			  'Accept': "Content-Type/pdf"
+	    			 },
+	    	responseType: 'arraybuffer'
+		});
+	};
+
 	return {
 	    createBook: createBook,
 	    getAllBooks: getAllBooks,
@@ -76,7 +93,9 @@ angular.module('booksAR')
 	    getBookData: getBookData,
 	    setBookData: setBookData,
 	    deleteBookData: deleteBookData,
-	    saveBook: saveBook
+	    saveBook: saveBook,
+	    savePDF: savePDF,
+	    downloadBook: downloadBook
     };
 	
 });
