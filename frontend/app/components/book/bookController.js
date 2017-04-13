@@ -103,7 +103,7 @@ angular.module('booksAR')
 		id = book.id,
 		title = book.title;
 		bookService.downloadBook(token, id).then(function successCallback(response) {
-			console.log("AAAAA");
+
 			var file = new Blob([response.data], {type: 'application/pdf'});
        		//var fileURL = URL.createObjectURL(file);
        		//window.open(fileURL);
@@ -111,7 +111,14 @@ angular.module('booksAR')
 			var anchor = document.createElement("a");
 			anchor.download = title+".pdf";
 			anchor.href = blobURL;
+
+			document.body.appendChild(anchor);
 			anchor.click();
+
+			setTimeout(function(){
+		        document.body.removeChild(anchor);
+		        window.URL.revokeObjectURL(blobURL);  
+		    }, 100);
 
 		}, function errorCallback(response) {
 			//error

@@ -13,7 +13,7 @@ var app = angular.module('booksAR', [
                 }
             }*/
             $rootScope.bodyClass = toState.name + '-page';
-            console.log($rootScope.bodyClass);
+
             //Change this when user login services are ready
             $rootScope.state = toState.name;
 
@@ -26,12 +26,12 @@ var app = angular.module('booksAR', [
                     $state.go('home.dashboard');           
                 }
             }*/
-            console.log(error);
+
 
             if (error === "home") {
                 
                 $rootScope.bodyClass = 'home-page';
-                console.log($rootScope.bodyClass);
+
                 $rootScope.state = 'home';
                 $state.go("home");
              }

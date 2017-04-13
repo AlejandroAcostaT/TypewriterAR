@@ -74,7 +74,7 @@ angular.module('booksAR')
 	};
 
 	var setUser = (function(data){
-		sessionStorage.user = data;
+		sessionStorage.user = JSON.stringify(data);
 		this.user = JSON.parse(sessionStorage.user);
 		this.updUser = {
 			name: this.user.name,
@@ -285,12 +285,12 @@ angular.module('booksAR')
 		this.updBook.cover = "";
 		this.bookUpdate = false;
 	};
-
 	this.downloadBook =function(book){
 		var token = sessionStorage.token,
 		id = book.id,
 		title = book.title;
 		bookService.downloadBook(token, id).then(function successCallback(response) {
+
 			var file = new Blob([response.data], {type: 'application/pdf'});
        		//var fileURL = URL.createObjectURL(file);
        		//window.open(fileURL);
@@ -298,13 +298,18 @@ angular.module('booksAR')
 			var anchor = document.createElement("a");
 			anchor.download = title+".pdf";
 			anchor.href = blobURL;
-			anchor.click();
 
+			document.body.appendChild(anchor);
+			anchor.click();
 			showSuccessMessage('Your download should start soon!');
+
+			setTimeout(function(){
+		        document.body.removeChild(anchor);
+		        window.URL.revokeObjectURL(blobURL);  
+		    }, 100);
 
 		}, function errorCallback(response) {
 			//error
-			showDangerMessage(response.data.data.message);
 			console.log(response.data.data.message);
 		});
 	};

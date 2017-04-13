@@ -20,7 +20,7 @@ angular.module('booksAR')
             controllerAs: 'typewriterCtrl',
             resolve: {
                 verifySession:  function($q){
-                    //console.log(tokenService.getToken());
+
                     var deferred = $q.defer();
 
                     if (sessionStorage.token) {
@@ -54,7 +54,7 @@ angular.module('booksAR')
             controllerAs: 'userCtrl',
             resolve: {
                 verifySession:  function($q){
-                    //console.log(tokenService.getToken());
+
                     var deferred = $q.defer();
 
                     if (sessionStorage.token) {
@@ -72,7 +72,7 @@ angular.module('booksAR')
             controllerAs: 'bookCtrl',
             resolve: {
                 verifySession:  function($q){
-                    //console.log(tokenService.getToken());
+
                     var deferred = $q.defer();
 
                     if (sessionStorage.token) {
