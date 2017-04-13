@@ -1,6 +1,6 @@
 angular.module('booksAR')
 
-.controller('typewriterController', function($scope, $state, $interval, Upload, API, sessionService, tokenService, bookService, contentService, verifySession, Book){
+.controller('typewriterController', function($scope, $state, $interval, Upload, API, sessionService, bookService, contentService, verifySession, Book){
 
 	this.bookAddress = API.bookAddress;
 
@@ -375,7 +375,7 @@ angular.module('booksAR')
 	/*-------------PDF Creation--------------*/
 
 	this.uploadPDF = function(blob){
-		var token = tokenService.getToken(),
+		var token = sessionStorage.token,
 		id = Book.data.id,
 		data = new FormData();
 
@@ -773,7 +773,7 @@ angular.module('booksAR')
     }).bind(this);
 
     this.sendFiles = function(){    	
-    	var token = tokenService.getToken(),
+    	var token = sessionStorage.token,
 		id = Book.data.id,
 		data = new FormData();
 
@@ -806,7 +806,7 @@ angular.module('booksAR')
 
     this.saveBook = function(){
     	angular.copy(this.page, this.pages[this.currentPage-1]);
-    	var token = tokenService.getToken(),
+    	var token = sessionStorage.token,
 		id = Book.data.id;
 
     	bookService.saveBook(token, id, {pages: this.pages}).then(function successCallback(response) {
@@ -822,10 +822,6 @@ angular.module('booksAR')
     this.goTo = function(route){
     	$state.go(route);
     }
-     
-    //verify user has logged in
-	if(verifySession==''){
-		$state.go('home');
-	}
+    
 
 });

@@ -1,6 +1,7 @@
 angular.module('booksAR')
 
-.controller('bookController', function($state, tokenService, sessionService, bookService, API, verifySession){
+.controller('bookController', function($state, sessionService, bookService, API, verifySession){
+
 	//server address 
 	this.bookAddress = API.bookAddress;
 	this.books = {};
@@ -69,7 +70,7 @@ angular.module('booksAR')
 	};
 
 	this.getBooks =function(){
-		var token = tokenService.getToken();
+		var token = sessionStorage.token;
 		bookService.getAllBooks(token, this.offset, this.q).then(function successCallback(response) {
 
 			setBooks(response.data);
@@ -98,7 +99,7 @@ angular.module('booksAR')
 	};
 
 	this.downloadBook =function(book){
-		var token = tokenService.getToken(),
+		var token = sessionStorage.token,
 		id = book.id,
 		title = book.title;
 		bookService.downloadBook(token, id).then(function successCallback(response) {
@@ -117,11 +118,6 @@ angular.module('booksAR')
 			console.log(response.data.data.message);
 		});
 	};
-
-	//verify user has logged in
-	if(verifySession==''){
-		$state.go('home');
-	}
 
 	//set books
 	this.getBooks();

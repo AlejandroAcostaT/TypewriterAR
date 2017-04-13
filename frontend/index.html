@@ -25,13 +25,6 @@
 <!-- apply our angular app to our site -->
 <body ng-app="booksAR" class="{{bodyClass}}">
 
-<!-- NAVIGATION -->
-
-    <div class="container header"  ng-show="state=='home'">
-      <h1 class="pull-left title"> Typewriter AR </h1>
-    </div>
-
-
 <!-- MAIN CONTENT -->
 
 <!-- THIS IS WHERE WE WILL INJECT OUR CONTENT -->
@@ -58,7 +51,6 @@
     <script src="./app/components/directives/user/user.js"></script>
     <script src="./app/components/directives/book/book.js"></script>
 <!-- JS (load services) -->
-    <script src="./app/components/services/tokenService.js"></script>
     <script src="./app/components/services/userService.js"></script>
     <script src="./app/components/services/sessionService.js"></script>
     <script src="./app/components/services/bookService.js"></script>

@@ -1,12 +1,13 @@
 angular.module('booksAR')
 
-.controller('userController', function($state, tokenService, userService, sessionService, bookService, API, verifySession){
+.controller('userController', function($state, userService, sessionService, bookService, API, verifySession){
+
 	//server address 
 	this.bookAddress = API.bookAddress;
 
 	//user
 	this.editUser = false;
-	this.user = tokenService.getUser();
+	this.user = JSON.parse(sessionStorage.user);
 
 	this.updUser = {
 		name: this.user.name,
@@ -73,8 +74,8 @@ angular.module('booksAR')
 	};
 
 	var setUser = (function(data){
-		this.user = tokenService.setUser(data);
-		this.user = tokenService.getUser();
+		sessionStorage.user = data;
+		this.user = JSON.parse(sessionStorage.user);
 		this.updUser = {
 			name: this.user.name,
 			lastName: this.user.lastName,
@@ -86,7 +87,7 @@ angular.module('booksAR')
 	}).bind(this);
 
 	this.updateUser = function(){
-		var token = tokenService.getToken(),
+		var token = sessionStorage.token,
 		id = this.user.id,
 		user = this.updUser;
 
@@ -119,7 +120,7 @@ angular.module('booksAR')
 	// Book functions
 
 	this.publishBook = function(book){
-		var token = tokenService.getToken(),
+		var token = sessionStorage.token,
 		bookId = book.id,
 		userId = this.user.id,
 		bookPublish = book.publish;
@@ -150,7 +151,7 @@ angular.module('booksAR')
 	};
 
 	this.deleteBook = function(book){
-		var token = tokenService.getToken(),
+		var token = sessionStorage.token,
 		bookId = book.id,
 		userId = this.user.id;
 
@@ -194,7 +195,7 @@ angular.module('booksAR')
 	}).bind(this);
 
     this.createBook = function(){
-		var token = tokenService.getToken(),
+		var token = sessionStorage.token,
 		id = this.user.id,
 		data = new FormData();
 
@@ -241,7 +242,7 @@ angular.module('booksAR')
 	}).bind(this);
 
 	this.updateBook = function(){
-		var token = tokenService.getToken(),
+		var token = sessionStorage.token,
 		idUser = this.user.id,
 		idBook = this.updBook.id,
 		data = new FormData();
@@ -286,7 +287,7 @@ angular.module('booksAR')
 	};
 
 	this.downloadBook =function(book){
-		var token = tokenService.getToken(),
+		var token = sessionStorage.token,
 		id = book.id,
 		title = book.title;
 		bookService.downloadBook(token, id).then(function successCallback(response) {
@@ -309,13 +310,9 @@ angular.module('booksAR')
 	};
 
 	this.goToTypewriter = function(book){
-		bookService.setBookData(book);
-		$state.go('typewriter', {id: book.id});
-	}
+		sessionStorage.book = JSON.stringify(book);
 
-	//verify user has logged in
-	if(verifySession==''){
-		$state.go('home');
-	}
+		$state.go('typewriter');
+	};
 
 });

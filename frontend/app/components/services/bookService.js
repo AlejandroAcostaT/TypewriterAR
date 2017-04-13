@@ -2,19 +2,6 @@ angular.module('booksAR')
 
 .service('bookService', function($http, API){
 
-	var book = {};
-
-	var getBookData= function () {
-        return book;
-    };
-
-    var setBookData= function(data) {
-        book = data;
-    };
-
-    var deleteBookData= function(){
-		book = {};
-	};
 
 	var createBook= function(token, data){ 
 		return $http.post(API.address + "books", data, {
@@ -90,9 +77,6 @@ angular.module('booksAR')
 	    getBook: getBook,
 	    publishBook: publishBook,
 	    deleteBook: deleteBook,
-	    getBookData: getBookData,
-	    setBookData: setBookData,
-	    deleteBookData: deleteBookData,
 	    saveBook: saveBook,
 	    savePDF: savePDF,
 	    downloadBook: downloadBook

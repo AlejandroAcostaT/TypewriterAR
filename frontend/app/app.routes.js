@@ -19,18 +19,29 @@ angular.module('booksAR')
             controller: 'typewriterController',
             controllerAs: 'typewriterCtrl',
             resolve: {
-                verifySession:  function(tokenService){
-                    return tokenService.getToken();
-                    console.log(tokenService.getToken());
+                verifySession:  function($q){
+                    //console.log(tokenService.getToken());
+                    var deferred = $q.defer();
+
+                    if (sessionStorage.token) {
+                        return sessionStorage.token;
+                    } else {
+                        return $q.reject("home");
+                    }
                 },
-                Book:  function(tokenService, bookService){
-                    console.log(tokenService.getToken());
-                    return bookService.getBook(tokenService.getToken(), bookService.getBookData().id).then(function successCallback(response) {
+                Book:  function($q, bookService){
+
+                    if (!sessionStorage.token) {
+                        return $q.reject("home");
+                    }
+
+                    var id = JSON.parse(sessionStorage.book).id; 
+
+                    return bookService.getBook(sessionStorage.token, id).then(function successCallback(response) {
                         return response.data;
 
                     }, function errorCallback(response) {
                         //error
-                        console.log(response.data.data.message);
                         return response.data;
                     });
                 }
@@ -42,9 +53,15 @@ angular.module('booksAR')
             controller: 'userController',
             controllerAs: 'userCtrl',
             resolve: {
-                verifySession:  function(tokenService){
+                verifySession:  function($q){
                     //console.log(tokenService.getToken());
-                    return tokenService.getToken();
+                    var deferred = $q.defer();
+
+                    if (sessionStorage.token) {
+                        return sessionStorage.token;
+                    } else {
+                        return $q.reject("home")
+                    }
                 }
             }
         })
@@ -54,9 +71,15 @@ angular.module('booksAR')
             controller: 'bookController',
             controllerAs: 'bookCtrl',
             resolve: {
-                verifySession:  function(tokenService){
-                    console.log('Book RESOLVE: '+tokenService.getToken());
-                    return tokenService.getToken();
+                verifySession:  function($q){
+                    //console.log(tokenService.getToken());
+                    var deferred = $q.defer();
+
+                    if (sessionStorage.token) {
+                        return sessionStorage.token;
+                    } else {
+                        return $q.reject("home")
+                    }
                 }
             }
         });

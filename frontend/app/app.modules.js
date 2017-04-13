@@ -4,8 +4,8 @@ var app = angular.module('booksAR', [
 	'ui.bootstrap',
 	'ngFileUpload'
 	])
-    .run(function($rootScope) {
-        $rootScope.$on('$stateChangeStart', function (event, toState) {      
+    .run(function($rootScope, $state) {
+        $rootScope.$on('$stateChangeStart', function (event, toState, toParams, from, fromParams, error) {      
             /*if (toState.name === 'landingpage') {              
                 if (!isAuthenticated()) { // Check if user allowed to transition                  
                     event.preventDefault();   // Prevent migration to default state                  
@@ -16,8 +16,32 @@ var app = angular.module('booksAR', [
             console.log($rootScope.bodyClass);
             //Change this when user login services are ready
             $rootScope.state = toState.name;
+
         });
-    }); 
+
+        $rootScope.$on('$stateChangeError', function (event, toState, toParams, from, fromParams, error) {      
+            /*if (toState.name === 'landingpage') {              
+                if (!isAuthenticated()) { // Check if user allowed to transition                  
+                    event.preventDefault();   // Prevent migration to default state                  
+                    $state.go('home.dashboard');           
+                }
+            }*/
+            console.log(error);
+
+            if (error === "home") {
+                
+                $rootScope.bodyClass = 'home-page';
+                console.log($rootScope.bodyClass);
+                $rootScope.state = 'home';
+                $state.go("home");
+             }
+
+        });
+
+    });
+
+
+        
 
 
 

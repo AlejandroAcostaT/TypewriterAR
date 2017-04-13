@@ -1,7 +1,7 @@
 
 angular.module('booksAR')
 
-.controller('homeController', function($state, userService, sessionService, tokenService){
+.controller('homeController', function($state, userService, sessionService){
 
 	// new user
 	this.user = {};
@@ -33,8 +33,10 @@ angular.module('booksAR')
 
 			sessionService.logIn(login).then(function successCallback(response) {
 
-				tokenService.setToken(response.data.data.token);
-				tokenService.setUser(response.data.data.user);
+				//Session Storage
+				sessionStorage.token = response.data.data.token;
+				sessionStorage.loggedIn =  true;
+				sessionStorage.user = response.data.data.user;
 
 				$state.go('book');
 			}, function errorCallback(response) {
@@ -125,10 +127,10 @@ angular.module('booksAR')
 
 		sessionService.logIn(this.loginUser).then(function successCallback(response) {
 
-			tokenService.setToken(response.data.data.token);
-			tokenService.setUser(response.data.data.user);
-
-			console.log('HOME: '+tokenService.getToken());
+			//Session Storage
+			sessionStorage.token = response.data.data.token;
+			sessionStorage.loggedIn =  true;
+			sessionStorage.user = JSON.stringify(response.data.data.user);
 
 			$state.go('book');
 		}, function errorCallback(response) {
