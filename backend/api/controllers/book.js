@@ -258,26 +258,34 @@ module.exports = {
 		Book.where('id', req.params.id)
 		.fetch({ require : true })
 		.then(function(book){
-			book.save({
-				publish: !book.get('publish')
-			},
-			{
-				method: "update"
-			})
-			.then(function(){
-				res.status(204)
-				.json({
-					error : false,
-					data : { message : 'Book publish attribute changed'}
-				});
-			})
-			.catch(function(err){
-				res.status(400)
+			if(!book || (book.get('pdf')=='')){
+				res.status(404)
 				.json({
 					error : true,
-					data : { message : err.message }
+					data : {message: "Book's PDF doesn't exist"}
 				})
-			})
+			}else{
+				book.save({
+					publish: !book.get('publish')
+				},
+				{
+					method: "update"
+				})
+				.then(function(){
+					res.status(204)
+					.json({
+						error : false,
+						data : { message : 'Book publish attribute changed'}
+					});
+				})
+				.catch(function(err){
+					res.status(400)
+					.json({
+						error : true,
+						data : { message : err.message }
+					})
+				})
+			}
 		})
 		.catch(function(err){
 			res.status(500)
