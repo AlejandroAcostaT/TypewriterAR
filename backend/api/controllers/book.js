@@ -51,12 +51,23 @@ module.exports = {
 			withRelated: ['user']
 		})
 		.then(function(Books){
-			res.status(200)
-			.json({
-				error : false,
-				data : Books.toJSON(),
-				total : Books.pagination.rowCount
-			});
+
+			if(req.decoded.device=='web'){
+				res.status(200)
+				.json({
+					error : false,
+					data : Books.toJSON(),
+					total : Books.pagination.rowCount
+				});
+			}else if(req.decoded.device=='mobile'){
+				res.status(200)
+				.json({
+					error : false,
+					data : Books.toJSON(),
+					total : Books.pagination.rowCount
+				});
+			}
+
 		})
 		.catch(function (err) {
 	     	res.status(500)
