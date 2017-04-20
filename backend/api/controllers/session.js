@@ -39,6 +39,7 @@ module.exports = {
 		        		.json({ success: false, message: "Failed to authenticate token."});    
 		      } else {
 		        // if everything is good, save to request for use in other routes
+		        console.log(decoded);
 		        req.decoded = decoded;    
 		        next();
 		      }
@@ -56,10 +57,11 @@ module.exports = {
 
 	deleteExistingSession : function(req, res, next){
 	
-		var username = req.body.username;
+		var username = req.body.username,
+			device 	= req.body.device;
 		Session.forge({
 			username : username,
-			type : "web"
+			type : device
 		})
 		.fetch()
 		.then(function(session){
@@ -157,6 +159,7 @@ module.exports = {
 						token 	= jwt.sign({
 											username: username,
 										 	sessionId: session.get('id'),
+										 	device: 'web',
 										 	date: date
 										},
 										config.secret,
@@ -167,6 +170,7 @@ module.exports = {
 						token 	= jwt.sign({
 											username: username,
 										 	sessionId: session.get('id'),
+										 	device: 'mobile',
 										 	date: date
 										},
 										config.secret
@@ -187,14 +191,29 @@ module.exports = {
 		}, 
 		function(err, results) {
 		    // results is now equal to: {verifyUser: user_json, createNewSession: token}
-		    res.status(201)
-			.json({
-				error: false,
-				data: {
-					user : results.verifyUser,
+		    if(device=='mobile'){
+
+		    	res.status(201)
+				.json({
+					id: results.verifyUser.id,
+					name : results.verifyUser.name,
+					lastName : results.verifyUser.lastName,
+					username: results.verifyUser.username,
+					email: results.verifyUser.email,
 					token : results.createNewSession
-				}
-			});
+				});
+
+		    }else if(device=='web'){
+		    	res.status(201)
+				.json({
+					error: false,
+					data: {
+						user : results.verifyUser,
+						token : results.createNewSession
+					}
+				});
+		    }
+		    
 		});
 		
 	},

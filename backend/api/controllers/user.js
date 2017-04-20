@@ -33,18 +33,36 @@ module.exports = {
 		User.forge()
 		.fetchAll({columns: ['id', 'name', 'lastName', 'username', 'email']})
 		.then(function(Users){
-			res.status(200)
-			.json({
-				error : false,
-				data : Users.toJSON()
-			});
+			if(req.decoded.device == 'web'){
+				res.status(200)
+				.json({
+					error : false,
+					data : Users.toJSON()
+				});
+			}else if(req.decoded.device == 'mobile'){
+				res.status(200)
+				.json(
+					Users.toJSON()
+				);
+			}
+
+			
 		})
 		.catch(function (err) {
-	     	res.status(500)
-			.json({
-				error: true,
-				data: {message: err.message}
-			});
+
+			if(req.decoded.device == 'web'){
+				res.status(500)
+				.json({
+					error: true,
+					data: {message: err.message}
+				});
+			}else if(req.decoded.device == 'mobile'){
+				res.status(500)
+				.json({
+					error:  err.message
+				});
+			}
+
 	    });
 	},
 
@@ -98,6 +116,7 @@ module.exports = {
 	*			- username 	: string / 8 - 16 char (body) *
 	*			- password 	: string / 8 - 16 char (body) *
 	*			- email 	: string (body)			 	  *
+	*			- device 	: string (body)			 	  *
 	******************************************************/
 
 	createUser :  function(req, res){
@@ -105,6 +124,7 @@ module.exports = {
 		var password = req.body.password,
 			username = req.body.username,
 			email	 = req.body.email,
+			device	 = req.body.device,
 			salt = bcrypt.genSaltSync(10);
 
 		//Password length validation
@@ -147,6 +167,7 @@ module.exports = {
 		})
 		.save()
 		.then(function(user){
+
 			res.status(201)
 			.json({
 				error: false,
@@ -158,6 +179,8 @@ module.exports = {
 					email : user.get('email')
 				}
 			});
+
+
 		})
 		.catch(function (err) {
 			res.status(500)

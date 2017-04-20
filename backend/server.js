@@ -1,4 +1,4 @@
-var express 	= require('express');
+var express 	= require('express'),
 	app 		= express(),
 	port 		= 3000,
 	routes 		= require('./api/routes/index.js'),
