@@ -36,7 +36,7 @@ angular.module('booksAR')
 				//Session Storage
 				sessionStorage.token = response.data.data.token;
 				sessionStorage.loggedIn =  true;
-				sessionStorage.user = response.data.data.user;
+				sessionStorage.user = JSON.stringify(response.data.data.user);
 
 				$state.go('book');
 			}, function errorCallback(response) {
