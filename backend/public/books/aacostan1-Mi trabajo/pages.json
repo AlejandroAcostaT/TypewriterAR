@@ -1,0 +1,26 @@
+[
+  {
+    "pageType": 2,
+    "text": "",
+    "paragraphs": "",
+    "title": "",
+    "pageStyle": {
+      "textSize": "100%",
+      "titleSize": "270%",
+      "weight": "normal",
+      "style": "normal",
+      "textFont": "times",
+      "titleFont": "times"
+    },
+    "image": {
+      "width": 720,
+      "height": 880,
+      "left": 0,
+      "top": 0,
+      "contentType": "image",
+      "markerPath": "aacostan1-Mi trabajo/content/fcd8f9a502b1b11273d7b6c815f164ac",
+      "contentPath": "aacostan1-Mi trabajo/content/da0cf6d7d23af0660d775399c342c2b3",
+      "texturePath": ""
+    }
+  }
+]

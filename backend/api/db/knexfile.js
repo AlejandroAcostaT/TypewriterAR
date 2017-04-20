@@ -4,7 +4,7 @@ module.exports = {
         host : 'localhost',
         user : 'booksUser',
         password : 'b00k5AR',
-        database : 'booksAR',
+        database : 'c9',
         charset : 'utf8'
     }
 }

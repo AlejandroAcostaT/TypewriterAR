@@ -1,6 +1,6 @@
-var express 	= require('express');
+var express 	= require('express'),
 	app 		= express(),
-	port 		= 3000,
+	port 		= process.env.PORT || 8080,
 	routes 		= require('./api/routes/index.js'),
 	bodyParser 	= require('body-parser'),
 	multer  	= require('multer'),
@@ -27,6 +27,4 @@ app.use(express.static('public'));
 
 app.use('/api', routes);
 
-app.listen(port, function() {
-  console.log("✔ Express server listening on port %d", port);
-});
+app.listen(port, process.env.IP);
