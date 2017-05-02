@@ -167,22 +167,35 @@ module.exports = {
 		})
 		.save()
 		.then(function(user){
-
-			res.status(201)
-			.json({
-				error: false,
-				data: {
+			
+			if(device=='web'){
+				res.status(201)
+				.json({
+					error: false,
+					data: {
+						id : user.get('id'),
+						name : user.get('name'),
+						lastName : user.get('lastName'),
+						username : user.get('username'),
+						email : user.get('email')
+					}
+				});
+			}else if(device=='mobile'){
+				res.status(201)
+				.json({
+					
 					id : user.get('id'),
 					name : user.get('name'),
 					lastName : user.get('lastName'),
 					username : user.get('username'),
 					email : user.get('email')
-				}
-			});
-
+					
+				});
+			}
 
 		})
 		.catch(function (err) {
+			console.log(err.message);
 			res.status(500)
 			.json({
 				error: true,

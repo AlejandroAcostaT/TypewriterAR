@@ -35,11 +35,11 @@ module.exports = {
 			// verifies secret and checks exp
 		    jwt.verify(token, config.secret, function(err, decoded) {      
 		      if (err) {
+		      	console.log("Failed to authenticate token.");
 		        return res.status(400)
 		        		.json({ success: false, message: "Failed to authenticate token."});    
 		      } else {
 		        // if everything is good, save to request for use in other routes
-		        console.log(decoded);
 		        req.decoded = decoded;    
 		        next();
 		      }
@@ -103,7 +103,7 @@ module.exports = {
 		var password = req.body.password,
 			username = req.body.username,
 			device	 = req.body.device; // "web" or "mobile"
- 		
+			
 		async.series({
 		    verifyUser: function(callback) {
 		    	//get user by username
@@ -114,20 +114,35 @@ module.exports = {
 				.then(function(user){
 					if(!user){ 
 					//verify user exist in database
+					if(device == "web"){
 						res.status(404)
 						.json({
 							error : true,
 							data : {message: "Username or password are incorrect"}
 						})
+					}else if(device == "mobile"){
+						res.status(404)
+						.json({
+							message: "Username or password are incorrect"
+						})
+					}
+						
 					}else{
 						user_json = user.toJSON();
 						if(!bcrypt.compareSync(password, user_json.password)){ 
 						//verify password match the database one
-							res.status(404)
-							.json({
-								error : true,
-								data : {message: "Username or password are incorrect"}
-							})
+							if(device == "web"){
+								res.status(404)
+								.json({
+									error : true,
+									data : {message: "Username or password are incorrect"}
+								})
+							}else if(device == "mobile"){
+								res.status(404)
+								.json({
+									message: "Username or password are incorrect"
+								})
+							}
 						}else{
 						// No error, pass user to callback	
 							delete user_json.password;
@@ -136,6 +151,7 @@ module.exports = {
 					}
 				})
 				.catch(function(err){
+					console.log(err);
 					res.status(500)
 					.json({
 						error : true,
@@ -195,11 +211,13 @@ module.exports = {
 
 		    	res.status(201)
 				.json({
-					id: results.verifyUser.id,
-					name : results.verifyUser.name,
-					lastName : results.verifyUser.lastName,
-					username: results.verifyUser.username,
-					email: results.verifyUser.email,
+					user: {
+						id: results.verifyUser.id,
+						name : results.verifyUser.name,
+						lastName : results.verifyUser.lastName,
+						username: results.verifyUser.username,
+						email: results.verifyUser.email
+					},
 					token : results.createNewSession
 				});
 
@@ -232,6 +250,8 @@ module.exports = {
 		var token 	= req.headers['token'],
 			decoded = jwt.verify(token, config.secret);
 
+		console.log(token);
+		console.log(decoded.sessionId);
 
 		Session.forge({id : decoded.sessionId})
 		.fetch({require : true})

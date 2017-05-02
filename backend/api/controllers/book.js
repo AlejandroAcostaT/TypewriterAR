@@ -29,53 +29,72 @@ module.exports = {
 	*****************************************************/
 
 	getBooks : function(req, res){
-
+		
 		var offset = req.query.offset ? parseInt(req.query.offset): 0,
 			q 	   = req.query.q ? req.query.q+'%' : undefined;
+			
+		if(req.decoded.device=='web'){
+			Book.query(function(qb){
+				qb.innerJoin('user', 'book.idUser', 'user.id');
+				if(q){
+					qb.where('book.title', 'LIKE', q);
+					qb.andWhere('book.publish',  '=', 1);
+					qb.orWhere('user.name',  'LIKE', q);
+					qb.andWhere('book.publish',  '=', 1);
+					qb.orWhere('user.lastName',  'LIKE', q);
+					qb.andWhere('book.publish',  '=', 1);
+				}
+				qb.andWhere('book.publish',  '=', 1);
+			})
+			.fetchPage({
+				pageSize: 12,
+				page: offset,
+				withRelated: ['user']
+			})
+			.then(function(Books){
+				var books_json = Books.toJSON();
 
-		Book.query(function(qb){
-			qb.innerJoin('user', 'book.idUser', 'user.id');
-			if(q){
-				qb.where('book.title', 'LIKE', q);
-				qb.andWhere('book.publish',  '=', 1);
-				qb.orWhere('user.name',  'LIKE', q);
-				qb.andWhere('book.publish',  '=', 1);
-				qb.orWhere('user.lastName',  'LIKE', q);
-				qb.andWhere('book.publish',  '=', 1);
-			}
-			qb.andWhere('book.publish',  '=', 1);
-		})
-		.fetchPage({
-			pageSize: 12,
-			page: offset,
-			withRelated: ['user']
-		})
-		.then(function(Books){
-
-			if(req.decoded.device=='web'){
 				res.status(200)
 				.json({
 					error : false,
-					data : Books.toJSON(),
+					data : books_json,
 					total : Books.pagination.rowCount
 				});
-			}else if(req.decoded.device=='mobile'){
-				res.status(200)
+			})
+			.catch(function (err) {
+		     	res.status(500)
 				.json({
-					error : false,
-					data : Books.toJSON(),
-					total : Books.pagination.rowCount
+					error: true,
+					data: {message: err.message}
 				});
-			}
-
-		})
-		.catch(function (err) {
-	     	res.status(500)
-			.json({
-				error: true,
-				data: {message: err.message}
-			});
-	    });
+		    });
+		}else if(req.decoded.device=='mobile'){
+			Book.query(function(qb){
+				qb.innerJoin('user', 'book.idUser', 'user.id');
+				if(q){
+					qb.where('book.title', 'LIKE', q);
+					qb.andWhere('book.publish',  '=', 1);
+					qb.orWhere('user.name',  'LIKE', q);
+					qb.andWhere('book.publish',  '=', 1);
+					qb.orWhere('user.lastName',  'LIKE', q);
+					qb.andWhere('book.publish',  '=', 1);
+				}
+				qb.andWhere('book.publish',  '=', 1);
+			})
+			.fetchAll({	withRelated: ['user'] })
+			.then(function(Books){
+				var books_json = Books.toJSON();
+					res.status(200)
+					.json(books_json);
+			})
+			.catch(function (err) {
+		     	res.status(500)
+				.json({
+					error: true,
+					data: {message: err.message}
+				});
+		    });
+		}
 	},
 
 	/*****************************************************
@@ -101,11 +120,12 @@ module.exports = {
 				})
 			}else{
 				var book_json = book.toJSON();
+				console.log(book_json);
 				res.status(200)
 				.json({
 					error : false,
 					data : book_json,
-					pages : fs.readJsonSync(book_json.pages)
+					pages : fs.readJsonSync("./public/books/"+book_json.pages)
 				})
 			}
 		})
@@ -140,10 +160,11 @@ module.exports = {
 			});
 		}
 		
-		var dir = './public/books/'+req.decoded.username+'-'+req.body.title+'/content',
+		var title = req.body.title.replace(/ /g,"_"),
+			dir = './public/books/'+req.decoded.username+'-'+title+'/content',
 			file = req.file,
-			userDir = './public/books/'+req.decoded.username+'-'+req.body.title+'/',
-			cover = req.decoded.username+'-'+req.body.title+'/'+req.file.filename,
+			userDir = './public/books/'+req.decoded.username+'-'+title+'/',
+			cover = req.decoded.username+'-'+title+'/'+req.file.originalname,
 			coverDir = './public/books/'+cover;
 
 		//create new book folder in public folder	
@@ -159,7 +180,7 @@ module.exports = {
 			title: req.body.title,
 			description: req.body.description,
 			cover: cover,
-			pages: userDir+'pages.json',
+			pages: req.decoded.username+'-'+title+'/'+'pages.json',
 			pdf: '',
 			publish: false,
 			idUser	: req.body.idUser
@@ -210,8 +231,9 @@ module.exports = {
 			if(req.file){
 
 				var file = req.file,
+				title =book.get('title').replace(/ /g,"_"),
 				previous = './public/books/'+book.get('cover'),
-				cover = req.decoded.username+'-'+req.body.title+'/'+req.file.filename;
+				cover = req.decoded.username+'-'+title+'/'+req.file.originalname;
 
 				// copy cover file to book folder
 				fs.moveSync(req.file.path, './public/books/'+cover);
@@ -321,7 +343,8 @@ module.exports = {
 		Book.forge({id : req.params.id})
 		.fetch({require : true})
 		.then(function(book){
-			var folder = './public/books/'+req.decoded.username+'-'+book.get('title');
+			var title =book.get('title').replace(/ /g,"_"),
+			folder = './public/books/'+req.decoded.username+'-'+title;
 
 			// remove cover file from its original path
 			fs.removeSync(folder);
@@ -360,7 +383,8 @@ module.exports = {
 		Book.forge({id : req.params.id})
 		.fetch({require : true})
 		.then(function(book){
-			var folder = './public/books/'+req.decoded.username+'-'+book.get('title')+'/';
+			var title =book.get('title').replace(/ /g,"_"),
+			folder = './public/books/'+req.decoded.username+'-'+title+'/';
 
 			//create json files in book folder
 			fs.writeJsonSync(folder+'pages.json', req.body.pages);
@@ -407,8 +431,9 @@ module.exports = {
 
 			var markerFile = req.files['marker'][0],
 			contentFile = req.files['content'][0],
-			path = './public/books/'+ req.decoded.username+'-'+book.get('title')+'/content',
-			userPath = req.decoded.username+'-'+book.get('title')+'/content',
+			title =book.get('title').replace(/ /g,"_"),
+			path = './public/books/'+ req.decoded.username+'-'+title+'/content',
+			userPath = req.decoded.username+'-'+title+'/content',
 			texturePath = '';
 
 			if(req.files['texture']){
@@ -430,15 +455,15 @@ module.exports = {
 			//Move new files to content folder
 
 			// copy marker file to book's content folder
-			fs.moveSync(markerFile.path, path+'/'+markerFile.filename);
+			fs.moveSync(markerFile.path, path+'/'+markerFile.originalname);
 
 			// copy content file to book's content folder
-			fs.moveSync(contentFile.path, path+'/'+contentFile.filename);
+			fs.moveSync(contentFile.path, path+'/'+contentFile.originalname);
 
 			// copy content file to book's content folder
 			if(textureFile){
-				fs.moveSync(textureFile.path, path+'/'+textureFile.filename);
-				texturePath = userPath+'/'+textureFile.filename;
+				fs.moveSync(textureFile.path, path+'/'+textureFile.originalname);
+				texturePath = userPath+'/'+textureFile.originalname;
 			}
 			
 
@@ -446,8 +471,8 @@ module.exports = {
 			.json({
 				error : false,
 				data : {
-					markerPath: userPath+'/'+markerFile.filename,
-					contentPath: userPath+'/'+contentFile.filename,
+					markerPath: userPath+'/'+markerFile.originalname,
+					contentPath: userPath+'/'+contentFile.originalname,
 					texturePath: texturePath,
 					message : 'Page content successfully uploaded'
 				}
@@ -478,7 +503,8 @@ module.exports = {
 		.fetch({require : true})
 		.then(function(book){
 
-			var folder = './public/books/'+req.decoded.username+'-'+book.get('title')+'/',
+			var title =book.get('title').replace(/ /g,"_"),
+			folder = './public/books/'+req.decoded.username+'-'+title+'/',
 			book_json = book.toJSON(),
 			pdfFile = req.file;
 
