@@ -120,7 +120,6 @@ module.exports = {
 				})
 			}else{
 				var book_json = book.toJSON();
-				console.log(book_json);
 				res.status(200)
 				.json({
 					error : false,

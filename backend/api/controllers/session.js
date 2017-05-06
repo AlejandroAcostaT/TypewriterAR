@@ -250,9 +250,6 @@ module.exports = {
 		var token 	= req.headers['token'],
 			decoded = jwt.verify(token, config.secret);
 
-		console.log(token);
-		console.log(decoded.sessionId);
-
 		Session.forge({id : decoded.sessionId})
 		.fetch({require : true})
 		.then(function(session){
