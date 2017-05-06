@@ -1,0 +1,11 @@
+<!-- PAGE PREVIEW -->
+<div class="page" id="page" >
+
+	<img src="../assets/img/typewriter.jpg" ng-style="{'width': typewriterCtrl.setWidth(typewriterCtrl.image.width), 'height':typewriterCtrl.setHeight(typewriterCtrl.image.height), 'margin-left':typewriterCtrl.setMarginLeft(typewriterCtrl.image.left), 'margin-top':typewriterCtrl.setMarginTop(typewriterCtrl.image.top)}" id="img" class="image">
+
+	<div ng-repeat="par in typewriterCtrl.paragraphs track by $index" ng-style="{'font-family': typewriterCtrl.pageStyle.font, 'font-size':typewriterCtrl.pageStyle.size}">
+		<p class="paragraph" style="white-space:pre-line;" ng-show="typewriterCtrl.isExtra($index)">{{par}}</p>
+	</div>
+</div>
+
+

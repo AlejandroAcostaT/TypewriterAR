@@ -1,0 +1,39 @@
+<nav class="navbar navbar-default" ng-show="state!='home'">
+    <div class= "container">
+        <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href='' ng-confirm-click="Are you sure you want to leave this page? Any unsaved progress will be lost" confirmed-click="typewriterCtrl.goTo('book')">Typewriter AR</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                <ul class="nav navbar-nav navbar-right">
+                  <li class="dropdown menu-btn">
+                    <a class="dropdown-toggle" href='' ng-click="typewriterCtrl.saveBook()">Save Book <span class="glyphicon glyphicon-floppy-disk" style="margin-left: 5px;" aria-hidden="true"></span></a>
+                  </li>
+                  <li class="dropdown menu-btn">
+                    <a class="dropdown-toggle" href='' ng-click="typewriterCtrl.createPDF()">Create PDF <span class="glyphicon glyphicon-file" style="margin-left: 5px;" aria-hidden="true"></span></a>
+                  </li>
+                  <li class="dropdown menu-btn" uib-dropdown>
+                    <a href="#" class="dropdown-toggle" uib-dropdown-toggle role="button" aria-haspopup="true" aria-expanded="false">User <span class="caret"></span></a>
+                    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="split-button">
+                      <li><a href='' ng-confirm-click="Would you like to go back to your profile? Any unsaved data will be lost." confirmed-click="typewriterCtrl.goTo('user')">User Profile</a></li>
+                      <li role="separator" class="divider"></li>
+                      <li><a href='' ng-confirm-click="Would you like to log out? Any unsaved data will be lost." confirmed-click="typewriterCtrl.logOut()">Log Out</a></li>
+                    </ul>
+                  </li>
+                </ul>
+
+            </div><!-- /.navbar-collapse -->
+                
+        </div><!-- /.container-fluid -->
+    </div>
+</nav>

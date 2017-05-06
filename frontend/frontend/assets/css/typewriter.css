@@ -1,0 +1,156 @@
+/* COLORS
+* GREEN: #7ebb6b;
+* RED: #ee9e8b;
+* AQUAMARINE: #19AC8F;
+* DARK AQUAMARINE: #158A73;
+* ORANGE: #D98C34;
+* DARK ORANGE: #BE7A2B;
+* GREY: #B8BBC1;
+
+--------------------------------------------------*/
+
+.textarea-text{
+	outline: none;
+	width: 100%;
+	height: 200pt;
+	resize: none;
+	border-color: #ccc;
+	padding: 4%;
+}
+
+.textarea-title{
+	outline: none;
+	width: 100%;
+	height: 100pt;
+	resize: none;
+	border-color: #ccc;
+	padding: 4%;
+}
+
+.typewriter{
+	margin-top: 5%;
+}
+
+.page{
+	border:2px solid #000;
+	padding: 60pt 40pt 50pt 40pt;
+	width: 622pt;
+	height: 782pt;
+	/*------------scale page-----------------*/
+	-ms-transform: scale(0.8, 0.8) translate(-60%, -10%); /* IE 9 */
+    -webkit-transform: scale(0.8, 0.8) translate(-60%, -10%); /* Safari */
+    transform: scale(0.8, 0.8) translate(-60%, -10%);
+    color: #000;
+    position: absolute;
+    left: 50%;
+    margin-bottom: 5%;
+    text-align: justify;
+    background-color: #fff;
+    font-family: "Comic Sans MS";
+}
+
+.textParagraph{
+	word-wrap: break-word;
+   	width: 542pt;
+}
+
+.center{
+	text-align: center;
+}
+
+.textControls{
+	margin-bottom: 3%;
+	width: 60%;
+	outline: none;
+}
+
+.form-control:focus {
+    border-color: #ccc;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(204,204,204,.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(204,204,204,.6);
+}
+
+.bootstrap-select .btn:focus {
+    outline: none !important;
+    box-shadow: none!important;
+}
+
+/* turn it off completely */
+select:active, select:hover {
+  outline: none
+}
+
+.centered{
+	position: relative;
+	top: 50%;
+	-ms-transform: translateY(-50%); /* IE 9 */
+    -webkit-transform: translateY(-50%); /* Safari */
+    transform: translateY(-50%);
+}
+
+.pageTypeMenu{
+	margin-top: 3%;
+}
+
+.pageTypeBtn{
+	border: 1px solid;
+	border-color: #B8BBC1;
+	color: #158A73;
+  	font-weight: bold;
+  	text-align: center;
+  	text-decoration: none;
+}
+
+.pageTypeBtn:hover{
+	border: 1px solid;
+	border-color: #B8BBC1;
+	color: #fff;
+	background-color: #19AC8F;
+  	font-weight: bold;
+  	text-align: center;
+  	text-decoration: none;
+}
+
+.pageTypeBtn:focus{
+	border: 1px solid;
+	border-color: #B8BBC1;
+	color: #fff;
+	background-color: #19AC8F;
+  	font-weight: bold;
+  	text-align: center;
+  	text-decoration: none;
+  	box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(204,204,204,.6);
+}
+
+.pageTypeImage{
+	width: 90px;
+	height: 90px;
+}
+
+.pageTypeSelected{
+	border: 1px solid;
+	border-color: #B8BBC1;
+	color: #fff;
+	background-color: #19AC8F;
+  	font-weight: bold;
+  	text-align: center;
+  	text-decoration: none;
+}
+
+.pageButton{
+	margin-right: 5%;
+	margin-left: 5%;
+}
+
+.progress {
+    display: inline-block;
+    width: 100px;
+    border: 3px groove #CCC;
+}
+
+.progress div {
+    font-size: smaller;
+    background: orange;
+    width: 0;
+}

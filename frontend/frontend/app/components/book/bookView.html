@@ -1,0 +1,59 @@
+<!-- Header Navbar -->
+<book-navbar></book-navbar>
+<!--/.Header Navbar -->
+
+<!-- Pagination 3 -->
+<nav aria-label="..." ng-show="!bookCtrl.detail">
+  <ul class="pager">
+    <li ng-class=" bookCtrl.offset == 1 ? 'disabled' : ''"><a href="" ng-click="bookCtrl.previous()">Previous</a></li>
+    <p class="inline pageNumbers">{{bookCtrl.amountBookPerPage}} - {{bookCtrl.total}}</p>
+    <li ng-class=" (bookCtrl.offset == bookCtrl.pages) || bookCtrl.pages == 0 ? 'disabled' : ''"><a href="" ng-click="bookCtrl.next()">Next</a></li>
+  </ul>
+</nav>
+
+
+<!-- Content -->
+<div class="container bookContainer">
+	<!-- Book List -->
+	<div class="row" ng-show="!bookCtrl.detail">
+		<div class="col-sm-4 col-md-3 col-lg-3" ng-repeat="book in bookCtrl.books">
+			<div class="thumbnail">
+		      	<img ng-src="{{bookCtrl.bookAddress}}{{book.cover}}" alt="..." class="thumbImage">
+		      	<div class="caption">
+			        <h2>{{book.title}}</h2>
+			        <h4> -{{book.user.name}} {{book.user.lastName}}</h4>
+			        	<button href="" class="btn btn-primary inline" role="button"  ng-click="bookCtrl.downloadBook(book)">
+			        		Download <span class="glyphicon glyphicon-download-alt button-icon" aria-hidden="true"></span>
+			        	</button>   
+			        	<button href="" class="btn btn-primary btnInverted inline" role="button" ng-click="bookCtrl.selectedBook(book)">
+			        		See More <span class="glyphicon glyphicon-plus button-icon" aria-hidden="true"></span>
+			        	</button>
+		      	</div>
+		    </div>
+		</div>
+		
+	</div>
+	<!-- /Book List -->
+
+	<!-- Book Detail -->
+	<div class="row" ng-show="bookCtrl.detail">
+		<div class="col-sm-4 col-md-4 col-lg-4" >
+			<img ng-src="{{bookCtrl.bookAddress}}{{bookCtrl.bookDetail.cover}}" alt="..." class="bookDetailImage">
+		</div>
+		<div class="col-sm-7 col-sm-offset-1 col-md-7 col-md-offset-1 col-lg-7 col-lg-offset-1">
+			<h1>{{bookCtrl.bookDetail.title}}</h1>
+			<h3>Author: {{bookCtrl.bookDetail.user.name}} {{bookCtrl.bookDetail.user.lastName}} / @{{bookCtrl.bookDetail.user.username}}</h3>
+			<h4>Description:</h4>
+			<p class="newLines">{{bookCtrl.bookDetail.description}}</p>
+			<button href="" class="btn btn-primary inline" role="button" ng-click="bookCtrl.downloadBook(bookCtrl.bookDetail)">
+	    		Download <span class="glyphicon glyphicon-download-alt button-icon" aria-hidden="true"></span>
+	    	</button>   
+	    	<button href="" class="btn btn-primary btnInverted inline" role="button" ng-click="bookCtrl.deselectBook()">
+	    		Go Back <span class="glyphicon glyphicon-chevron-left button-icon" aria-hidden="true"></span>
+	    	</button>
+		</div>
+	</div>
+
+	<!-- /Book Detail -->
+</div>
+<!-- /Content -->

@@ -1,0 +1,26 @@
+<!-- Header Navbar -->
+<user-navbar></user-navbar>
+<!--/.Header Navbar -->
+
+<!-- Content -->
+
+<div class=" container userProfile">
+	<user-profile-info></user-profile-info>
+</div>
+
+<div class="container shadow">
+
+	<div uib-alert class="alert-success alertFixed" close="userCtrl.closeSuccessAlert()" ng-if="userCtrl.alertSuccess.show" dismiss-on-timeout="2000">{{userCtrl.alertSuccess.msg}}</div >
+		
+	<div uib-alert class="alert-danger alertFixed" close="userCtrl.closeDangerAlert()" ng-if="userCtrl.alertDanger.show" dismiss-on-timeout="2000">{{userCtrl.alertDanger.msg}}</div >
+
+	<div class="container userTables">
+		<!-- Table to Create, Update, Publish, Delete and Download Books -->
+		<user-books-table></user-books-table>
+		<!-- /Table to Create, Update, Publish, Delete and Download Books -->
+
+		<!-- Table to Update User's information -->
+		<user-table></user-table>
+		<!-- /Table to Update User's information -->
+	</div>
+</div>
