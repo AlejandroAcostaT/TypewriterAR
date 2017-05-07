@@ -154,3 +154,15 @@ select:active, select:hover {
     background: orange;
     width: 0;
 }
+
+.btn-circle {
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  padding: 5px 0;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border-radius: 50%;
+  margin-left: 2%;
+  margin-top: -2%;
+}

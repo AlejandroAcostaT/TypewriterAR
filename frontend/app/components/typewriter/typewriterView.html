@@ -46,7 +46,7 @@
 	<!--Left column (content options)-->
 	<div class="col-lg-4 col-md-4 col-sm-4 leftBar">
 		<div >
-			<h3>Select Page</h3>
+			<h3 class="inline">Select Page</h3> <button type="button" class="btn btn-default btn-circle inline" tooltip-placement="right" uib-tooltip="Select the page you want to go to."><b>?</b></button>
 			<select class="form-control" ng-model="typewriterCtrl.currentPage" ng-options="n for n in [] | range:1:typewriterCtrl.pages.length" ng-change="typewriterCtrl.updatePage()">
 			</select>
 		</div>
