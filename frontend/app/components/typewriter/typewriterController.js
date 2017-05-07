@@ -770,6 +770,9 @@ angular.module('booksAR')
     	this.page.image.contentPath = data.contentPath;
     	//texture Path
     	this.page.image.texturePath = data.texturePath;
+
+    	//save book
+    	this.saveBook();
     }).bind(this);
 
     this.sendFiles = function(){    	

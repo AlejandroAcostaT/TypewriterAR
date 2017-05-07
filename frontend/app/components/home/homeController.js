@@ -4,7 +4,9 @@ angular.module('booksAR')
 .controller('homeController', function($state, userService, sessionService){
 
 	// new user
-	this.user = {};
+	this.user = {
+		device: "web"
+	};
 
 	// log in user
 	this.loginUser = {
@@ -79,9 +81,17 @@ angular.module('booksAR')
 		}
 	};
 
+	this.verifySpecialCharacters = function(){
+		return /^[a-zA-Z0-9]*$/.test(this.user.username) == false;
+	}
+
 	this.verifyUsername = function(){
 		if(this.user.username.length >= 8 && this.user.username.length <= 16){
-			this.removeError();
+			if(/^[a-zA-Z0-9]*$/.test(this.user.username) == false){
+				this.addError('Username must not contain white spaces or special characters.');
+			}else{
+				this.removeError();
+			}
 		}else{
 			this.addError('Username length must be between 8 and 16 characters.');
 		}

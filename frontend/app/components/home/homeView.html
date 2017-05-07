@@ -30,10 +30,10 @@
           <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="signUpForm.lastName.$invalid && signUpForm.lastName.$dirty"></span>
         </div>
 
-        <div class="has-feedback" ng-class="{ 'has-success': signUpForm.username.$valid && (homeCtrl.user.username.length > 7), 'has-error': (homeCtrl.user.username.length <= 7) || signUpForm.username.$invalid && signUpForm.username.$dirty}">
+        <div class="has-feedback" ng-class="{ 'has-success': signUpForm.username.$valid && (homeCtrl.user.username.length > 7) && !homeCtrl.verifySpecialCharacters(), 'has-error': (homeCtrl.user.username.length <= 7) || signUpForm.username.$invalid && signUpForm.username.$dirty || homeCtrl.verifySpecialCharacters()}">
           <input name="username" type="text" class="formInput form-control" ng-change="homeCtrl.verifyUsername()" placeholder="Username" ng-model="homeCtrl.user.username" ng-model-options="{allowInvalid: true}" minlength="8" maxlength="16" required>            
-          <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-show="signUpForm.username.$valid && homeCtrl.user.username.length > 7"></span>
-          <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="homeCtrl.user.username.length <= 7 || signUpForm.username.$invalid && signUpForm.username.$dirty"></span>
+          <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-show="signUpForm.username.$valid && homeCtrl.user.username.length > 7 && !homeCtrl.verifySpecialCharacters()"></span>
+          <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="homeCtrl.user.username.length <= 7 || signUpForm.username.$invalid && signUpForm.username.$dirty || homeCtrl.verifySpecialCharacters()"></span>
         </div>
 
         <div class="has-feedback" ng-class="{ 'has-success': signUpForm.email.$valid, 'has-error': signUpForm.email.$invalid && signUpForm.email.$dirty}">

@@ -1,5 +1,5 @@
-<h3>Image Selection</h3>
-<button class="btn btn-default btn-lg btn-block" ng-model="typewriterCtrl.image"  ngf-pattern="'.jpg,.jpeg,.png'" ngf-select="submitImage(file)">Select Image File</button>
+<h3>Marker Image Selection</h3>
+<button class="btn btn-default btn-lg btn-block" ng-model="typewriterCtrl.image"  ngf-pattern="'.jpg,.jpeg,.png'" ngf-select="submitImage(file)">Select Marker Image File</button>
 
 <h3>AR Content Selection</h3>
 
@@ -30,7 +30,7 @@
 
 <button type='submit' class="btn btn-default btn-lg btn-block" ng-show="typewriterCtrl.page.image.contentType == 'object'" ng-click="typewriterCtrl.sendFiles()" ng-disabled="!typewriterCtrl.image || !typewriterCtrl.ARContent || !typewriterCtrl.texture">Upload Files</button>
 
-<h3>Image Dimension</h3>
+<h3>Marker Image Dimension</h3>
 <div class="form-group">
 	<label for="exampleInputEmail1">Width</label>
 	<input type="number" class="form-control" ng-model="typewriterCtrl.page.image.width">
@@ -40,7 +40,7 @@
 	<input type="number" class="form-control" ng-model="typewriterCtrl.page.image.height">
 </div>
 
-<h3>Image Position</h3>
+<h3>Marker Image Position</h3>
 <div class="form-group">
 	<label for="exampleInputEmail1">Horizontal</label>
 	<input type="number" min="0" class="form-control" ng-model="typewriterCtrl.page.image.left">

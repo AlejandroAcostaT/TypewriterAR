@@ -49,6 +49,11 @@
     font-family: "Comic Sans MS";
 }
 
+.textParagraph{
+	word-wrap: break-word;
+   	width: 542pt;
+}
+
 .center{
 	text-align: center;
 }

@@ -2,7 +2,8 @@
 var app = angular.module('booksAR', [
 	'ui.router',
 	'ui.bootstrap',
-	'ngFileUpload'
+	'ngFileUpload',
+    'angular-loading-bar'
 	])
     .run(function($rootScope, $state) {
         $rootScope.$on('$stateChangeStart', function (event, toState, toParams, from, fromParams, error) {      
@@ -48,8 +49,8 @@ var app = angular.module('booksAR', [
 //Setting API Address
 app.service('API', function(){
     return {
-        bookAddress: 'http://192.168.1.12:3000/books/',
-        address : 'http://192.168.1.12:3000/api/'
+        bookAddress: 'https://typewriterar-tartaretalex.c9users.io/books/', //'http://192.168.1.12:3000/books/',
+        address : 'https://typewriterar-tartaretalex.c9users.io/api/' //'http://192.168.1.12:3000/api/'
     };
 });
 
