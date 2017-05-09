@@ -7,7 +7,9 @@ angular.module('booksAR')
 	this.page = {
 			pageType: 1,
 			text: '',
-			paragraphs: [],
+			paragraphs: [
+				""
+			],
 			title: '',
 			pageStyle: {
 				textSize: "100%",
@@ -100,7 +102,9 @@ angular.module('booksAR')
 		var emptyPage = {
 			pageType: 1,
 			text: '',
-			paragraphs: [],
+			paragraphs: [
+				""
+			],
 			title: '',
 			pageStyle: {
 				textSize: "100%",
@@ -136,7 +140,9 @@ angular.module('booksAR')
 			var emptyPage = {
 				pageType: 1,
 				text: '',
-				paragraphs: [],
+				paragraphs: [
+					""
+				],
 				title: '',
 				pageStyle: {
 					textSize: "100%",
