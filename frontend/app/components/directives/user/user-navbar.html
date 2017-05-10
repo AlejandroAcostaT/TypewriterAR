@@ -16,12 +16,20 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
                 <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown menu-btn" uib-dropdown>
-                  <a href="#" class="dropdown-toggle" uib-dropdown-toggle role="button" aria-haspopup="true" aria-expanded="false">User <span class="caret"></span></a>
-                  <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="split-button">
-                    <li><a href="" ng-click="userCtrl.logOut()">Log Out</a></li>
-                  </ul>
-                </li>
+                  <li class="dropdown menu-btn">
+                      <a ui-sref="book" class="dropdown-toggle">Library<span class="glyphicon glyphicon-book" style="margin-left: 5px;" aria-hidden="true"></span></a>
+                  </li>
+                  <li class="dropdown menu-btn">
+                      <a href="" class="dropdown-toggle" ng-confirm-click="Are you sure you want to log out?" confirmed-click="userCtrl.logOut()">Log Out</a>
+                  </li>
+                  <!--
+                  <li class="dropdown menu-btn" uib-dropdown>
+                    <a href="#" class="dropdown-toggle" uib-dropdown-toggle role="button" aria-haspopup="true" aria-expanded="false">User <span class="caret"></span></a>
+                    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="split-button">
+                      <li><a href="" ng-click="userCtrl.logOut()">Log Out</a></li>
+                    </ul>
+                  </li>
+                -->
                 </ul>
 
             </div><!-- /.navbar-collapse -->

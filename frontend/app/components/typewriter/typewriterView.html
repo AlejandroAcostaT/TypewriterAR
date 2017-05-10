@@ -9,7 +9,13 @@
 
 <div class="row pageTypeMenu">
 
-	<a href="" class="col-lg-2 col-lg-offset-1 col-md-2 col-md-offset-1 col-sm-2 col-sm-offset-1 pageTypeBtn" ng-click="typewriterCtrl.setPageType(1)" ng-class="{pageTypeSelected: typewriterCtrl.isSelected(1)}" ng-init="textWhite = false" 
+	<a href="" class="col-lg-2 col-lg-offset-1 col-md-2 col-md-offset-1 col-sm-2 col-sm-offset-1 pageTypeBtn" ng-click="typewriterCtrl.setPageType(4)" ng-class="{pageTypeSelected: typewriterCtrl.isSelected(4)}" ng-init="titleTextWhite = false" ng-mouseenter="titleTextWhite = true"
+    ng-mouseleave="titleTextWhite = false">
+		<img src="./assets/img/title-text-white.png" alt="..." class="pageTypeImage" ng-show="typewriterCtrl.isSelected(4) || titleTextWhite">
+		<img src="./assets/img/title-text-black.png" alt="..." class="pageTypeImage"  ng-show="!typewriterCtrl.isSelected(4) && !titleTextWhite">
+		<p> Title & Text </p>
+	</a>
+	<a href="" class="col-lg-2 col-md-2 col-sm-2 pageTypeBtn" ng-click="typewriterCtrl.setPageType(1)" ng-class="{pageTypeSelected: typewriterCtrl.isSelected(1)}" ng-init="textWhite = false" 
     ng-mouseenter="textWhite = true" ng-mouseleave="textWhite = false">
 		<img src="./assets/img/text-white.png" alt="..." class="pageTypeImage" ng-show="typewriterCtrl.isSelected(1) || textWhite">
 		<img src="./assets/img/text-black.png" alt="..." class="pageTypeImage" ng-show="!typewriterCtrl.isSelected(1) && !textWhite">
@@ -26,12 +32,6 @@
 		<img src="./assets/img/title-white.png" alt="..." class="pageTypeImage" ng-show="typewriterCtrl.isSelected(3) || titleWhite">
 		<img src="./assets/img/title-black.png" alt="..." class="pageTypeImage"  ng-show="!typewriterCtrl.isSelected(3) && !titleWhite">
 		<p> Title </p>
-	</a>
-	<a href="" class="col-lg-2 col-md-2 col-sm-2 pageTypeBtn" ng-click="typewriterCtrl.setPageType(4)" ng-class="{pageTypeSelected: typewriterCtrl.isSelected(4)}" ng-init="titleTextWhite = false" ng-mouseenter="titleTextWhite = true"
-    ng-mouseleave="titleTextWhite = false">
-		<img src="./assets/img/title-text-white.png" alt="..." class="pageTypeImage" ng-show="typewriterCtrl.isSelected(4) || titleTextWhite">
-		<img src="./assets/img/title-text-black.png" alt="..." class="pageTypeImage"  ng-show="!typewriterCtrl.isSelected(4) && !titleTextWhite">
-		<p> Title & Text </p>
 	</a>
 	<a href="" class="col-lg-2 col-md-2 col-sm-2 pageTypeBtn" ng-click="typewriterCtrl.setPageType(5)" ng-class="{pageTypeSelected: typewriterCtrl.isSelected(5)}" ng-init="titleImageWhite = false" ng-mouseenter="titleImageWhite = true" ng-mouseleave="titleImageWhite = false">
 		<img src="./assets/img/title-image-white.png" alt="..." class="pageTypeImage" ng-show="typewriterCtrl.isSelected(5) || titleImageWhite">

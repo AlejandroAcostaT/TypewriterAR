@@ -166,3 +166,7 @@ select:active, select:hover {
   margin-left: 2%;
   margin-top: -2%;
 }
+
+.medium {
+	width: 78%;
+}
