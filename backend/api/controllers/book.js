@@ -160,10 +160,11 @@ module.exports = {
 		}
 		
 		var title = req.body.title.replace(/ /g,"_"),
+			timestamp = new Date().valueOf(),
 			dir = './public/books/'+req.decoded.username+'-'+title+'/content',
 			file = req.file,
 			userDir = './public/books/'+req.decoded.username+'-'+title+'/',
-			cover = req.decoded.username+'-'+title+'/'+req.file.originalname,
+			cover = req.decoded.username+'-'+title+'/'+timestamp+"-"+req.file.originalname,
 			coverDir = './public/books/'+cover;
 
 		//create new book folder in public folder	
@@ -232,7 +233,7 @@ module.exports = {
 				var file = req.file,
 				title =book.get('title').replace(/ /g,"_"),
 				previous = './public/books/'+book.get('cover'),
-				cover = req.decoded.username+'-'+title+'/'+req.file.originalname;
+				cover = req.decoded.username+'-'+title+'/'+timestamp+"-"+req.file.originalname;
 
 				// copy cover file to book folder
 				fs.moveSync(req.file.path, './public/books/'+cover);
@@ -430,6 +431,7 @@ module.exports = {
 
 			var markerFile = req.files['marker'][0],
 			contentFile = req.files['content'][0],
+			timestamp = new Date().valueOf(),
 			title =book.get('title').replace(/ /g,"_"),
 			path = './public/books/'+ req.decoded.username+'-'+title+'/content',
 			userPath = req.decoded.username+'-'+title+'/content',
@@ -440,7 +442,6 @@ module.exports = {
 			}
 
 			//Verify if there are previous files and delete them
-
 			if(req.body.markerPath != ''){
 				fs.removeSync('./public/books/'+req.body.markerPath);
 			}
@@ -454,15 +455,15 @@ module.exports = {
 			//Move new files to content folder
 
 			// copy marker file to book's content folder
-			fs.moveSync(markerFile.path, path+'/'+markerFile.originalname);
+			fs.moveSync(markerFile.path, path+'/'+timestamp+"-"+markerFile.originalname);
 
 			// copy content file to book's content folder
-			fs.moveSync(contentFile.path, path+'/'+contentFile.originalname);
+			fs.moveSync(contentFile.path, path+'/'+timestamp+"-"+contentFile.originalname);
 
 			// copy content file to book's content folder
 			if(textureFile){
-				fs.moveSync(textureFile.path, path+'/'+textureFile.originalname);
-				texturePath = userPath+'/'+textureFile.originalname;
+				fs.moveSync(textureFile.path, path+'/'+timestamp+"-"+textureFile.originalname);
+				texturePath = userPath+'/'+timestamp+"-"+textureFile.originalname;
 			}
 			
 
@@ -470,8 +471,8 @@ module.exports = {
 			.json({
 				error : false,
 				data : {
-					markerPath: userPath+'/'+markerFile.originalname,
-					contentPath: userPath+'/'+contentFile.originalname,
+					markerPath: userPath+'/'+timestamp+"-"+markerFile.originalname,
+					contentPath: userPath+'/'+timestamp+"-"+contentFile.originalname,
 					texturePath: texturePath,
 					message : 'Page content successfully uploaded'
 				}
