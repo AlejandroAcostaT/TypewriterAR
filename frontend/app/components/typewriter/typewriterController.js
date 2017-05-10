@@ -449,7 +449,7 @@ angular.module('booksAR')
 				this.updatePage();
 			}
 		
-		}).bind(this), 500, totalPages);
+		}).bind(this), 1800, totalPages);
 		
 	};
 	
@@ -492,7 +492,7 @@ angular.module('booksAR')
 	this.pdfImage = function(pdf, margins){
 		// source can be HTML-formatted string, or a reference
 		// to an actual DOM element from which the text will be scraped.
-		var imgData = document.getElementById("img"),
+		var imgData = document.getElementById("onlyImg"),
 
 		// we support special element handlers. Register them with jQuery-style 
 		// ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
@@ -647,7 +647,7 @@ angular.module('booksAR')
 
 		var linesOffset = 0,
 
-		imgData = document.getElementById("img"),
+		imgData = document.getElementById("titleImg"),
 
 		image = {
 			width: this.page.image.width*0.75,
@@ -771,6 +771,10 @@ angular.module('booksAR')
     	//texture Path
     	this.page.image.texturePath = data.texturePath;
 
+    	this.image = null;
+    	this.ARContent = null;
+    	this.texture = null;
+
     	//save book
     	this.saveBook();
     }).bind(this);
@@ -782,7 +786,6 @@ angular.module('booksAR')
 
 	    data.append('marker', this.image);
 	   	data.append('markerPath', this.page.image.markerPath);
-
 	    data.append('content', this.ARContent);
 	    data.append('contentPath', this.page.image.contentPath);
 
@@ -793,6 +796,7 @@ angular.module('booksAR')
 
 		contentService.addContent(token, id, data).then(function successCallback(response) {
 			showSuccessMessage('The files has been uploaded!');
+
 			setFiles(response.data.data);
 			
 		}, function errorCallback(response) {

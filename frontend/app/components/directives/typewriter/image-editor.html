@@ -1,6 +1,10 @@
-<h3 class="inline">Marker Image Selection</h3> <button type="button" class="btn btn-default btn-circle inline" tooltip-placement="right" uib-tooltip="Select the image that will be your marker for the Augmented Reality Content. Files should be .jpeg, .jpg or .png"><b>?</b></button>
+<h3 class="inline">Marker Image Selection</h3> <button type="button" class="btn btn-default btn-circle inline" tooltip-placement="right" uib-tooltip="Select the image that will be your marker for the Augmented Reality Content. Files should be .jpeg, .jpg"><b>?</b></button>
 
-<button class="btn btn-default btn-lg btn-block" ng-model="typewriterCtrl.image"  ngf-pattern="'.jpg,.jpeg,.png'" ngf-select="submitImage(file)">Select Marker Image File</button>
+<button class="btn btn-default btn-lg btn-block inline medium" ng-model="typewriterCtrl.image"  ngf-pattern="'.jpg,.jpeg'" ngf-select="submitImage(file)">Select Marker Image File</button>
+<!-- THUMBNAIL -->
+<img ngf-src="typewriterCtrl.image" id="img" class="inline cover-preview">
+<br>
+<!-- /THUMBNAIL -->
 
 <h3 class="inline">AR Content Selection</h3> <button type="button" class="btn btn-default btn-circle inline" tooltip-placement="right" uib-tooltip="Select the type of Augmented Reality content. Image Formats: .jpeg, .jpg and .png. Audio Formats: .mp3 and .wav. Video Formats: .mp4 and .3gp. 3D Object Formats: .jet (go to https://www.kudan.eu/download-kudan-ar-sdk/ and download the Toolkit to convert .obj and .fbx files to .jet.). Texture must be .jpg or .png"><b>?</b></button>
 
@@ -17,13 +21,26 @@
 <br>
 
 <button class="btn btn-default btn-lg btn-block" ng-model="typewriterCtrl.ARContent" ng-show="typewriterCtrl.page.image.contentType == 'image'" ngf-pattern="'.jpg,.jpeg,.png'" ngf-select="uploadContent(file)">Select AR Image File</button> 
+<p ng-show="typewriterCtrl.page.image.contentType == 'image' && typewriterCtrl.ARContent">Image file to upload: {{typewriterCtrl.ARContent.name}}</p>
+<p ng-show="typewriterCtrl.page.image.contentType == 'image' && typewriterCtrl.page.image.contentPath">Uploaded Image file: {{typewriterCtrl.page.image.contentPath}}</p>
 
 <button class="btn btn-default btn-lg btn-block" ng-model="typewriterCtrl.ARContent" ng-show="typewriterCtrl.page.image.contentType == 'video'" ngf-pattern="'.3gp,.mp4'" ngf-select="uploadImage(file)">Select AR Video File</button> 
+<p ng-show="typewriterCtrl.page.image.contentType == 'video' && typewriterCtrl.ARContent">Video file to upload: {{typewriterCtrl.ARContent.name}}</p>
+<p ng-show="typewriterCtrl.page.image.contentType == 'video' && typewriterCtrl.page.image.contentPath">Uploaded Video file: {{typewriterCtrl.page.image.contentPath}}</p>
 
 <button class="btn btn-default btn-lg btn-block" ng-model="typewriterCtrl.ARContent" ng-show="typewriterCtrl.page.image.contentType == 'audio'" ngf-pattern="'.wav,.mp3'" ngf-select="uploadContent(file)">Select AR Audio File</button>
+<p ng-show="typewriterCtrl.page.image.contentType == 'audio' && typewriterCtrl.ARContent">Audio file to upload: {{typewriterCtrl.ARContent.name}}</p>
+<p ng-show="typewriterCtrl.page.image.contentType == 'audio' && typewriterCtrl.page.image.contentPath">Uploaded Audio file: {{typewriterCtrl.page.image.contentPath}}</p>
 
 <button class="btn btn-default btn-lg btn-block" ng-model="typewriterCtrl.ARContent" ng-show="typewriterCtrl.page.image.contentType == 'object'" ngf-pattern="'.jet'" ngf-select="uploadContent(file)">Select AR 3D Object File</button>
+<p ng-show="typewriterCtrl.page.image.contentType == 'object' && typewriterCtrl.ARContent">3D Object file to upload: {{typewriterCtrl.ARContent.name}}</p>
+<p ng-show="typewriterCtrl.page.image.contentType == 'object' && typewriterCtrl.page.image.contentPath">Uploaded 3D Object file: {{typewriterCtrl.page.image.contentPath}}</p>
+
+<br>
+
 <button class="btn btn-default btn-lg btn-block" ng-model="typewriterCtrl.texture" ng-show="typewriterCtrl.page.image.contentType == 'object'" ngf-pattern="'.jpg,.jpeg,.png'" ngf-select="uploadTexture(file)">Select Object Texture File</button>
+<p ng-show="typewriterCtrl.page.image.contentType == 'object' && typewriterCtrl.texture">Texture file to upload: {{typewriterCtrl.texture.name}}</p>
+<p ng-show="typewriterCtrl.page.image.contentType == 'object' && typewriterCtrl.page.image.contentPath">Uploaded Texture file: {{typewriterCtrl.page.image.texturePath}}</p>
 
 <br><br>
 
@@ -34,24 +51,26 @@
 <h3 class="inline">Marker Image Dimension</h3> <button type="button" class="btn btn-default btn-circle inline" tooltip-placement="right" uib-tooltip="Set the width and height of your marker image."><b>?</b></button>
 
 <div class="form-group">
-	<label for="exampleInputEmail1">Width</label>
-	<input type="number" class="form-control" ng-model="typewriterCtrl.page.image.width">
+	<label class="inline" for="exampleInputEmail1">Width: </label> <p class="inline"> {{typewriterCtrl.page.image.width}} px</p>
+	<input type="range" min="0" max="720" step="0.5" class="form-control" ng-model="typewriterCtrl.page.image.width">
 </div>
 
 <div class="form-group">
-	<label for="exampleInputEmail1">Height</label>
-	<input type="number" class="form-control" ng-model="typewriterCtrl.page.image.height">
+	<label class="inline" for="exampleInputEmail1">Height: </label> <p class="inline"> {{typewriterCtrl.page.image.height}} px</p>
+	<input type="range" min="0" max="880" step="0.5" class="form-control" ng-model="typewriterCtrl.page.image.height">
 </div>
 
 <h3 class="inline">Marker Image Position</h3> <button type="button" class="btn btn-default btn-circle inline" tooltip-placement="right" uib-tooltip="Set the position of your marker image. 'Horizontal' is the left margin and 'Vertical' the top one."><b>?</b></button>
 
 <div class="form-group">
-	<label for="exampleInputEmail1">Horizontal</label>
-	<input type="number" min="0" class="form-control" ng-model="typewriterCtrl.page.image.left">
+	<label class="inline" for="exampleInputEmail1">Horizontal: </label> <p class="inline"> {{typewriterCtrl.page.image.left}} px</p>
+	<input type="range" min="0" max="720" step="0.5" class="form-control" ng-model="typewriterCtrl.page.image.left">
+	
 </div>
 
 <div class="form-group">
-	<label for="exampleInputEmail1">Vertical</label>
-	<input type="number" min="0" class="form-control" ng-model="typewriterCtrl.page.image.top">
+	<label class="inline" for="exampleInputEmail1">Vertical: </label> <p class="inline"> {{typewriterCtrl.page.image.top}} px</p>
+	<input type="range" min="0" max="880" step="0.5" class="form-control" ng-model="typewriterCtrl.page.image.top">
+	
 </div>
 

@@ -9,6 +9,8 @@ angular.module('booksAR')
 	this.editUser = false;
 	this.user = JSON.parse(sessionStorage.user);
 
+	console.log(this.user.books);
+
 	this.updUser = {
 		name: this.user.name,
 		lastName: this.user.lastName,
@@ -214,8 +216,10 @@ angular.module('booksAR')
 
 			}, function errorCallback(response) {
 				//error
-				showDangerMessage(response.data.data.message);
 				console.log(response.data.data.message);
+				console.log(response.status);
+				showDangerMessage(response.data.data.message);
+				
 			});
 			
 		}, function errorCallback(response) {
