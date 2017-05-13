@@ -164,7 +164,7 @@ module.exports = {
 			dir = './public/books/'+req.decoded.username+'-'+title+'/content',
 			file = req.file,
 			userDir = './public/books/'+req.decoded.username+'-'+title+'/',
-			cover = req.decoded.username+'-'+title+'/'+timestamp+"-"+req.file.originalname,
+			cover = req.decoded.username+'-'+title+'/'+timestamp+"-"+req.file.originalname.replace(/ /g,"_"),
 			coverDir = './public/books/'+cover;
 
 		//create new book folder in public folder	
@@ -233,7 +233,7 @@ module.exports = {
 				var file = req.file,
 				title =book.get('title').replace(/ /g,"_"),
 				previous = './public/books/'+book.get('cover'),
-				cover = req.decoded.username+'-'+title+'/'+timestamp+"-"+req.file.originalname;
+				cover = req.decoded.username+'-'+title+'/'+timestamp+"-"+req.file.originalname.replace(/ /g,"_");
 
 				// copy cover file to book folder
 				fs.moveSync(req.file.path, './public/books/'+cover);
@@ -455,15 +455,15 @@ module.exports = {
 			//Move new files to content folder
 
 			// copy marker file to book's content folder
-			fs.moveSync(markerFile.path, path+'/'+timestamp+"-"+markerFile.originalname);
+			fs.moveSync(markerFile.path, path+'/'+timestamp+"-"+markerFile.originalname.replace(/ /g,"_"));
 
 			// copy content file to book's content folder
-			fs.moveSync(contentFile.path, path+'/'+timestamp+"-"+contentFile.originalname);
+			fs.moveSync(contentFile.path, path+'/'+timestamp+"-"+contentFile.originalname.replace(/ /g,"_"));
 
 			// copy content file to book's content folder
 			if(textureFile){
-				fs.moveSync(textureFile.path, path+'/'+timestamp+"-"+textureFile.originalname);
-				texturePath = userPath+'/'+timestamp+"-"+textureFile.originalname;
+				fs.moveSync(textureFile.path, path+'/'+timestamp+"-"+textureFile.originalname.replace(/ /g,"_"));
+				texturePath = userPath+'/'+timestamp+"-"+textureFile.originalname.replace(/ /g,"_");
 			}
 			
 
@@ -471,8 +471,8 @@ module.exports = {
 			.json({
 				error : false,
 				data : {
-					markerPath: userPath+'/'+timestamp+"-"+markerFile.originalname,
-					contentPath: userPath+'/'+timestamp+"-"+contentFile.originalname,
+					markerPath: userPath+'/'+timestamp+"-"+markerFile.originalname.replace(/ /g,"_"),
+					contentPath: userPath+'/'+timestamp+"-"+contentFile.originalname.replace(/ /g,"_"),
 					texturePath: texturePath,
 					message : 'Page content successfully uploaded'
 				}
