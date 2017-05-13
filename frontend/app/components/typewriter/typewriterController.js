@@ -213,47 +213,28 @@ angular.module('booksAR')
 
 		}else if(this.page.pageType == 5){
 			//page type is title & image
+
 			var lines = this.page.title.split(/\r\n|\r|\n/g),
 			space = 0,
 			newHeight = 0;
 			//default size with 1 line
-			lines = lines.length - 1;
+			lines = lines.length - 1,
+			//pageHeight and titleHeight to calculate max height of image
+			titleHeight = document.getElementById("title-image").clientHeight,
+			pageHeight = document.getElementById("page").clientHeight;
 
+			//Formule to set image height
+			// newHeight = pageHeight - topMargin - bottomMargin - titleHeight;
+			newHeight = pageHeight - 80 - 80 - titleHeight;
 
-			switch(this.page.pageStyle.titleSize) {
-			    case '270%': //26
-			        space = 40;
-			        newHeight = 820;
-			        break;
-			    case '280%': //28
-			        space = 42;
-			        newHeight = 815;
-			        break;
-			    case '290%': //30
-			        space = 44;
-			        newHeight = 815;
-			        break;
-			    case '300%': //32
-			        space = 46;
-			        newHeight = 813;
-			        break;
-			    case '320%': //34
-			        space = 47;
-			        newHeight = 811;
-			        break;
-			    case '350%': //36
-			        space = 52;
-			        newHeight = 806;
-			        break;
-			}
-
-
-			if(parseInt(this.page.image.height) < (newHeight - space*lines)){
+			
+			if(this.page.image.height < newHeight){
 				return (height + "px");
 			}else{
-				this.page.image.height = (newHeight - space*lines);
+				this.page.image.height = newHeight;
 				return (this.page.image.height + "px");
 			}
+			
 		}
 		
 	};
