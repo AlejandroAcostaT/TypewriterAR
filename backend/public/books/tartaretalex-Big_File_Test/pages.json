@@ -1,0 +1,26 @@
+[
+  {
+    "pageType": 2,
+    "text": "",
+    "paragraphs": [],
+    "title": "",
+    "pageStyle": {
+      "textSize": "100%",
+      "titleSize": "270%",
+      "weight": "normal",
+      "style": "normal",
+      "textFont": "times",
+      "titleFont": "times"
+    },
+    "image": {
+      "width": 720,
+      "height": 720,
+      "left": 0,
+      "top": 84,
+      "contentType": "object",
+      "markerPath": "tartaretalex-Big_File_Test/content/1494972006520-moana.jpg",
+      "contentPath": "tartaretalex-Big_File_Test/content/1494972006520-bunny.jet",
+      "texturePath": "tartaretalex-Big_File_Test/content/1494972006520-white-texture.png"
+    }
+  }
+]

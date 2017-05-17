@@ -1,0 +1,76 @@
+[
+  {
+    "pageType": 3,
+    "text": "",
+    "paragraphs": [],
+    "title": "Alejandra's life",
+    "pageStyle": {
+      "textSize": "100%",
+      "titleSize": "350%",
+      "weight": "normal",
+      "style": "normal",
+      "textFont": "times",
+      "titleFont": "courier"
+    },
+    "image": {
+      "width": 720,
+      "height": 880,
+      "left": 0,
+      "top": 0,
+      "contentType": "image",
+      "markerPath": "",
+      "contentPath": "",
+      "texturePath": ""
+    }
+  },
+  {
+    "pageType": 1,
+    "text": "the life of poor Alejandra.",
+    "paragraphs": [
+      "the life of poor Alejandra."
+    ],
+    "title": "",
+    "pageStyle": {
+      "textSize": "150%",
+      "titleSize": "270%",
+      "weight": "normal",
+      "style": "normal",
+      "textFont": "courier",
+      "titleFont": "times"
+    },
+    "image": {
+      "width": 720,
+      "height": 880,
+      "left": 0,
+      "top": 0,
+      "contentType": "image",
+      "markerPath": "",
+      "contentPath": "",
+      "texturePath": ""
+    }
+  },
+  {
+    "pageType": 5,
+    "text": "",
+    "paragraphs": [],
+    "title": "Alejandra's life",
+    "pageStyle": {
+      "textSize": "100%",
+      "titleSize": "270%",
+      "weight": "normal",
+      "style": "normal",
+      "textFont": "times",
+      "titleFont": "times"
+    },
+    "image": {
+      "width": 720,
+      "height": 820,
+      "left": 0,
+      "top": 0,
+      "contentType": "image",
+      "markerPath": "Acosteeeca-Alejandra's_life/content/1494798765194-Moana_big.jpg",
+      "contentPath": "Acosteeeca-Alejandra's_life/content/1494798765194-Minnie_Mouse.png",
+      "texturePath": ""
+    }
+  }
+]

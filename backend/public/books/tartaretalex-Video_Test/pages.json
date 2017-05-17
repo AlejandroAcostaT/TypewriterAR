@@ -1,0 +1,26 @@
+[
+  {
+    "pageType": 2,
+    "text": "",
+    "paragraphs": [],
+    "title": "",
+    "pageStyle": {
+      "textSize": "100%",
+      "titleSize": "270%",
+      "weight": "normal",
+      "style": "normal",
+      "textFont": "times",
+      "titleFont": "times"
+    },
+    "image": {
+      "width": 615,
+      "height": 327,
+      "left": 62,
+      "top": 184.5,
+      "contentType": "video",
+      "markerPath": "tartaretalex-Video_Test/content/1494970367212-marker.jpg",
+      "contentPath": "tartaretalex-Video_Test/content/1494970367212-video_2.mp4",
+      "texturePath": ""
+    }
+  }
+]

@@ -42,12 +42,12 @@
     },
     "image": {
       "width": 720,
-      "height": 880,
+      "height": 314,
       "left": 0,
       "top": 0,
       "contentType": "audio",
       "markerPath": "aacostan1-La_Liebre_y_La_Tortuga/content/1494628266419-liebre-tortuga-ilustracion-p.jpg",
-      "contentPath": "aacostan1-La_Liebre_y_La_Tortuga/content/1494628266419-Cuenta Cuentos- La liebre y la tortuga..mp3",
+      "contentPath": "aacostan1-La_Liebre_y_La_Tortuga/content/1494628266419-Cuenta_Cuentos-_La_liebre_y_la_tortuga..mp3",
       "texturePath": ""
     }
   },
@@ -136,7 +136,7 @@
     }
   },
   {
-    "pageType": 2,
+    "pageType": 1,
     "text": "La liebre y la tortuga también aprendieron otra lección vital: cuando dejamos de competir contra un rival y comenzamos a competir contra una situación, complementamos capacidades, compensamos defectos, potenciamos nuestros recursos... y obtenemos mejores resultados!",
     "paragraphs": [
       "La liebre y la tortuga también aprendieron otra lección vital: cuando dejamos de competir contra un rival y comenzamos a competir contra una situación, complementamos capacidades, compensamos defectos, potenciamos nuestros recursos... y obtenemos mejores resultados!"
@@ -181,8 +181,56 @@
       "top": 0,
       "contentType": "video",
       "markerPath": "aacostan1-La_Liebre_y_La_Tortuga/content/1494629116882-imagen-pag3.jpg",
-      "contentPath": "aacostan1-La_Liebre_y_La_Tortuga/content/1494629116882-FABULA DE LA LIEBRE Y LA TORTUGA.mp4",
+      "contentPath": "aacostan1-La_Liebre_y_La_Tortuga/content/1494629116882-FABULA_DE_LA_LIEBRE_Y_LA_TORTUGA.mp4",
       "texturePath": ""
+    }
+  },
+  {
+    "pageType": 2,
+    "text": "",
+    "paragraphs": [],
+    "title": "",
+    "pageStyle": {
+      "textSize": "100%",
+      "titleSize": "270%",
+      "weight": "normal",
+      "style": "normal",
+      "textFont": "times",
+      "titleFont": "times"
+    },
+    "image": {
+      "width": 382,
+      "height": 625,
+      "left": 169.5,
+      "top": 84.5,
+      "contentType": "object",
+      "markerPath": "aacostan1-La_Liebre_y_La_Tortuga/content/1494854144300-images-pag5.jpg",
+      "contentPath": "aacostan1-La_Liebre_y_La_Tortuga/content/1494854144300-Turtle.jet",
+      "texturePath": "aacostan1-La_Liebre_y_La_Tortuga/content/1494854144300-Body.png"
+    }
+  },
+  {
+    "pageType": 2,
+    "text": "",
+    "paragraphs": [],
+    "title": "",
+    "pageStyle": {
+      "textSize": "100%",
+      "titleSize": "270%",
+      "weight": "normal",
+      "style": "normal",
+      "textFont": "times",
+      "titleFont": "times"
+    },
+    "image": {
+      "width": 609.5,
+      "height": 551.5,
+      "left": 54.5,
+      "top": 166.5,
+      "contentType": "object",
+      "markerPath": "aacostan1-La_Liebre_y_La_Tortuga/content/1494854827147-imagen55.jpg",
+      "contentPath": "aacostan1-La_Liebre_y_La_Tortuga/content/1494854827147-Pocky.jet",
+      "texturePath": "aacostan1-La_Liebre_y_La_Tortuga/content/1494854827147-ani_all_body.png"
     }
   }
 ]

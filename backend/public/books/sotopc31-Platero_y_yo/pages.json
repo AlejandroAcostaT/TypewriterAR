@@ -1,0 +1,52 @@
+[
+  {
+    "pageType": 5,
+    "text": "El autobus me fue a buscar y como todo nino no queria ir porque estaba aterrado, y me tome de unos ganchos de ropa pensando que estos me ayudarian a quedar pegada del closet y no me llevarian al autobus. Pero mis padres a la fuerza me llevaron. Y lo demas es  hisoria ......",
+    "paragraphs": [
+      "El autobus me fue a buscar y como todo nino no queria ir porque estaba aterrado, y me tome de unos ganchos de ropa pensando que estos me ayudarian a quedar pegada del closet y no me llevarian al autobus. Pero mis padres a la fuerza me llevaron. Y lo demas es  hisoria ......"
+    ],
+    "title": "Mi primer dis de clase",
+    "pageStyle": {
+      "textSize": "100%",
+      "titleSize": "270%",
+      "weight": "normal",
+      "style": "normal",
+      "textFont": "times",
+      "titleFont": "helvetica"
+    },
+    "image": {
+      "width": 720,
+      "height": 820,
+      "left": 0,
+      "top": 0,
+      "contentType": "image",
+      "markerPath": "sotopc31-Platero_y_yo/content/1494797776009-moana.jpg",
+      "contentPath": "sotopc31-Platero_y_yo/content/1494797776009-dagger.png",
+      "texturePath": ""
+    }
+  },
+  {
+    "pageType": 2,
+    "text": "",
+    "paragraphs": [],
+    "title": "",
+    "pageStyle": {
+      "textSize": "100%",
+      "titleSize": "270%",
+      "weight": "normal",
+      "style": "normal",
+      "textFont": "times",
+      "titleFont": "times"
+    },
+    "image": {
+      "width": 720,
+      "height": 403.5,
+      "left": 0,
+      "top": 251,
+      "contentType": "object",
+      "markerPath": "sotopc31-Platero_y_yo/content/1494796788427-lego.jpg",
+      "contentPath": "sotopc31-Platero_y_yo/content/1494796788427-adult1.jet",
+      "texturePath": "sotopc31-Platero_y_yo/content/1494796788427-Adult.png"
+    }
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "pageType": 2,
+    "text": "",
+    "paragraphs": [],
+    "title": "",
+    "pageStyle": {
+      "textSize": "100%",
+      "titleSize": "270%",
+      "weight": "normal",
+      "style": "normal",
+      "textFont": "times",
+      "titleFont": "times"
+    },
+    "image": {
+      "width": 615,
+      "height": 320,
+      "left": 59,
+      "top": 196.5,
+      "contentType": "image",
+      "markerPath": "tartaretalex-Image_Test/content/1494969098155-marker.jpg",
+      "contentPath": "tartaretalex-Image_Test/content/1494969098155-Megablaziken.png",
+      "texturePath": ""
+    }
+  }
+]

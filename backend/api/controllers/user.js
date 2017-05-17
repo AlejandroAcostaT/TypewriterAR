@@ -126,81 +126,103 @@ module.exports = {
 			email	 = req.body.email,
 			device	 = req.body.device,
 			salt = bcrypt.genSaltSync(10);
-
-		//Password length validation
-		if(password.length < 8 || password.length > 16){
-			res.status(400)
-			.json({
-				error : true,
-				data : { message : "Password length must be between 8 and 16 characters" }
-			})
-		}	
-
-		//Username length validation
-		if(username.length < 8 || username.length > 16){
-			res.status(400)
-			.json({
-				error : true,
-				data : { message : "Username length must be between 8 and 16 characters" }
-			})
-		}	
-
-		//Email validation
-		if(!validator.validate(email)){
-			res.status(400)
-			.json({
-				error : true,
-				data : { message : "Invalid Email" }
-			})
-		}
-
-		//Encrypting password;
-		var hash = bcrypt.hashSync(password, salt); 
-
-		//Creating User in database
-		User.forge({
-			name: req.body.name,
-			lastName: req.body.lastName,
-			username: req.body.username,
-			password: hash,
-			email	: req.body.email
-		})
-		.save()
-		.then(function(user){
 			
-			if(device=='web'){
-				res.status(201)
+		User.forge({
+			username : username
+		})
+		.fetch({})
+		.then(function(user){
+			if(user){
+				res.status(400)
 				.json({
-					error: false,
-					data: {
-						id : user.get('id'),
-						name : user.get('name'),
-						lastName : user.get('lastName'),
-						username : user.get('username'),
-						email : user.get('email')
+					error : true,
+					data : {message: "Username already in use."}
+				})
+			}else{
+				//Password length validation
+				if(password.length < 8 || password.length > 16){
+					return res.status(400)
+					.json({
+						error : true,
+						data : { message : "Password length must be between 8 and 16 characters" }
+					});
+				}	
+		
+				//Username length validation
+				if(username.length < 8 || username.length > 16){
+					return res.status(400)
+					.json({
+						error : true,
+						data : { message : "Username length must be between 8 and 16 characters" }
+					});
+					
+				}	
+		
+				//Email validation
+				if(!validator.validate(email)){
+					return res.status(400)
+					.json({
+						error : true,
+						data : { message : "Invalid Email" }
+					});
+				}
+		
+				//Encrypting password;
+				var hash = bcrypt.hashSync(password, salt); 
+		
+				//Creating User in database
+				User.forge({
+					name: req.body.name,
+					lastName: req.body.lastName,
+					username: req.body.username,
+					password: hash,
+					email	: req.body.email
+				})
+				.save()
+				.then(function(user){
+					
+					if(device=='web'){
+						res.status(201)
+						.json({
+							error: false,
+							data: {
+								id : user.get('id'),
+								name : user.get('name'),
+								lastName : user.get('lastName'),
+								username : user.get('username'),
+								email : user.get('email')
+							}
+						});
+					}else if(device=='mobile'){
+						res.status(201)
+						.json({
+							
+							id : user.get('id'),
+							name : user.get('name'),
+							lastName : user.get('lastName'),
+							username : user.get('username'),
+							email : user.get('email')
+							
+						});
 					}
-				});
-			}else if(device=='mobile'){
-				res.status(201)
-				.json({
-					
-					id : user.get('id'),
-					name : user.get('name'),
-					lastName : user.get('lastName'),
-					username : user.get('username'),
-					email : user.get('email')
-					
+		
+				})
+				.catch(function (err) {
+					console.log(err.message);
+					res.status(500)
+					.json({
+						error: true,
+						data: {message: err.message}
+					});
 				});
 			}
-
 		})
-		.catch(function (err) {
-			console.log(err.message);
+		.catch(function(err){
 			res.status(500)
 			.json({
-				error: true,
-				data: {message: err.message}
-			});
+				error : false,
+				data : {message : err.message}
+			})
 		});
 	},
 

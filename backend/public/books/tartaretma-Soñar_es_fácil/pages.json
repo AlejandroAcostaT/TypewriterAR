@@ -1,0 +1,101 @@
+[
+  {
+    "pageType": 3,
+    "text": "",
+    "paragraphs": [],
+    "title": "Soñar es fácil",
+    "pageStyle": {
+      "textSize": "100%",
+      "titleSize": "320%",
+      "weight": "normal",
+      "style": "normal",
+      "textFont": "times",
+      "titleFont": "helvetica"
+    },
+    "image": {
+      "width": 720,
+      "height": 880,
+      "left": 0,
+      "top": 0,
+      "contentType": "image",
+      "markerPath": "",
+      "contentPath": "",
+      "texturePath": ""
+    }
+  },
+  {
+    "pageType": 1,
+    "text": "Pluto es un soñador y, como todos los soñadores, está siempre en la luna. \nUn día, Minnie se lo encontró metido en la bañera.",
+    "paragraphs": [
+      "Pluto es un soñador y, como todos los soñadores, está siempre en la luna. ",
+      "Un día, Minnie se lo encontró metido en la bañera."
+    ],
+    "title": "",
+    "pageStyle": {
+      "textSize": "100%",
+      "titleSize": "270%",
+      "weight": "normal",
+      "style": "normal",
+      "textFont": "times",
+      "titleFont": "times"
+    },
+    "image": {
+      "width": 720,
+      "height": 820,
+      "left": 0,
+      "top": 0,
+      "contentType": "image",
+      "markerPath": "",
+      "contentPath": "",
+      "texturePath": ""
+    }
+  },
+  {
+    "pageType": 2,
+    "text": "",
+    "paragraphs": [],
+    "title": "",
+    "pageStyle": {
+      "textSize": "100%",
+      "titleSize": "270%",
+      "weight": "normal",
+      "style": "normal",
+      "textFont": "times",
+      "titleFont": "times"
+    },
+    "image": {
+      "width": 619,
+      "height": 757,
+      "left": 29,
+      "top": 55.5,
+      "contentType": "image",
+      "markerPath": "tartaretma-Soñar_es_fácil/content/1494726878610-Pluto.jpg",
+      "contentPath": "tartaretma-Soñar_es_fácil/content/1494726878610-Pluto2.jpg",
+      "texturePath": ""
+    }
+  },
+  {
+    "pageType": 5,
+    "text": "",
+    "paragraphs": [],
+    "title": "La prueba",
+    "pageStyle": {
+      "textSize": "100%",
+      "titleSize": "270%",
+      "weight": "normal",
+      "style": "normal",
+      "textFont": "times",
+      "titleFont": "times"
+    },
+    "image": {
+      "width": 552.5,
+      "height": 552.5,
+      "left": 77.5,
+      "top": 119,
+      "contentType": "object",
+      "markerPath": "tartaretma-Soñar_es_fácil/content/1494727079899-moana.jpg",
+      "contentPath": "tartaretma-Soñar_es_fácil/content/1494727079899-adult1.jet",
+      "texturePath": "tartaretma-Soñar_es_fácil/content/1494727079899-Adult.png"
+    }
+  }
+]

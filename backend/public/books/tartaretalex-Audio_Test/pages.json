@@ -1,0 +1,26 @@
+[
+  {
+    "pageType": 2,
+    "text": "",
+    "paragraphs": [],
+    "title": "",
+    "pageStyle": {
+      "textSize": "100%",
+      "titleSize": "270%",
+      "weight": "normal",
+      "style": "normal",
+      "textFont": "times",
+      "titleFont": "times"
+    },
+    "image": {
+      "width": 615,
+      "height": 327,
+      "left": 45.5,
+      "top": 215,
+      "contentType": "audio",
+      "markerPath": "tartaretalex-Audio_Test/content/1494970555465-marker.jpg",
+      "contentPath": "tartaretalex-Audio_Test/content/1494970555465-audio_2.mp3",
+      "texturePath": ""
+    }
+  }
+]

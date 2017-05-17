@@ -1,0 +1,26 @@
+[
+  {
+    "pageType": 2,
+    "text": "",
+    "paragraphs": [],
+    "title": "",
+    "pageStyle": {
+      "textSize": "100%",
+      "titleSize": "270%",
+      "weight": "normal",
+      "style": "normal",
+      "textFont": "times",
+      "titleFont": "times"
+    },
+    "image": {
+      "width": 615,
+      "height": 327,
+      "left": 49,
+      "top": 205,
+      "contentType": "object",
+      "markerPath": "tartaretalex-3D_Object_Test/content/1494971368282-marker.jpg",
+      "contentPath": "tartaretalex-3D_Object_Test/content/1494971368282-turtle.jet",
+      "texturePath": "tartaretalex-3D_Object_Test/content/1494971368282-Body.png"
+    }
+  }
+]
