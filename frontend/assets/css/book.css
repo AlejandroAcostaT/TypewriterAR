@@ -69,3 +69,11 @@
   min-width: 320px;
   min-height: 500px;
 }
+
+.overflowText{
+  overflow:hidden;
+  display:inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+}

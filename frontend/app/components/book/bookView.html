@@ -20,8 +20,8 @@
 			<div class="thumbnail">
 		      	<img ng-src="{{bookCtrl.bookAddress}}{{book.cover}}" alt="..." class="thumbImage">
 		      	<div class="caption">
-			        <h2>{{book.title}}</h2>
-			        <h4> -{{book.user.name}} {{book.user.lastName}}</h4>
+			        <h2 class= "overflowText">{{book.title}}</h2>
+			        <h4 class= "overflowText"> -{{book.user.name}} {{book.user.lastName}}</h4>
 			        	<button href="" class="btn btn-primary inline" role="button"  ng-click="bookCtrl.downloadBook(book)">
 			        		Download <span class="glyphicon glyphicon-download-alt button-icon" aria-hidden="true"></span>
 			        	</button>   
